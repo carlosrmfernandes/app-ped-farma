@@ -1,28 +1,50 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container p-5">
+
+      <header>
+        <h1>Bootstrap + Vue</h1>
+        <p>Componentes criados a partir de cores temas ($theme-colors) são disponibilizados pelo Bootstrap por padrão, você pode <a href="https://getbootstrap.com/docs/4.1/getting-started/theming/">customizar o tema</a> incluindo e removendo cores tema e/ou componentes</p>
+      </header>
+
+      <!-- Colors -->
+      <section class="mb-4">
+        <h2 class="mb-3">Cores</h2>
+        <div class="row">
+          <div class="col-md-3 mb-2" v-for="(color,index) in themeColors" :key="index">
+            <code>.{{ color }}</code>
+            <div :class="'p-3 bg-blue bg-' + color"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Buttons -->
+      <section class="mb-4">
+        <h2 class="mb-3">Botões</h2>
+        <div class="row">
+          <div class="col-md-3 mb-2" v-for="(color,index) in themeColors" :key="index">
+            <button type="button" :class="'btn btn-block btn-' + color">{{ color }}</button>
+            <button type="button" :class="'btn btn-block btn-outline-' + color">{{ color }}</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      themeColors: ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+@import './assets/styles/variables';
+@import './assets/styles/bootstrap';
 </style>
