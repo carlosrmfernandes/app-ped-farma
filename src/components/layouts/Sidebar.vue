@@ -8,20 +8,11 @@
         <p>Admin</p>
     </ul>
     <Collapse icon="nextbss-bar-chart" title="Dashboard">
-          <a href>
-            <span>Brigit</span>
-          </a>
-          <a href>
-            <span>Thomas</span>
-          </a>
-          <a href>
-            <span>Legann</span>
-          </a>
     </Collapse>
     <Collapse  title="Eventos">
-          <a href>
+          <router-link :to="{name: 'RegistOrganizer'}" tag="a">
             <span>Eventos 1</span>
-          </a>
+          </router-link>
           <a href>
             <span>Eventos 2</span>
           </a>
@@ -67,7 +58,6 @@ export default {
   data () {
   },
   components: { Collapse },
-
   methods: {
 
   }
