@@ -48,6 +48,7 @@ export default {
 
 .accordion {
   width: 100%;
+  height: 140px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -102,7 +103,8 @@ export default {
 .accordion .accordion-body {
   text-align: start;
   box-sizing: border-box;
-  padding: 10px 16px;
+  width: 100%;
+  /* padding: 10px 16px; */
   transition: all 0.3s ease;
   color: #ffffff;
   font-size: 14px;
@@ -112,6 +114,25 @@ export default {
 .accordion .accordion-body .accordion-content {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.accordion .accordion-body .accordion-content a {
+  width: 100%;
+  height: 35px;
+  padding-top: 7px;
+}
+.accordion .accordion-body .accordion-content a:hover {
+  width: 100%;
+  /* height: 35px; */
+  background-color: #fff;
+  color: #2e3553;
+}
+
+.accordion .accordion-body .accordion-content a span {
+  margin-left: 20px;
+  margin-top: 30px;
 }
 
 .accordion.disabled {
