@@ -1,12 +1,8 @@
 <template>
-  <div class="header">
-
-  </div>
+  <div class="header">Teste</div>
 </template>
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style >
