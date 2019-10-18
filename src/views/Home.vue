@@ -1,15 +1,16 @@
 <template>
-  <div class="flex-auto h-full w-full mb-4">
-Testando
+  <div id="b-main">
+    <b-dashboard></b-dashboard>
   </div>
 </template>
 
 <script>
+import Dashboard from "./dashboard/index";
 
 export default {
-  name: 'home',
+  name: "home",
   components: {
-
+    Dashboard
   }
-}
+};
 </script>
