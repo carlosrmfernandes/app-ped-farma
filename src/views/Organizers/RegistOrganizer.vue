@@ -1,18 +1,100 @@
 <template>
-  <div class="row">
-      <div class="col">
-        <input type="text" class="form-control" placeholder="First name">
+  <div class="panel">
+    <div class="panel-header">
+      <h1>Novo Organizador</h1>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="event-name">Nome</label>
+            <input type="text" class="form-control" id="event-name" placeholder="Nome do evento" />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="event-class">Classificação</label>
+            <select id="event-class" class="form-control">
+              <option selected>E - Everyone</option>
+              <option>T – Tee</option>
+              <option>A – Adult</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for>Sessão</label>
+            <div class="row">
+              <div class="col-md-4">
+                <input type="text" class="form-control" id="localization" placeholder="Localização" />
+                <small class="form-text text-muted">Localização do evento</small>
+              </div>
+              <div class="col-md-3">
+                <input type="date" class="form-control" id="event-date" />
+                <small class="form-text text-muted">Data do evento</small>
+              </div>
+              <div class="col-md-4">
+                <input type="time" class="form-control" id="event-time" />
+                <small class="form-text text-muted">Hora do evento</small>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col">
-        <input type="text" class="form-control" placeholder="Last name">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for>Detalhes</label>
+            <div class="form-group">
+              <textarea class="form-control" rows="4" placeholder="Descrição do evento"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="event-name">Nome</label>
+            <input type="text" class="form-control" id="event-name" placeholder="Nome do evento" />
+          </div>
+        </div>
+        <div class="col-md-3 form-group mt-4">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="inputGroupFile01" />
+            <label class="custom-file-label" for="inputGroupFile01">Carregar poster</label>
+            <small class="form-text text-muted">
+              Anexar uma imagem no formato
+              <i>JPG, Paisagem 16/9</i>.
+            </small>
+          </div>
+        </div>
       </div>
+      <div class="panel-footer">
+        <button type="submit" class="btn btn-primary float-right ml-2">Registar</button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-export default {
-
-}
+export default {}
 </script>
-<style>
+<style scoped>
+.panel {
+  border: 1px solid red;
+  padding: 20px;
+}
+.panel-header {
+  border: 1px solid red;
+  top: 0px;
+  width: 100%;
+  height: 15%;
+}
 
+.panel-body {
+  border: 1px solid red;
+  margin-top: 40px;
+}
+.panel-footer {
+  border: 1px solid red;
+  margin-top: 40px;
+  height: 40px;
+}
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <div class="header">Teste</div>
+  <div class="header"></div>
 </template>
 <script>
-export default {};
+export default {}
 </script>
 
 <style >

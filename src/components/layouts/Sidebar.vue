@@ -21,15 +21,12 @@
           </a>
     </Collapse>
     <Collapse  title="Organizadores">
-          <a href>
-            <span>Organizadore 1</span>
-          </a>
-          <a href>
-            <span>Organizadore 2</span>
-          </a>
-          <a href>
-            <span>Organizadore 3</span>
-          </a>
+          <router-link :to="{name: 'ListOrganizer'}" tag="a">
+            <span>Listar</span>
+          </router-link>
+          <router-link :to="{name: 'RegistOrganizer'}" tag="a">
+            <span>Novo Organizador</span>
+          </router-link>
     </Collapse>
     <Collapse  title="Patrocinadores">
           <a href>
