@@ -9,7 +9,7 @@ import RegistOrganizer from '@/views/Organizers/RegistOrganizer'
 import ListOrganizer from '@/views/Organizers/ListOrganizer'
 import EditOrganizer from '@/views/Organizers/EditOrganizer'
 
-import NewEvent from '@/views/events/NewEvent'
+import NewEvent from '@/views/Events/NewEvent'
 
 Vue.use(Router)
 

@@ -68,32 +68,63 @@
         </div>
       </div>
       <div class="panel-footer">
-        <button type="submit" class="btn btn-primary float-right ml-2">Registar</button>
+        <button type="submit" class="btn btn-primary float-right ml-2" @click="RegistOrganizer()">Registar</button>
       </div>
     </div>
   </div>
 </template>
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      form: {},
+      isRequesting: false,
+      hadSuccess: false,
+      isOrderSaved: false,
+      hadError: ''
+    }
+  },
+  methods: {
+    /*
+     *  RegistOrganizer: This method will create a post request to regist a
+     *  new organizer and then redirect to the ListOrganizer component.
+     */
+    async RegistOrganizer () {
+      this.isRequesting = true
+      try {
+        const result = await this.axios.post('/organizer', this.form)
+        if (result) {
+          // Redirect to the Organizer views
+          this.$router.push({ name: 'ListOrganizer' })
+        }
+        this.hadSuccess = true
+        this.isOrderSaved = true
+      } catch (e) {
+        this.hadError =
+          'Não foi possível realizar esta operação. Tente novamente'
+      }
+      this.isRequesting = false
+    }
+  }
+}
 </script>
 <style scoped>
 .panel {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   padding: 20px;
 }
 .panel-header {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   top: 0px;
   width: 100%;
   height: 15%;
 }
-
 .panel-body {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   margin-top: 40px;
 }
 .panel-footer {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   margin-top: 40px;
   height: 40px;
 }
