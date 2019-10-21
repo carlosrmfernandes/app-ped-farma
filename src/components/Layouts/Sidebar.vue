@@ -5,39 +5,35 @@
       <h3>BOX Admin</h3>
     </div>
     <ul class="list-unstyled components">
-        <p>Admin</p>
+      <p>Admin</p>
     </ul>
-    <Collapse icon="nextbss-bar-chart" title="Dashboard">
+    <Collapse icon="nextbss-bar-chart" title="Dashboard"></Collapse>
+    <Collapse title="Eventos">
+      <router-link :to="{name: 'ListEvent'}" tag="a">
+        <span>Listar</span>
+      </router-link>
+      <router-link :to="{name: 'RegistEvent'}" tag="a">
+        <span>Novo Evento</span>
+      </router-link>
     </Collapse>
-    <Collapse  title="Eventos">
-          <router-link :to="{name: 'RegistOrganizer'}" tag="a">
-            <span>Eventos 1</span>
-          </router-link>
-          <a href>
-            <span>Eventos 2</span>
-          </a>
-          <a href>
-            <span>Eventos 3</span>
-          </a>
+    <Collapse title="Organizadores">
+      <router-link :to="{name: 'ListOrganizer'}" tag="a">
+        <span>Listar</span>
+      </router-link>
+      <router-link :to="{name: 'RegistOrganizer'}" tag="a">
+        <span>Novo Organizador</span>
+      </router-link>
     </Collapse>
-    <Collapse  title="Organizadores">
-          <router-link :to="{name: 'ListOrganizer'}" tag="a">
-            <span>Listar</span>
-          </router-link>
-          <router-link :to="{name: 'RegistOrganizer'}" tag="a">
-            <span>Novo Organizador</span>
-          </router-link>
-    </Collapse>
-    <Collapse  title="Patrocinadores">
-          <a href>
-            <span>Patrocinadore 1</span>
-          </a>
-          <a href>
-            <span>Patrocinadore 2</span>
-          </a>
-          <a href>
-            <span>Patrocinadore 3</span>
-          </a>
+    <Collapse title="Patrocinadores">
+      <a href>
+        <span>Patrocinadore 1</span>
+      </a>
+      <a href>
+        <span>Patrocinadore 2</span>
+      </a>
+      <a href>
+        <span>Patrocinadore 3</span>
+      </a>
     </Collapse>
     <ul class="list-unstyled CTAs">
       <li>
@@ -49,14 +45,11 @@
 <script>
 import '../../assets/css/style.css'
 
-import Collapse from '@/components/Layouts/Collapse'
+import Collapse from './Collapse'
 
 export default {
-  data () {
-  },
+  data () {},
   components: { Collapse },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
