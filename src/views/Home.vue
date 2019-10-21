@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import Sidebar from '@/components/layouts/Sidebar.vue'
-import RightContent from '@/components/layouts/Right-Content.vue'
-import Breadcrumbs from '@/components/layouts/Breadcrumbs.vue'
+import Sidebar from '@/components/Layouts/Sidebar.vue'
+import RightContent from '@/components/Layouts/Right-Content.vue'
+import Breadcrumbs from '@/components/Layouts/Breadcrumbs.vue'
 
 export default {
   name: 'home',

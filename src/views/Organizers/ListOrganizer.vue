@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import Table from '@/components/layouts/Table'
+import Table from '@/components/Layouts/Table'
 export default {
   components: {
     Table
