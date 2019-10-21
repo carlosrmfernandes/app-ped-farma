@@ -51,7 +51,6 @@ export default {
 
 .accordion {
   width: 100%;
-  height: 140px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

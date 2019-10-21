@@ -9,13 +9,14 @@
         :cols="cols"
         :data="data"
         title="Organizador"
+        :searchMethod="GetPosts"
         />
       </div>
       <div class="panel-footer">
       </div>
     </div>
     <!-- Modal -->
-    <b-modal id="bv-modal-example" size="lg">
+    <b-modal id="bv-modal-example" class="mt-4" size="lg">
       <template v-slot:modal-title >
          <div class="w-100">
             <p class="float-left">Detalhe Organizador</p>
@@ -96,51 +97,51 @@ export default {
       data: [
         {
           id: 1,
-          name: 'Spider Man',
-          organizer: 'Far From Home',
-          time: 'Belas Shopping'
+          name: 'O Partido',
+          organizer: 'Man renas',
+          time: 'All Day'
         },
         {
           id: 2,
-          name: 'Spider Man',
-          organizer: 'Far From Home',
-          time: 'Belas Shopping'
+          name: 'Deadshot',
+          organizer: 'Dj Havaiana',
+          time: 'All Day'
         },
         {
           id: 3,
-          name: 'Spider Man',
-          organizer: 'Far From Home',
-          time: 'Belas Shopping'
+          name: 'October Fest',
+          organizer: 'Luandina',
+          time: 'Ate as 12hrs'
         },
         {
           id: 4,
-          name: 'Spider Man',
-          organizer: 'Far From Home',
-          time: 'Belas Shopping'
+          name: 'Black Santa',
+          organizer: 'Povao',
+          time: 'All Day'
         },
         {
           id: 5,
-          name: 'Spider Man',
-          organizer: 'Far From Home',
-          time: 'Belas Shopping'
+          name: 'Colours',
+          organizer: 'Minha Entrada',
+          time: 'Ate as 03'
         },
         {
           id: 6,
-          name: 'Spider Man',
-          organizer: 'Far From Home',
-          time: 'Belas Shopping'
+          name: 'Nocal Fest',
+          organizer: 'Unitel',
+          time: 'Meio Dia'
         },
         {
           id: 7,
-          name: 'Spider Man',
-          organizer: 'Far From Home',
-          time: 'Belas Shopping'
+          name: 'Cha de Mulheres',
+          organizer: 'As Pretas',
+          time: 'as 18hrs'
         },
         {
           id: 8,
-          name: 'Spider Man',
-          organizer: 'Far From Home',
-          time: 'Belas Shopping'
+          name: 'Hackaton',
+          organizer: 'Criciuma Dev',
+          time: 'All Night'
         }
       ]
     }
@@ -148,6 +149,10 @@ export default {
   methods: {
     editOrganizer () {
       this.isEditable = true
+    },
+    async GetPosts () {
+      // eslint-disable-next-line no-unused-expressions
+      this.data
     }
   }
 }
@@ -175,5 +180,10 @@ export default {
 
 label{
     float: left !important;
+}
+
+.modal-content{
+
+    margin-top: 15% !important;
 }
 </style>

@@ -5,25 +5,14 @@
         <div class="searchInput">
           <div class="col-md-8 pl-0">
           <div class="form-group">
-            <input type="text" class="form-control" id="event-name" placeholder="Buscar.." />
+            <input type="text" class="form-control" v-model="searchInput"
+                  @keyup.enter="Search" id="event-name" placeholder="Buscar.." />
           </div>
         </div>
         </div>
         <div class="gridOrList">
-          <b-button
-            variant="outline-primary"
-            size="sm"
-            class="float-right"
-          >
-            Grid
-          </b-button>
-          <b-button
-            variant="outline-primary"
-            size="sm"
-            class="float-right mr-2"
-          >
-            List
-          </b-button>
+          <span><i class="fas fa-th fa-lg" v-if="gridOrList"></i></span>
+          <span><i class="fa fa-list fa-lg" v-if="!gridOrList"></i></span>
         </div>
       </div>
       <table class="table">
@@ -66,6 +55,10 @@ export default {
     searchMethod: {
       type: Function
     },
+    searchParam: {
+      type: String,
+      default: 'name'
+    },
     detailItemRoute: {
       type: String
     },
@@ -76,15 +69,15 @@ export default {
   data () {
     return {
       searchInput: '',
-      tableSearch: '',
       currentPage: 1,
       pageCount: 0,
-      elementsPerPage: 14,
+      elementsPerPage: 8,
       totalElements: this.data.length,
       showingElements: 0,
       ascending: false,
       sortOrder: false,
-      sortColumn: ''
+      sortColumn: '',
+      gridOrList: true
     }
   },
   methods: {
@@ -101,6 +94,12 @@ export default {
       // We pass the ID of the button that we want to return focus to
       // when the modal has hidden
       this.$refs['my-modal'].toggle('#toggle-btn')
+    },
+    Search () {
+      // Only perform the search if the method is passed as a props
+      if (this.searchMethod) {
+        this.searchMethod('', '', '', this.searchInput)
+      }
     }
   },
   computed: {
@@ -109,12 +108,12 @@ export default {
       let sortColumn = this.sortColumn
       let order = this.sortOrder ? 1 : -1
 
-      if (this.tableSearch) {
+      if (this.searchInput) {
         data = data.filter(
           item =>
             item[this.searchParam]
               .toLowerCase()
-              .indexOf(this.tableSearch.toLowerCase()) > -1
+              .indexOf(this.searchInput.toLowerCase()) > -1
         )
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.paginationArray = data
@@ -151,8 +150,12 @@ export default {
   width: 50%;
 }
 
-.gridOrList button{
+.gridOrList span{
   float: right;
+}
+
+.gridOrList span i{
+  color: #343A4E;
 }
 
 .table .thead-dark th{
