@@ -1,6 +1,6 @@
 <template>
   <div class="accordion" v-bind:class="{ disabled: !active}">
-      <div class="accordion-header" @click="openClose()">
+      <div class="accordion-header" v-bind:class="{ atual: active}" @click="openClose($this)">
         <span class="accordion-title">{{ title }}</span>
       </div>
       <div class="accordion-body" v-bind:style="{ maxHeight: maxHeight }">
@@ -29,7 +29,10 @@ export default {
     }
   },
   methods: {
-    openClose () {
+    openClose (event) {
+      // var element = this.$el.querySelector('.accordion-header')
+      // element.classList.toggle('teste')
+
       let containerHeight = this.$el.querySelector('.accordion-body')
         .offsetHeight
       if (this.active) {
@@ -67,6 +70,11 @@ export default {
   border-bottom: 1px solid #2e3553;
   color: #fff;
   transition: all 0.3s ease;
+}
+
+.accordion .accordion-header.atual {
+   color: #2e3553;
+   background-color: #fff;
 }
 
 .accordion .accordion-header:hover {
@@ -142,7 +150,7 @@ export default {
 .accordion.disabled .accordion-header {
   border-bottom: none;
   height: 40px;
-  color: #ffffff;
+  color: #fff;
 }
 
 .accordion.disabled .accordion-header:hover {
