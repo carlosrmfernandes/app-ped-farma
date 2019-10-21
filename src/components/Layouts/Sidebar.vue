@@ -49,7 +49,7 @@
 <script>
 import '../../assets/css/style.css'
 
-import Collapse from '@/components/layouts/Collapse'
+import Collapse from '@/components/Layouts/Collapse'
 
 export default {
   data () {
