@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div v-if="!grid">
+    <div >
       <div class="head-table">
         <div class="searchInput">
           <div class="col-md-8 pl-0">
-          <div class="form-group">
-            <input type="text" class="form-control" v-model="searchInput"
-                  @keyup.enter="Search" id="event-name" placeholder="Buscar.." />
+            <div class="form-group">
+              <input type="text" class="form-control" v-model="searchInput"
+                    @keyup.enter="Search" id="event-name" placeholder="Buscar.." />
+            </div>
           </div>
         </div>
-        </div>
-        <div class="gridOrList">
+        <div class="gridOrList" v-if="needGrid" @click="tableGrid">
           <span><i class="fas fa-th fa-lg" v-if="gridOrList"></i></span>
-          <span><i class="fa fa-list fa-lg" v-if="!gridOrList"></i></span>
+          <span><i class="fa fa-bars fa-lg" v-if="!gridOrList"></i></span>
         </div>
       </div>
-      <table class="table">
+      <table class="table" v-if="!grid">
         <thead class="thead-dark">
           <tr>
             <th v-for="(col, index) in cols" :key="index">{{ col.label }}</th>
@@ -31,12 +31,22 @@
           </tr>
         </tbody>
       </table>
+      <div v-else>
+        <Cards
+              :data="data"
+              roomsItemRoute="RoomsEvent"
+            />
+      </div>
     </div>
-    <div v-else></div>
   </div>
 </template>
 <script>
+import Cards from '@/components/Layouts/Cards.vue'
+
 export default {
+  components: {
+    Cards
+  },
   props: {
     data: {},
     cols: {},
@@ -45,10 +55,6 @@ export default {
       default: false
     },
     editButton: {
-      type: Boolean,
-      default: false
-    },
-    grid: {
       type: Boolean,
       default: false
     },
@@ -64,6 +70,10 @@ export default {
     },
     title: {
       type: String
+    },
+    needGrid: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -77,7 +87,8 @@ export default {
       ascending: false,
       sortOrder: false,
       sortColumn: '',
-      gridOrList: true
+      gridOrList: true,
+      grid: false
     }
   },
   methods: {
@@ -99,6 +110,15 @@ export default {
       // Only perform the search if the method is passed as a props
       if (this.searchMethod) {
         this.searchMethod('', '', '', this.searchInput)
+      }
+    },
+    tableGrid () {
+      this.gridOrList = !this.gridOrList
+
+      if (this.gridOrList) {
+        this.grid = false
+      } else if (!this.gridOrList) {
+        this.grid = true
       }
     }
   },
@@ -156,6 +176,7 @@ export default {
 
 .gridOrList span i{
   color: #343A4E;
+  cursor: pointer;
 }
 
 .table .thead-dark th{
