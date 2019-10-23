@@ -9,6 +9,9 @@ import RegistOrganizer from '@/views/Organizers/RegistOrganizer'
 import ListOrganizer from '@/views/Organizers/ListOrganizer'
 import EditOrganizer from '@/views/Organizers/EditOrganizer'
 
+import RegistSponsor from '@/views/Sponsors/RegistSponsor'
+import ListSponsor from '@/views/Sponsors/ListSponsor'
+
 import RegistEvent from '@/views/Events/RegistEvent'
 import ListEvent from '@/views/Events/ListEvent'
 import EditEvent from '@/views/Events/EditEvent'
@@ -62,6 +65,31 @@ export default new Router({
         component: EditOrganizer,
         meta: {
           title: 'Editar Organizador'
+        }
+      }
+      ]
+    },
+    {
+      path: '/sponsor',
+      name: 'ListSponsor',
+      component: View,
+      meta: {
+        title: 'Patrocinadores'
+      },
+      children: [{
+        path: '/',
+        name: 'ListSponsor',
+        component: ListSponsor,
+        meta: {
+          title: 'Patrocinadores'
+        }
+      },
+      {
+        path: 'regist',
+        name: 'RegistSponsor',
+        component: RegistSponsor,
+        meta: {
+          title: 'Novo Patrocinador'
         }
       }
       ]
