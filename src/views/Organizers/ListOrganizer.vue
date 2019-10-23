@@ -185,13 +185,10 @@ export default {
   margin-top: 40px;
   height: 40px;
 }
-
 label{
     float: left !important;
 }
-
 .modal-content{
-
     margin-top: 15% !important;
 }
 </style>
