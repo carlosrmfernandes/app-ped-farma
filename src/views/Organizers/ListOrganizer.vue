@@ -7,9 +7,11 @@
       <div>
         <Table
         :cols="cols"
-        :data="data"
+        :data="companies"
         title="Organizador"
         :searchMethod="GetPosts"
+        :detailMethod="GetCompany"
+        :needGrid="false"
         />
       </div>
       <div class="panel-footer">
@@ -33,7 +35,7 @@
               variant="outline-danger"
               size="lg"
               class="float-right mr-2"
-              @click="$bvModal.hide('bv-modal-example')"
+              @click="showRemoveModal"
             >
               Remover
             </b-button>
@@ -43,19 +45,7 @@
         <div class="row flex">
           <div class="form-group m-2">
             <label for="event-name" >Nome</label>
-            <input type="text" class="form-control" id="event-name" placeholder="Nome do evento" :disabled="!isEditable" />
-          </div>
-          <div class="form-group m-2">
-            <label for="event-name" >Teste</label>
-            <input type="text" class="form-control" id="event-name" placeholder="Nome do evento" :disabled="!isEditable" />
-          </div>
-          <div class="form-group m-2">
-            <label for="event-name" >Nome</label>
-            <input type="text" class="form-control" id="event-name" placeholder="Nome do evento" :disabled="!isEditable"/>
-          </div>
-          <div class="form-group m-2">
-            <label for="event-name" >Teste</label>
-            <input type="text" class="form-control" id="event-name" placeholder="Nome do evento" :disabled="!isEditable"/>
+            <input type="text" class="form-control" v-model="form.name" id="event-name" placeholder="Nome do Organizador de Evento" :disabled="!isEditable" />
           </div>
         </div>
       </div>
@@ -65,9 +55,33 @@
             variant="outline-secondary"
             size="lg"
             class="float-right"
-            @click="$bvModal.hide('bv-modal-example')"
+            @click="hideModal"
           >
             Fechar
+          </b-button>
+        </div>
+      </template>
+    </b-modal>
+    <!-- Remove Modal-->
+    <b-modal id="modal-remove" title="Organizador">
+      <p class="my-4">Tem certeza que deseja remover?</p>
+       <template v-slot:modal-footer>
+        <div class="w-100">
+          <b-button
+            variant="outline-primary"
+            size="lg"
+            class="float-right"
+            @click="RemoveCompany"
+          >
+            Sim
+          </b-button>
+          <b-button
+            variant="outline-danger"
+            size="lg"
+            class="float-right mr-2"
+            @click="hideRemoveModal"
+          >
+            Nao
           </b-button>
         </div>
       </template>
@@ -88,11 +102,9 @@ export default {
   },
   data () {
     return {
+      form: {},
       cols: [
-        { name: 'id', label: 'Id' },
-        { name: 'name', label: 'Nome' },
-        { name: 'organizer', label: 'Organizador' },
-        { name: 'time', label: 'Tempo' }
+        { name: 'name', label: 'Nome' }
       ],
       data: [
         {
@@ -151,7 +163,11 @@ export default {
           time: 'All Night',
           img: 'http://www.trt12.jus.br/portal/areas/ascom/extranet/imagens/hackathon-bannerdetalhes.jpg'
         }
-      ]
+      ],
+      isRequesting: false,
+      companies: [],
+      hadError: '',
+      editID: ''
     }
   },
   methods: {
@@ -160,8 +176,82 @@ export default {
     },
     async GetPosts () {
       // eslint-disable-next-line no-unused-expressions
-      this.data
+      this.companies
+    },
+    /*
+     *  GetCompanies: This method will fire a GET request
+     *  to fetch the companies and the will store the result
+     *  into the orders local state property
+     */
+    async GetCompanies () {
+      this.isRequesting = true
+      try {
+        const result = await this.axios.get(`/companies/pages`)
+        const res = result.data
+        this.companies = res.data
+      } catch (e) {
+        this.hadError =
+          'Não foi possível carregar as encomendas. Actualize a página.'
+      }
+      this.isRequesting = false
+    },
+    /**
+     * GetCompany: This method will fire a GET request and then
+     * assign the response data into the state property: form
+     */
+    async GetCompany () {
+      this.isRequesting = true
+      // Get the table rwo's details ID in store
+      this.editID = this.$store.state.tableDetailID
+      try {
+        const result = await this.axios.get(
+          `/companies/${this.editID}`
+        )
+        this.form = result.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+      this.isRequesting = false
+    },
+    /**
+     * GetCompany: This method will fire a GET request and then
+     * assign the response data into the state property: form
+     */
+    async RemoveCompany () {
+      this.isRequesting = true
+      // Get the table rwo's details ID in store
+      this.editID = this.$store.state.tableDetailID
+      try {
+        const result = await this.axios.delete(
+          `/companies/${this.editID}`
+        )
+        this.form = result.data
+      } catch (e) {
+        this.hadError = 'Não foi possível efetuar esta operação.'
+      }
+      this.isRequesting = false
+      this.$store.state.tableDetailID = ''
+    },
+    hideModal () {
+      this.$bvModal.hide('bv-modal-example')
+      // Set the value to empty
+      this.$store.state.tableDetailID = ''
+    },
+    showRemoveModal () {
+      // this.$store.state.tableDetailID = id
+      // Show modal for deatils
+      this.$bvModal.show('modal-remove')
+    },
+    hideRemoveModal () {
+      // Set the ID value on store Global variable for using with modal
+      this.$store.state.tableDetailID = ''
+      // Show modal for deatils
+      this.$bvModal.hide('modal-remove')
     }
+  },
+  created () {
+    // Get customer orders
+    this.GetCompanies()
   }
 }
 </script>
