@@ -25,7 +25,7 @@
           <tr
             v-for="(row, index) in results"
             :key="index"
-            @click="$bvModal.show('bv-modal-example')"
+            @click="showModal(row.id)"
           >
             <td v-for="(col, index) in cols" :key="index">{{row[col.name]}}</td>
           </tr>
@@ -33,9 +33,9 @@
       </table>
       <div v-else>
         <Cards
-              :data="data"
-              roomsItemRoute="RoomsEvent"
-            />
+          :data="data"
+          roomsItemRoute="RoomsEvent"
+        />
       </div>
     </div>
   </div>
@@ -59,6 +59,9 @@ export default {
       default: false
     },
     searchMethod: {
+      type: Function
+    },
+    detailMethod: {
       type: Function
     },
     searchParam: {
@@ -95,11 +98,13 @@ export default {
     clickArrow (router) {
       this.$router.push(router)
     },
-    showModal () {
-      this.$refs['my-modal'].show()
-    },
-    hideModal () {
-      this.$refs['my-modal'].hide()
+    showModal (id) {
+      // Set the ID value on store Global variable for using with modal
+      this.$store.state.tableDetailID = id
+      // Get the especific resource with the saved ID, on your list on table
+      this.detailMethod()
+      // Show modal for deatils
+      this.$bvModal.show('bv-modal-example')
     },
     toggleModal () {
       // We pass the ID of the button that we want to return focus to
