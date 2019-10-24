@@ -1,14 +1,14 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Novo Organizador</h1>
+      <h1>Novo Patrocinador</h1>
     </div>
     <div class="panel-body">
       <div class="row">
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Nome</label>
-            <input type="text" class="form-control" id="organizer-name" placeholder="Nome do organizador" />
+            <input type="text" class="form-control" id="organizer-name" placeholder="Nome do Patrocinador" />
           </div>
         </div>
         <div class="col-md-4">

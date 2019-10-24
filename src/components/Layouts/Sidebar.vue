@@ -25,15 +25,12 @@
       </router-link>
     </Collapse>
     <Collapse title="Patrocinadores">
-      <a href>
-        <span>Patrocinadore 1</span>
-      </a>
-      <a href>
-        <span>Patrocinadore 2</span>
-      </a>
-      <a href>
-        <span>Patrocinadore 3</span>
-      </a>
+      <router-link :to="{name: 'ListSponsor'}" tag="a">
+        <span>Listar</span>
+      </router-link>
+      <router-link :to="{name: 'RegistSponsor'}" tag="a">
+        <span>Novo Patrocinador</span>
+      </router-link>
     </Collapse>
     <ul class="list-unstyled CTAs">
       <li>
@@ -43,13 +40,13 @@
   </nav>
 </template>
 <script>
-import "../../assets/css/style.css";
+import '../../assets/css/style.css'
 
-import Collapse from "./Collapse";
+import Collapse from './Collapse'
 
 export default {
-  data() {},
+  data () {},
   components: { Collapse },
   methods: {}
-};
+}
 </script>

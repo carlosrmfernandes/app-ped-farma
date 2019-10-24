@@ -9,6 +9,9 @@ import RegistOrganizer from '@/views/Organizers/RegistOrganizer'
 import ListOrganizer from '@/views/Organizers/ListOrganizer'
 import EditOrganizer from '@/views/Organizers/EditOrganizer'
 
+import RegistSponsor from '@/views/Sponsors/RegistSponsor'
+import ListSponsor from '@/views/Sponsors/ListSponsor'
+
 import RegistEvent from '@/views/Events/RegistEvent'
 import ListEvent from '@/views/Events/ListEvent'
 import EditEvent from '@/views/Events/EditEvent'
@@ -26,79 +29,104 @@ export default new Router({
       title: 'Pagina Inicial'
     },
     children: [{
-        path: '',
-        name: 'Dashboard',
-        component: Dashboard,
+      path: '',
+      name: 'Dashboard',
+      component: Dashboard,
+      meta: {
+        title: 'Pagina Inicial'
+      }
+    },
+    {
+      path: '/organizer',
+      name: 'ListOrganizer',
+      component: View,
+      meta: {
+        title: 'Organizadores'
+      },
+      children: [{
+        path: '/',
+        name: 'ListOrganizer',
+        component: ListOrganizer,
         meta: {
-          title: 'Pagina Inicial'
+          title: 'Organizadores'
         }
       },
       {
-        path: '/organizer',
-        name: 'ListOrganizer',
-        component: View,
+        path: 'regist',
+        name: 'RegistOrganizer',
+        component: RegistOrganizer,
         meta: {
-          title: 'Organizadores'
-        },
-        children: [{
-            path: '/',
-            name: 'ListOrganizer',
-            component: ListOrganizer,
-            meta: {
-              title: 'Organizadores'
-            }
-          },
-          {
-            path: 'regist',
-            name: 'RegistOrganizer',
-            component: RegistOrganizer,
-            meta: {
-              title: 'Novo Organizador'
-            }
-          },
-          {
-            path: 'edit/:id',
-            name: 'EditOrganizer',
-            component: EditOrganizer,
-            meta: {
-              title: 'Editar Organizador'
-            }
-          }
-        ]
+          title: 'Novo Organizador'
+        }
       },
       {
-        path: '/events',
+        path: 'edit/:id',
+        name: 'EditOrganizer',
+        component: EditOrganizer,
+        meta: {
+          title: 'Editar Organizador'
+        }
+      }
+      ]
+    },
+    {
+      path: '/sponsor',
+      name: 'ListSponsor',
+      component: View,
+      meta: {
+        title: 'Patrocinadores'
+      },
+      children: [{
+        path: '/',
+        name: 'ListSponsor',
+        component: ListSponsor,
+        meta: {
+          title: 'Patrocinadores'
+        }
+      },
+      {
+        path: 'regist',
+        name: 'RegistSponsor',
+        component: RegistSponsor,
+        meta: {
+          title: 'Novo Patrocinador'
+        }
+      }
+      ]
+    },
+    {
+      path: '/events',
+      name: 'ListEvent',
+      component: View,
+      meta: {
+        title: 'Listar Eventos'
+      },
+      children: [{
+        path: '/',
         name: 'ListEvent',
-        component: View,
+        component: ListEvent,
         meta: {
           title: 'Listar Eventos'
-        },
-        children: [{
-            path: '/',
-            name: 'ListEvent',
-            component: ListEvent,
-            meta: {
-              title: 'Listar Eventos'
-            }
-          },
-          {
-            path: 'regist',
-            name: 'RegistEvent',
-            component: RegistEvent,
-            meta: {
-              title: 'Registar Evento'
-            }
-          },
-          {
-            path: 'edit/:id',
-            name: 'EditEvent',
-            component: EditEvent,
-            meta: {
-              title: 'Editar Evento'
-            }
-          }
-        ]
+        }
+      },
+      {
+        path: 'regist',
+        name: 'RegistEvent',
+        component: RegistEvent,
+        meta: {
+          title: 'Registar Evento'
+        }
+      },
+      {
+        path: 'edit/:id',
+        name: 'EditEvent',
+        component: EditEvent,
+        meta: {
+          title: 'Editar Evento'
+        }
       }
+      ]
+    }
     ]
   }]
 })
