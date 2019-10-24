@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group col-xs-5 p-4">
                     <label>Municipio</label>
-                    <input v-model="address.city" type="number"
+                    <input v-model="address.city"
                             class="form-control" placeholder="Maianga">
                 </div>
                 <div class="form-group col-xs-5 p-4">
