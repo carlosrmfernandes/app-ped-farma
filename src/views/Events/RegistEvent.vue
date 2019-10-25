@@ -16,11 +16,9 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="event-class">Classificação</label>
-            <select id="event-class" class="form-control">
-              <option selected>E - Everyone</option>
-              <option>T – Tee</option>
-              <option>A – Adult</option>
+            <label for="event-class">Localização</label>
+            <select id="location" class="form-control">
+              <option v-for="location in locations">{{ location.description }}</option>
             </select>
           </div>
         </div>
@@ -228,7 +226,30 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data: function() {
+    return {
+      locations: ""
+    };
+  },
+  methods: {
+    /**
+     * GetEvent: This method will fire a GET request and then
+     * assign the response data into the state property: form
+     */
+    async getLocations() {
+      try {
+        const result = await this.axios.get(`/locations`);
+        this.locations = result.data;
+      } catch (e) {
+        this.hadError = "Não foi possível carregar as informações.";
+      }
+    }
+  },
+  created() {
+    this.getLocations();
+  }
+};
 </script>
 
 <style>
