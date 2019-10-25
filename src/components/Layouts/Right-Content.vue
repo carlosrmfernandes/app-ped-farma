@@ -15,7 +15,7 @@ export default {
 .right-content {
   position: absolute;
   width: 90%;
-  height: 90%;
+  height: 95%;
   bottom: 0;
   right: 0;
   /* border: 1px solid red; */

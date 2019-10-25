@@ -20,6 +20,9 @@ export default {
     data: {},
     roomsItemRoute: {
       type: String
+    },
+    getImageEndpoint: {
+      type: String
     }
   },
   data () {
@@ -40,6 +43,13 @@ export default {
       let data = this.data
       let sortColumn = this.sortColumn
       let order = this.sortOrder ? 1 : -1
+
+      data.forEach(element => {
+        const result = this.axios.get(
+          `/${this.getImageEndpoint}/${element.id}`
+        )
+        data['img'] = result.poster_path
+      })
 
       if (sortColumn) {
         data = data.slice().sort((a, b) => {

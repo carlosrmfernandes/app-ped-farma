@@ -35,6 +35,7 @@
         <Cards
           :data="data"
           roomsItemRoute="RoomsEvent"
+          getImageEndpoint="party_events"
         />
       </div>
     </div>
