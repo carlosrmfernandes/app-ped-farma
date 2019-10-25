@@ -11,7 +11,7 @@
         title="Organizador"
         :searchMethod="GetPosts"
         :detailMethod="GetCompany"
-        :needGrid="false"
+        :needGrid="true"
         />
       </div>
       <div class="panel-footer">
@@ -28,8 +28,18 @@
               class="float-right"
               @click="editOrganizer"
               :disabled="isEditable"
+              v-show="!isEditable"
             >
               Editar
+            </b-button>
+             <b-button
+              variant="outline-success"
+              size="lg"
+              class="float-right"
+              @click="UpdateCompany"
+              v-show="isEditable"
+            >
+              Salvar
             </b-button>
             <b-button
               variant="outline-danger"
@@ -42,6 +52,14 @@
         </div>
       </template>
       <div class="d-block text-center">
+        <div class=" col-md-12">
+          <div class="alert alert-success" v-if="hadSuccess" role="alert">
+            {{hadSuccess}}
+          </div>
+          <div class="alert alert-danger" v-if="hadError" role="alert">
+            {{hadError}}
+          </div>
+        </div>
         <div class="row flex">
           <div class="form-group m-2">
             <label for="event-name" >Nome</label>
@@ -167,6 +185,7 @@ export default {
       isRequesting: false,
       companies: [],
       hadError: '',
+      hadSuccess: '',
       editID: ''
     }
   },
@@ -222,15 +241,30 @@ export default {
       // Get the table rwo's details ID in store
       this.editID = this.$store.state.tableDetailID
       try {
-        const result = await this.axios.delete(
-          `/companies/${this.editID}`
-        )
-        this.form = result.data
+        // Redirect to the Organizer views
+        await this.axios.delete(`/companies/${this.editID}`)
+        location.reload()
       } catch (e) {
         this.hadError = 'Não foi possível efetuar esta operação.'
       }
       this.isRequesting = false
       this.$store.state.tableDetailID = ''
+    },
+    /**
+     * UpdateCompany: This method will send form to serve, for update
+     */
+    async UpdateCompany () {
+      this.isRequesting = true
+      // Get the table rwo's details ID in store
+      this.editID = this.$store.state.tableDetailID
+      try {
+        await this.axios.put(`/companies/${this.editID}`, this.form)
+        // this.$router.push({ name: "ListAddresses" });
+        this.hadSuccess = 'Informações actualizadas com sucesso.'
+      } catch (e) {
+        this.hadError = 'Não foi possível realizar esta operação.'
+      }
+      this.isRequesting = false
     },
     hideModal () {
       this.$bvModal.hide('bv-modal-example')
@@ -238,7 +272,6 @@ export default {
       this.$store.state.tableDetailID = ''
     },
     showRemoveModal () {
-      // this.$store.state.tableDetailID = id
       // Show modal for deatils
       this.$bvModal.show('modal-remove')
     },
