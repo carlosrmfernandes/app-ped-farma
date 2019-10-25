@@ -8,7 +8,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Nome</label>
-            <input type="text" class="form-control" id="organizer-name" placeholder="Nome do organizador" />
+            <input type="text" class="form-control" v-model="form.name" id="organizer-name" placeholder="Nome do organizador" />
           </div>
         </div>
         <div class="col-md-4">
@@ -28,6 +28,7 @@
         <UploadPhoto
           :defaultImage="form.cover_image_url"
           :OnChange="SelectImage"
+          v-model="form.file"
           width="140px"
           height="185px"
         />
@@ -67,7 +68,7 @@ export default {
     async RegistOrganizer () {
       this.isRequesting = true
       try {
-        const result = await this.axios.post('/organizer', this.form)
+        const result = await this.axios.post('/companies', this.form)
         if (result) {
           // Redirect to the Organizer views
           this.$router.push({ name: 'ListOrganizer' })

@@ -9,7 +9,7 @@ export default {}
 .header {
   position: fixed;
   width: 90%;
-  height: 10%;
+  height: 5%;
   top: 0;
   right: 0;
   /* border: 1px solid red; */
