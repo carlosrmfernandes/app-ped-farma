@@ -24,7 +24,7 @@
             <p class="float-left">Detalhe Organizador</p>
              <b-button
               variant="outline-primary"
-              size="lg"
+              size="sm"
               class="float-right"
               @click="editOrganizer"
               :disabled="isEditable"
@@ -34,7 +34,7 @@
             </b-button>
              <b-button
               variant="outline-success"
-              size="lg"
+              size="sm"
               class="float-right"
               @click="UpdateCompany"
               v-show="isEditable"
@@ -43,7 +43,7 @@
             </b-button>
             <b-button
               variant="outline-danger"
-              size="lg"
+              size="sm"
               class="float-right mr-2"
               @click="showRemoveModal"
             >
@@ -71,7 +71,7 @@
         <div class="w-100">
           <b-button
             variant="outline-secondary"
-            size="lg"
+            size="sm"
             class="float-right"
             @click="hideModal"
           >
