@@ -36,6 +36,7 @@
           :data="data"
           roomsItemRoute="RoomsEvent"
           getImageEndpoint="party_events"
+          :detailMethod="detailMethod"
         />
       </div>
     </div>

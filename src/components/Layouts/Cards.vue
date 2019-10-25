@@ -4,7 +4,7 @@
       <div class="card-principal" v-for="(row, i) in results" :key="i">
         <aside class="profile-card">
           <header>
-              <img :src="row.img" v-on:click="$bvModal.show('bv-modal-example')" />
+              <img :src="row.imagem" v-on:click="showModal(row.id)" />
           </header>
         </aside>
         <div class="profile-bio">
@@ -23,6 +23,9 @@ export default {
     },
     getImageEndpoint: {
       type: String
+    },
+    detailMethod: {
+      type: Function
     }
   },
   data () {
@@ -31,11 +34,22 @@ export default {
       tableSearch: '',
       currentPage: 1,
       pageCount: 0,
-      elementsPerPage: 8,
+      elementsPerPage: 17,
       totalElements: this.data.length,
       showingElements: 0,
       sortColumn: '',
-      sortOrder: false
+      sortOrder: false,
+      root: process.env.VUE_APP_API
+    }
+  },
+  methods: {
+    showModal (id) {
+      // Set the ID value on store Global variable for using with modal
+      this.$store.state.tableDetailID = id
+      // Get the especific resource with the saved ID, on your list on table
+      this.detailMethod()
+      // Show modal for deatils
+      this.$bvModal.show('bv-modal-example')
     }
   },
   computed: {
@@ -43,12 +57,14 @@ export default {
       let data = this.data
       let sortColumn = this.sortColumn
       let order = this.sortOrder ? 1 : -1
-
+      let k = 0
       data.forEach(element => {
         const result = this.axios.get(
           `/${this.getImageEndpoint}/${element.id}`
         )
-        data['img'] = result.poster_path
+        data[k]['imagem'] = `${this.root}/company_logos/${element.logo_path}`
+        data[k]['img'] = result.poster_path
+        k++
       })
 
       if (sortColumn) {
