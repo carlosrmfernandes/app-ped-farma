@@ -12,6 +12,7 @@
         :searchMethod="GetPosts"
         :detailMethod="GetCompany"
         :needGrid="true"
+        resource="company"
         />
       </div>
       <div class="panel-footer">
@@ -123,64 +124,6 @@ export default {
       form: {},
       cols: [
         { name: 'name', label: 'Nome' }
-      ],
-      data: [
-        {
-          id: 1,
-          name: 'The Club',
-          organizer: 'Club Present',
-          time: 'All Day',
-          img: 'https://media.istockphoto.com/vectors/party-poster-vector-id611862070'
-        },
-        {
-          id: 2,
-          name: 'Disney',
-          organizer: 'Disney Brasil',
-          time: 'All Day',
-          img: 'https://http2.mlstatic.com/pster-cartaz-viva-a-vida-e-uma-festa-93x63-cm-D_NQ_NP_941332-MLB27078469427_032018-F.webp'
-        },
-        {
-          id: 3,
-          name: 'OctoberFest Luanda',
-          organizer: 'Luandina',
-          time: 'Ate as 12hrs',
-          img: 'https://i2.wp.com/www.wusangola.com/wp-content/uploads/2019/10/9f2b9b71-9fe3-4ca7-8ca2-3bd40890ab50.jpg?w=1023'
-        },
-        {
-          id: 4,
-          name: 'Black Santa',
-          organizer: 'Povao',
-          time: 'All Day',
-          img: 'https://i1.wp.com/idontdoclubs.biz/wp-content/uploads/2017/12/noir-noel.jpg?w=640&ssl=1'
-        },
-        {
-          id: 5,
-          name: 'Colours',
-          organizer: 'Minha Entrada',
-          time: 'Ate as 03',
-          img: 'https://scontent-lga3-1.cdninstagram.com/vp/718e76e99528f73216a53cca7e7fb5a1/5DB10799/t51.12442-15/e35/p320x320/73134093_176988376807831_2686096669175805374_n.jpg?_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_cat=107&ig_cache_key=MjE1OTgzNzYyMzc5OTgwMTg5NQ%3D%3D.2'
-        },
-        {
-          id: 6,
-          name: 'Nocal Fest',
-          organizer: 'Unitel',
-          time: 'Meio Dia',
-          img: 'https://www.verangola.net/va/images/cache/290x420/crop/images%7Ccms-image-000009800.png'
-        },
-        {
-          id: 7,
-          name: 'Festa Junina',
-          organizer: 'As Pretas',
-          time: 'as 18hrs',
-          img: 'http://www.avmpmpr.com.br/site/wp-content/uploads/2018/05/cartaz-festa-junina.jpg'
-        },
-        {
-          id: 8,
-          name: 'Hackaton',
-          organizer: 'Criciuma Dev',
-          time: 'All Night',
-          img: 'http://www.trt12.jus.br/portal/areas/ascom/extranet/imagens/hackathon-bannerdetalhes.jpg'
-        }
       ],
       isRequesting: false,
       companies: [],
