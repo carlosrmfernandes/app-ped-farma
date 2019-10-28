@@ -26,9 +26,8 @@
       </div>
       <div class="row">
         <UploadPhoto
-          :defaultImage="form.cover_image_url"
+          :defaultImage="form.logo"
           :OnChange="SelectImage"
-          v-model="form.file"
           width="140px"
           height="185px"
         />
@@ -69,9 +68,24 @@ export default {
       this.isRequesting = true
       try {
         const result = await this.axios.post('/companies', this.form)
+        console.log(result)
         if (result) {
-          // Redirect to the Organizer views
-          this.$router.push({ name: 'ListOrganizer' })
+          // Create a new form data object
+          const fData = new FormData()
+          fData.append('logo', this.file)
+          // Fire the PUT request
+          const res = await this.axios({
+            url: `/companies/${result.data['id']}/company_logos`,
+            method: 'put',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: fData
+          })
+          this.file = ''
+
+          if (res) {
+            // Redirect to the Organizer views
+            this.$router.push({ name: 'ListOrganizer' })
+          }
         }
         this.hadSuccess = true
         this.isOrderSaved = true
