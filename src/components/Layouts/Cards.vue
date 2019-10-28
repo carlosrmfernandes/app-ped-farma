@@ -4,7 +4,7 @@
       <div class="card-principal" v-for="(row, i) in results" :key="i">
         <aside class="profile-card">
           <header>
-              <img :src="row.imagem" v-on:click="showModal(row.id)" />
+              <img :src="row.img" v-on:click="showModal(row.id)" />
           </header>
         </aside>
         <div class="profile-bio">
@@ -26,6 +26,10 @@ export default {
     },
     detailMethod: {
       type: Function
+    },
+    resource: {
+      type: String,
+      default: 'event'
     }
   },
   data () {
@@ -34,7 +38,7 @@ export default {
       tableSearch: '',
       currentPage: 1,
       pageCount: 0,
-      elementsPerPage: 17,
+      elementsPerPage: 16,
       totalElements: this.data.length,
       showingElements: 0,
       sortColumn: '',
@@ -62,8 +66,12 @@ export default {
         const result = this.axios.get(
           `/${this.getImageEndpoint}/${element.id}`
         )
-        data[k]['imagem'] = `${this.root}/company_logos/${element.logo_path}`
-        data[k]['img'] = result.poster_path
+        if (this.resource === 'event') {
+          data[k]['img'] = result.poster_path
+        } else if (this.resource === 'company') {
+          data[k]['img'] = `${this.root}/company_logos/${element.logo_path}`
+        }
+
         k++
       })
 
