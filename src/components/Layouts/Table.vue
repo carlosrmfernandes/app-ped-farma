@@ -37,6 +37,7 @@
           roomsItemRoute="RoomsEvent"
           getImageEndpoint="party_events"
           :detailMethod="detailMethod"
+          :resource="resource"
         />
       </div>
     </div>
@@ -79,6 +80,9 @@ export default {
     needGrid: {
       type: Boolean,
       default: true
+    },
+    resource: {
+      type: String
     }
   },
   data () {
