@@ -8,9 +8,9 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 import PortalVue from 'portal-vue'
-import { BootstrapVue } from 'bootstrap-vue'
-
-import './assets/styles/main.scss'
+import {
+  BootstrapVue
+} from 'bootstrap-vue'
 
 require('bootstrap')
 
