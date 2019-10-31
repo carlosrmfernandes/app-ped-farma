@@ -65,8 +65,18 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3">
-            <UploadPhoto :OnChange="SelectImage" v-model="file" width="140px" height="185px" />
+          <div class="col-md-2">
+            Poster
+            <UploadPhoto :OnChange="SelectPoster" v-model="poster" width="140px" height="185px" />
+          </div>
+          <div class="col-md-2">
+            Backdrop
+            <UploadPhoto
+              :OnChange="SelectBackdrop"
+              v-model="backdrop"
+              width="140px"
+              height="185px"
+            />
           </div>
           <div class="col-md-3 form-group mt-4">
             <div class="form-group">
@@ -214,13 +224,21 @@ export default {
       sessionsCount: 0,
       locations: "",
       classifications: "",
-      file: "",
+      poster: "",
+      backdrop: "",
       classification: "",
       title: "",
       description: "",
       starts_at: "",
       video_id: "",
-      location_id: ""
+      location_id: "",
+      endsAt: "",
+      locationId: "",
+      party_event_id: "",
+      startsAt: "",
+      ticketType: "",
+      amount: "",
+      company_product_id: ""
     };
   },
   methods: {
@@ -257,7 +275,8 @@ export default {
           // if (result) {
           // Create a new form data object
           const fData = new FormData();
-          fData.append("poster", this.file);
+          fData.append("poster", this.poster);
+          fData.append("backdrop", this.backdrop);
           fData.append("classification", this.classification);
           fData.append("locationId", this.location_id);
           fData.append("videoId", this.video_id);
@@ -272,27 +291,56 @@ export default {
             headers: { "Content-Type": "multipart/form-data" },
             data: fData
           });
-
-          console.log(res);
+          this.party_event_id = res.data;
+          console.log(this.party_event_id);
 
           // Redirect to the ListEvent views
-          this.$router.push({ name: "ListEvent" });
-          // }
+          //this.$router.push({ name: "ListEvent" });
+          this.step++;
         } catch (e) {
           this.hadError =
             "Não foi possível realizar esta operação. Tente novamente";
           console.log(e);
         }
       } else if (step === 2) {
+        // try {
+        //   this.startsAt = this.formatDate(this.startsAt);
+        //   const fData = new FormData();
+        //   fData.append("amount", this.amount);
+        //   fData.append(
+        //     "company_product_id",
+        //     "8cdf8e59-356e-4e09-9a96-bda0db2b12f3"
+        //   );
+        //   fData.append("endsAt", this.endsAt);
+        //   fData.append("locationId", this.location_id);
+        //   fData.append("party_event_id", this.party_event_id);
+        //   fData.append("startsAt", this.startsAt);
+        //   fData.append("ticketType", this.ticketType);
+        //   // Fire the PUT request
+        //   const res = await this.axios({
+        //     url: `/party_events/step_2`,
+        //     method: "post",
+        //     headers: { "Content-Type": "multipart/form-data" },
+        //     data: fData
+        //   });
+        //   console.log(res);
+        //   // Redirect to the ListEvent views
+        //   this.$router.push({ name: "ListEvent" });
+        //   // }
+        // } catch (e) {
+        //   this.hadError =
+        //     "Não foi possível realizar esta operação. Tente novamente";
+        //   console.log(e);
+        // }
+        alert("Step 2!!!");
       } else {
       }
     },
-    SelectImage(file) {
-      this.file = file;
-    },
-    setImage: function(file) {
-      this.hasImage = true;
+    SelectPoster(file) {
       this.poster = file;
+    },
+    SelectBackdrop(file) {
+      this.backdrop = file;
     },
     next: function() {
       this.step++;
