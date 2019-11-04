@@ -55,7 +55,8 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   overflow: hidden;
-  background-color: #2e3553;
+  /* background-color: #2e3553; */
+  background-color: #0b132e;
   cursor: pointer;
 }
 .accordion .accordion-header {
@@ -129,6 +130,7 @@ export default {
   width: 100%;
   height: 35px;
   padding-top: 7px;
+  padding-left: 15px;
 }
 .accordion .accordion-body .accordion-content a:hover {
   width: 100%;
