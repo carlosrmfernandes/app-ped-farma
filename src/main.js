@@ -9,18 +9,12 @@ import VueAxios from 'vue-axios'
 import moment from 'moment'
 
 import PortalVue from 'portal-vue'
-<<<<<<< HEAD
 import {
   BootstrapVue
 } from 'bootstrap-vue'
-
-require('bootstrap')
-=======
-import { BootstrapVue } from 'bootstrap-vue'
 import * as VeeValidate from 'vee-validate'
 // import VeeValidate, { Validator } from 'vee-validate'
 import pt from 'vee-validate/dist/locale/pt_PT'
->>>>>>> 045bd8745087ebcf1747763c6b5a42430ca25ae4
 
 Vue.config.productionTip = false
 Vue.use(Vuelidate)
