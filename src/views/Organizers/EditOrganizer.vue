@@ -29,7 +29,7 @@
         class="float-right mr-2"
         @click="showRemoveModal"
       >Remover</b-button>
-      <div class="alert alert-success" v-if="hadSuccess" role="alert">
+      <div class="alert alert-success col-md-10" v-if="hadSuccess" role="alert">
         {{hadSuccess}}
       </div>
       <div class="alert alert-danger col-md-10" v-if="hadError" role="alert">
