@@ -19,103 +19,6 @@
       <div class="panel-footer">
       </div>
     </div>
-    <!-- Modal -->
-    <b-modal id="bv-modal-example" class="mt-4" size="lg">
-      <template v-slot:modal-title >
-         <div class="w-100">
-            <p class="float-left">Detalhe Patrocidor</p>
-             <b-button
-              variant="outline-primary"
-              size="sm"
-              class="float-right"
-              @click="editSponsor"
-              :disabled="isEditable"
-              v-show="!isEditable"
-            >
-              Editar
-            </b-button>
-             <b-button
-              variant="success"
-              size="sm"
-              class="float-right"
-              @click="UpdateCompany"
-              v-show="isEditable"
-            >
-              <span v-if="!isRequesting"> salvar</span>
-              <div class="loading-dots" v-if="isRequesting">
-                <div class="loading-dots--dot"></div>
-                <div class="loading-dots--dot"></div>
-                <div class="loading-dots--dot"></div>
-              </div>
-            </b-button>
-            <b-button
-              variant="outline-danger"
-              size="sm"
-              class="float-right mr-2"
-              @click="showRemoveModal"
-            >
-              Remover
-            </b-button>
-        </div>
-      </template>
-      <div class="d-block text-center">
-        <div class=" col-md-12">
-          <div class="alert alert-success" v-if="hadSuccess" role="alert">
-            {{hadSuccess}}
-          </div>
-          <div class="alert alert-danger" v-if="hadError" role="alert">
-            {{hadError}}
-          </div>
-        </div>
-        <div class="row flex">
-          <div class="form-group m-2">
-            <label for="event-name" >Nome</label>
-            <input type="text" class="form-control" v-model="form.name" id="event-name" placeholder="Nome do Organizador de Evento" :disabled="!isEditable" />
-          </div>
-        </div>
-      </div>
-       <template v-slot:modal-footer>
-        <div class="w-100">
-          <b-button
-            variant="outline-secondary"
-            size="sm"
-            class="float-right"
-            @click="hideModal"
-          >
-            Fechar
-          </b-button>
-        </div>
-      </template>
-    </b-modal>
-    <!-- Remove Modal-->
-    <b-modal id="modal-remove" title="Organizador">
-      <p class="my-4">Tem certeza que deseja remover?</p>
-       <template v-slot:modal-footer>
-        <div class="w-100">
-          <b-button
-            variant="primary"
-            size="sm"
-            class="float-right"
-            @click="RemoveCompany"
-          >
-          <span v-if="!isRequesting"> Sim</span>
-          <div class="loading-dots" v-if="isRequesting">
-            <div class="loading-dots--dot"></div>
-            <div class="loading-dots--dot"></div>
-            <div class="loading-dots--dot"></div>
-          </div>
-          </b-button>
-          <b-button
-            variant="outline-danger"
-            size="sm"
-            class="float-right mr-2"
-            @click="hideRemoveModal"
-          >
-            Não
-          </b-button>
-        </div>
-      </template>
-    </b-modal>
   </div>
 </template>
 <script>
@@ -134,7 +37,12 @@ export default {
     return {
       form: {},
       cols: [
-        { name: 'name', label: 'Nome' }
+        { name: 'description', label: 'Nome' },
+        { name: 'email', label: 'Email' },
+        { name: 'facebook_url', label: 'Facebook' },
+        { name: 'instagram_url', label: 'Instagram' },
+        { name: 'twitter_url', label: 'Twitter' },
+        { name: 'phone_number', label: 'Telefone' }
       ],
       isRequesting: false,
       companies: [],
@@ -144,9 +52,6 @@ export default {
     }
   },
   methods: {
-    editSponsor () {
-      this.isEditable = true
-    },
     async GetPosts () {
       // eslint-disable-next-line no-unused-expressions
       this.companies
@@ -167,73 +72,6 @@ export default {
           'Não foi possível carregar as encomendas. Actualize a página.'
       }
       this.isRequesting = false
-    },
-    /**
-     * GetCompany: This method will fire a GET request and then
-     * assign the response data into the state property: form
-     */
-    async GetCompany () {
-      this.isRequesting = true
-      // Get the table rwo's details ID in store
-      this.editID = this.$store.state.tableDetailID
-      try {
-        const result = await this.axios.get(
-          `/companies/${this.editID}`
-        )
-        this.form = result.data
-      } catch (e) {
-        this.hadError = 'Não foi possível carregar as informações.'
-      }
-      this.isRequesting = false
-    },
-    /**
-     * GetCompany: This method will fire a GET request and then
-     * assign the response data into the state property: form
-     */
-    async RemoveCompany () {
-      this.isRequesting = true
-      // Get the table rwo's details ID in store
-      this.editID = this.$store.state.tableDetailID
-      try {
-        // Redirect to the Sponsor views
-        await this.axios.delete(`/companies/${this.editID}`)
-        location.reload()
-      } catch (e) {
-        this.hadError = 'Não foi possível efetuar esta operação.'
-      }
-      this.isRequesting = false
-      this.$store.state.tableDetailID = ''
-    },
-    /**
-     * UpdateCompany: This method will send form to serve, for update
-     */
-    async UpdateCompany () {
-      this.isRequesting = true
-      // Get the table rwo's details ID in store
-      this.editID = this.$store.state.tableDetailID
-      try {
-        await this.axios.put(`/companies/${this.editID}`, this.form)
-        // this.$router.push({ name: "ListAddresses" });
-        this.hadSuccess = 'Informações actualizadas com sucesso.'
-      } catch (e) {
-        this.hadError = 'Não foi possível realizar esta operação.'
-      }
-      this.isRequesting = false
-    },
-    hideModal () {
-      this.$bvModal.hide('bv-modal-example')
-      // Set the value to empty
-      this.$store.state.tableDetailID = ''
-    },
-    showRemoveModal () {
-      // Show modal for deatils
-      this.$bvModal.show('modal-remove')
-    },
-    hideRemoveModal () {
-      // Set the ID value on store Global variable for using with modal
-      this.$store.state.tableDetailID = ''
-      // Show modal for deatils
-      this.$bvModal.hide('modal-remove')
     }
   },
   created () {
