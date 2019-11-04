@@ -1,38 +1,34 @@
-import Vue from 'vue'
-import Vuelidate from 'vuelidate'
-import ImageUploader from 'vue-image-upload-resize'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-import moment from 'moment'
+import Vue from "vue";
+import ImageUploader from "vue-image-upload-resize";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import axios from "axios";
+import VueAxios from "vue-axios";
+import moment from "moment";
 
-import PortalVue from 'portal-vue'
-import {
-  BootstrapVue
-} from 'bootstrap-vue'
-import * as VeeValidate from 'vee-validate'
+import PortalVue from "portal-vue";
+import { BootstrapVue } from "bootstrap-vue";
+import * as VeeValidate from "vee-validate";
 // import VeeValidate, { Validator } from 'vee-validate'
-import pt from 'vee-validate/dist/locale/pt_PT'
+import pt from "vee-validate/dist/locale/pt_PT";
 
-Vue.config.productionTip = false
-Vue.use(Vuelidate)
-Vue.use(ImageUploader)
+Vue.config.productionTip = false;
+Vue.use(ImageUploader);
 
 // Set libraries
-moment.locale('pt_PT')
-VeeValidate.localize('pt_PT', pt)
-Vue.use(VeeValidate)
-Vue.use(VueAxios, axios)
-axios.defaults.baseURL = process.env.VUE_APP_API
-axios.defaults.headers.post['Content-Type'] = 'application/json'
+moment.locale("pt_PT");
+VeeValidate.localize("pt_PT", pt);
+Vue.use(VeeValidate);
+Vue.use(VueAxios, axios);
+axios.defaults.baseURL = process.env.VUE_APP_API;
+axios.defaults.headers.post["Content-Type"] = "application/json";
 
-Vue.use(PortalVue)
-Vue.use(BootstrapVue)
+Vue.use(PortalVue);
+Vue.use(BootstrapVue);
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount("#app");
