@@ -25,7 +25,7 @@
           <tr
             v-for="(row, index) in results"
             :key="index"
-            @click="showModal(row.id)"
+            @click="clickArrow({ name: editRoute, params: { id: row.id } })"
           >
             <td v-for="(col, index) in cols" :key="index">{{row[col.name]}}</td>
           </tr>
@@ -82,6 +82,9 @@ export default {
       default: true
     },
     resource: {
+      type: String
+    },
+    editRoute: {
       type: String
     }
   },
