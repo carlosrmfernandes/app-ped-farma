@@ -1,79 +1,50 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Novo Organizador</h1>
+      <h1>Nova Empresa</h1>
     </div>
     <div class="panel-body">
       <div class="row">
         <div class="col-md-3">
           <div class="form-group">
-            <label for="event-name">Empresa</label>
-            <select class="custom-select" v-model="form.company_id">
-                <option selected>Choose...</option>
-                <option :value="company.id" v-for="(company, index) of companies" :key="index" >{{company.name}}</option>
-            </select>
-            <!-- <input type="text" class="form-control" v-model="form.email" id="Sponsor-name" placeholder="Nome do organizador" /> -->
+            <label for="event-name">Nome</label>
+            <input type="text" class="form-control"
+             v-model="form.name" id="organizer-name"
+             placeholder="Nome do organizador"
+             v-validate="'required'"
+             data-vv-as="Nome da Empresa" />
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="event-name">Email</label>
-            <input type="text" class="form-control" v-model="form.email" id="Sponsor-name" placeholder="Email" />
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="event-name">Facebook</label>
-            <input type="text" class="form-control" v-model="form.facebook_url" id="Sponsor-name" placeholder="URL do Facebook" />
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="event-name">Instagram</label>
-            <input type="text" class="form-control" v-model="form.instagram_url" id="Sponsor-name" placeholder="URL do Instagram" />
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="event-name">Twitter</label>
-            <input type="text" class="form-control" v-model="form.twitter_url" id="Sponsor-name" placeholder="URL do Twitter" />
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="event-name">Telefone</label>
-            <input type="text" class="form-control" v-model="form.phone_number" id="Sponsor-name" placeholder="999 999 999" />
-          </div>
-        </div>
-        <div class="col-md-3">
+        <!-- <div class="col-md-4">
           <div class="form-group">
             <label for>Detalhes</label>
             <div class="form-group">
-              <textarea class="form-control" rows="4" placeholder="Descrição do evento" v-model="form.description"></textarea>
+              <textarea class="form-control" rows="4" placeholder="Descrição do evento"></textarea>
             </div>
           </div>
         </div>
-        <!-- <NextInput placeholder="Telefone, Email, Facebook, Instagram" /> -->
+        <NextInput placeholder="Telefone, Email, Facebook, Instagram" /> -->
       </div>
-      <div class="row flex">
+      <!-- <div class="row flex">
           <Address></Address>
-      </div>
+      </div> -->
       <div class="row">
         <UploadPhoto
           :defaultImage="form.logo"
           :OnChange="SelectImage"
           width="140px"
           height="185px"
+          title="Logo"
         />
       </div>
       <div class="panel-footer">
-        <!-- <button type="submit" class="btn btn-primary float-right ml-2" @click="RegistSponsor()">Registar</button> -->
+        <!-- <button type="submit" class="btn btn-primary float-right ml-2" @click="RegistOrganizer()">Registar</button> -->
         <b-button
         variant="primary"
         size="lg"
         class="float-right"
         :disabled="isRequesting ? true : false"
-        @click="RegistSponsor">
+        @click="ProcessForm">
          <span v-if="!isRequesting"> Registar</span>
           <div class="loading-dots" v-if="isRequesting">
             <div class="loading-dots--dot"></div>
@@ -86,18 +57,19 @@
   </div>
 </template>
 <script>
-import Address from '@/components/Form/Address'
+// import NextInput from '@/components/Form/NextInput'
+// import Address from '@/components/Form/Address'
 import UploadPhoto from '@/components/Form/Photo'
 
 export default {
   components: {
-    Address,
+    // NextInput,
+    // Address,
     UploadPhoto
   },
   data () {
     return {
       form: {},
-      companies: [],
       isRequesting: false,
       hadSuccess: false,
       isOrderSaved: false,
@@ -115,19 +87,6 @@ export default {
       this.hadError = ''
       const result = await this.$validator.validateAll()
       return result ? this.RegistOrganizer() : result
-    },
-    editSponsor () {
-      this.isEditable = false
-    },
-    async allCompanies () {
-      try {
-        const result = await this.axios.get(`/companies/pages`)
-        const res = result.data
-        this.companies = res.data
-      } catch (e) {
-        this.hadError =
-          'Não foi possível carregar as encomendas. Actualize a página.'
-      }
     },
     /*
      *  RegistOrganizer: This method will create a post request to regist a

@@ -18,13 +18,14 @@
                 id="title"
                 v-model="title"
                 placeholder="Nome do evento"
+                required
               />
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
               <label for="event-class">Localização</label>
-              <select id="location" class="form-control" v-model="location_id">
+              <select required id="location" class="form-control" v-model="location_id">
                 <option
                   v-for="location in locations"
                   :value="location.id"
@@ -37,7 +38,7 @@
             <div class="row">
               <div class="form-group">
                 <label for="event-class">Classificação</label>
-                <select v-model="classification" class="form-control">
+                <select required v-model="classification" class="form-control">
                   <option selected id="classification">A</option>
                   <option id="classification">E</option>
                   <option id="classification">T</option>
@@ -45,7 +46,7 @@
               </div>
               <div class="form-group ml-3 col-md-3">
                 <label for="event-class">Data do Evento</label>
-                <input type="date" class="form-control" id="startsAt" v-model="starts_at" />
+                <input required type="date" class="form-control" id="startsAt" v-model="starts_at" />
               </div>
             </div>
           </div>
@@ -61,6 +62,7 @@
                   v-model="description"
                   rows="4"
                   placeholder="Descrição do evento"
+                  required
                 ></textarea>
               </div>
             </div>
@@ -87,6 +89,7 @@
                 id="videoId"
                 v-model="video_id"
                 placeholder="Ex.: "
+                required
               />
             </div>
           </div>

@@ -1,22 +1,22 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Editar Organizador</h1>
+      <h1>Editar Patrocinador</h1>
       <b-button
         variant="outline-primary"
         size="sm"
         class="float-right"
-        @click="editOrganizer"
+        @click="editSponsor"
         v-show="isEditable"
       >Editar</b-button>
       <b-button
         variant="success"
         size="sm"
         class="float-right"
-        @click="UpdateOrganizer"
+        @click="UpdateSponsor"
         v-show="!isEditable"
       >
-        <span v-if="!isRequesting">salvar</span>
+        <span v-if="!isRequesting">Salvar</span>
         <div class="loading-dots" v-if="isRequesting">
           <div class="loading-dots--dot"></div>
           <div class="loading-dots--dot"></div>
@@ -49,7 +49,7 @@
                 :key="index"
               >{{company.name}}</option>
             </select>
-            <!-- <input type="text" class="form-control" v-model="form.email" id="Sponsor-name" placeholder="Nome do organizador" /> -->
+            <!-- <input type="text" class="form-control" v-model="form.avatar" id="Sponsor-name" placeholder="Avatar" /> -->
           </div>
         </div>
         <div class="col-md-3">
@@ -121,7 +121,7 @@
           <div class="form-group">
             <label for>Detalhes</label>
             <div class="form-group">
-              <textarea class="form-control" rows="4" placeholder="Descrição do evento" :disabled="isEditable"></textarea>
+              <textarea class="form-control" rows="4" placeholder="Descrição do patrocinador" :disabled="isEditable"></textarea>
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@
       <p class="my-4">Tem certeza que deseja remover?</p>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="primary" size="sm" class="float-right" @click="RemoveOrganizer">
+          <b-button variant="primary" size="sm" class="float-right" @click="RemoveSponsor">
             <span v-if="!isRequesting">Sim</span>
             <div class="loading-dots" v-if="isRequesting">
               <div class="loading-dots--dot"></div>
@@ -205,9 +205,9 @@ export default {
     async ProcessForm () {
       this.hadError = ''
       const result = await this.$validator.validateAll()
-      return result ? this.UpdateOrganizer() : result
+      return result ? this.UpdateSponsor() : result
     },
-    editOrganizer () {
+    editSponsor () {
       this.isEditable = false
     },
     async allCompanies () {
@@ -227,10 +227,10 @@ export default {
      * GetCompany: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
-    async GetOrganizer () {
+    async GetSponsor () {
       this.isRequesting = true
       try {
-        const result = await this.axios.get(`/organizer/${this.id}`)
+        const result = await this.axios.get(`/sponsors/${this.id}`)
         this.form = result.data
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
@@ -241,12 +241,12 @@ export default {
      * GetCompany: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
-    async RemoveOrganizer () {
+    async RemoveSponsor () {
       this.isRequesting = true
 
       try {
         // Redirect to the Organizer views
-        await this.axios.delete(`/organizer/${this.id}`)
+        await this.axios.delete(`/sponsors/${this.id}`)
         location.reload()
       } catch (e) {
         this.hadError = 'Não foi possível efetuar esta operação.'
@@ -256,10 +256,10 @@ export default {
     /**
      * UpdateCompany: This method will send form to serve, for update
      */
-    async UpdateOrganizer () {
+    async UpdateSponsor () {
       this.isRequesting = true
       try {
-        await this.axios.put(`/organizer/${this.id}`, this.form)
+        await this.axios.put(`/sponsors/${this.id}`, this.form)
         // this.$router.push({ name: "ListAddresses" });
         this.hadSuccess = 'Informações actualizadas com sucesso.'
       } catch (e) {
@@ -278,7 +278,7 @@ export default {
   },
   created () {
     this.allCompanies()
-    this.GetOrganizer()
+    this.GetSponsor()
   }
 }
 </script>

@@ -12,12 +12,6 @@
         </div>
         <div v-for="(address, index) in addresses" :key="index">
             <div class="row">
-                <div class="col-xs-2 p-4">
-                    <label>&nbsp;</label>
-                    <button type="button" @click="removeAddress(index)" class="btn btn-block btn-danger">
-                        Rem -
-                    </button>
-                </div>
                 <div class="form-group col-xs-5 p-4">
                     <label>Provincia</label>
                     <input v-model="address.province"
@@ -32,6 +26,12 @@
                     <label>Bairro</label>
                     <input v-model="address.neighborhood"
                             class="form-control" placeholder="Catambor">
+                </div>
+                <div class="col-xs-2 p-4">
+                    <label>&nbsp;</label>
+                    <button type="button" @click="removeAddress(index)" class="btn btn-block btn-danger">
+                        Rem -
+                    </button>
                 </div>
             </div>
         </div>

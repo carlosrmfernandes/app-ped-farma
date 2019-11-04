@@ -28,7 +28,7 @@
     </div>
     <span v-if="label" class="upload-photo__label">{{ label }}</span>
   </div>
-  <Span class="image-footer">Carregar imagem</Span>
+  <Span class="image-footer">{{ title }}</Span>
 </div>
 </template>
 
@@ -62,6 +62,10 @@ export default {
     },
     defaultImage: {
       type: String
+    },
+    title: {
+      type: String,
+      default: 'Carregar Imagem'
     }
   },
   methods: {

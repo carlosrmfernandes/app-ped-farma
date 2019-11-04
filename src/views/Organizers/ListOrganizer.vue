@@ -6,16 +6,28 @@
     <div class="panel-body">
       <div>
         <Table
+<<<<<<< HEAD
           :cols="cols"
           :data="companies"
           title="Organizador"
           :searchMethod="GetPosts"
           :detailMethod="GetCompany"
           :needGrid="true"
+=======
+        :cols="cols"
+        :data="companies"
+        title="Organizador"
+        :searchMethod="GetPosts"
+        :detailMethod="GetCompany"
+        :needGrid="true"
+        resource="company"
+        editRoute="EditOrganizer"
+>>>>>>> 045bd8745087ebcf1747763c6b5a42430ca25ae4
         />
       </div>
       <div class="panel-footer"></div>
     </div>
+<<<<<<< HEAD
     <!-- Modal -->
     <b-modal id="bv-modal-example" class="mt-4" size="lg">
       <template v-slot:modal-title>
@@ -94,6 +106,8 @@
         </div>
       </template>
     </b-modal>
+=======
+>>>>>>> 045bd8745087ebcf1747763c6b5a42430ca25ae4
   </div>
 </template>
 <script>
@@ -102,6 +116,7 @@ export default {
   components: {
     Table
   },
+<<<<<<< HEAD
   props: {
     isEditable: {
       type: Boolean,
@@ -112,6 +127,14 @@ export default {
     return {
       form: {},
       cols: [{ name: "name", label: "Nome" }],
+=======
+  data () {
+    return {
+      form: {},
+      cols: [
+        { name: 'name', label: 'Nome' }
+      ],
+>>>>>>> 045bd8745087ebcf1747763c6b5a42430ca25ae4
       isRequesting: false,
       companies: [],
       hadError: "",
@@ -120,10 +143,14 @@ export default {
     };
   },
   methods: {
+<<<<<<< HEAD
     editOrganizer() {
       this.isEditable = true;
     },
     async GetPosts() {
+=======
+    async GetPosts () {
+>>>>>>> 045bd8745087ebcf1747763c6b5a42430ca25ae4
       // eslint-disable-next-line no-unused-expressions
       this.companies;
     },
@@ -142,6 +169,7 @@ export default {
         this.hadError =
           "Não foi possível carregar as encomendas. Actualize a página.";
       }
+<<<<<<< HEAD
       this.isRequesting = false;
     },
     /**
@@ -208,6 +236,9 @@ export default {
       this.$store.state.tableDetailID = "";
       // Show modal for deatils
       this.$bvModal.hide("modal-remove");
+=======
+      this.isRequesting = false
+>>>>>>> 045bd8745087ebcf1747763c6b5a42430ca25ae4
     }
   },
   created() {
