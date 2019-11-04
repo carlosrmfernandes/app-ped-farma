@@ -16,6 +16,14 @@
         <span>Novo Evento</span>
       </router-link>
     </Collapse>
+    <Collapse title="Empresas">
+      <router-link :to="{name: 'ListCompany'}" tag="a">
+        <span>Listar</span>
+      </router-link>
+      <router-link :to="{name: 'RegistCompany'}" tag="a">
+        <span>Nova Empresa</span>
+      </router-link>
+    </Collapse>
     <Collapse title="Organizadores">
       <router-link :to="{name: 'ListOrganizer'}" tag="a">
         <span>Listar</span>
@@ -40,7 +48,7 @@
   </nav>
 </template>
 <script>
-import '../../assets/css/style.css'
+import '../../assets/css/style.scss'
 
 import Collapse from './Collapse'
 
