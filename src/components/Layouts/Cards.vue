@@ -116,6 +116,7 @@ export default {
   margin-right: 15px;
   margin-bottom: 15px;
 }
+
 .profile-card {
   margin: 0 auto;
   /* background-color: #343a4e; */
