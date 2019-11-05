@@ -8,26 +8,18 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Nome</label>
-            <input type="text" class="form-control"
-             v-model="form.name" id="organizer-name"
-             placeholder="Nome do organizador"
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.name')}"
+             name="form.name"
+             v-model="form.name"
+             id="organizer-name"
+             placeholder="Nome da Empresa"
              v-validate="'required'"
              data-vv-as="Nome da Empresa" />
+             <span v-show="errors.has('form.name')" class="help is-danger">{{ errors.first('form.name') }}</span>
           </div>
         </div>
-        <!-- <div class="col-md-4">
-          <div class="form-group">
-            <label for>Detalhes</label>
-            <div class="form-group">
-              <textarea class="form-control" rows="4" placeholder="Descrição do evento"></textarea>
-            </div>
-          </div>
-        </div>
-        <NextInput placeholder="Telefone, Email, Facebook, Instagram" /> -->
       </div>
-      <!-- <div class="row flex">
-          <Address></Address>
-      </div> -->
       <div class="row">
         <UploadPhoto
           :defaultImage="form.logo"
@@ -38,7 +30,6 @@
         />
       </div>
       <div class="panel-footer">
-        <!-- <button type="submit" class="btn btn-primary float-right ml-2" @click="RegistOrganizer()">Registar</button> -->
         <b-button
         variant="primary"
         size="lg"
@@ -57,14 +48,10 @@
   </div>
 </template>
 <script>
-// import NextInput from '@/components/Form/NextInput'
-// import Address from '@/components/Form/Address'
 import UploadPhoto from '@/components/Form/Photo'
 
 export default {
   components: {
-    // NextInput,
-    // Address,
     UploadPhoto
   },
   data () {

@@ -34,149 +34,149 @@ export default new Router({
       title: 'Pagina Inicial'
     },
     children: [{
-      path: '',
-      name: 'Dashboard',
-      component: Dashboard,
-      meta: {
-        title: 'Pagina Inicial'
-      }
-    },
-    {
-      path: '/organizer',
-      name: 'ListOrganizer',
-      component: View,
-      meta: {
-        title: 'Organizadores'
+        path: '',
+        name: 'Dashboard',
+        component: Dashboard,
+        meta: {
+          title: 'Pagina Inicial'
+        }
       },
-      children: [{
-        path: '/',
+      {
+        path: '/organizer',
         name: 'ListOrganizer',
-        component: ListOrganizer,
+        component: View,
         meta: {
           title: 'Organizadores'
-        }
-      },
-      {
-        path: 'regist',
-        name: 'RegistOrganizer',
-        component: RegistOrganizer,
-        meta: {
-          title: 'Novo Organizador'
-        }
-      },
-      {
-        path: 'edit/:id',
-        name: 'EditOrganizer',
-        component: EditOrganizer,
-        meta: {
-          title: 'Editar Organizador'
         },
-        props: true
-      }
-      ]
-    },
-    {
-      path: '/sponsor',
-      name: 'ListSponsor',
-      component: View,
-      meta: {
-        title: 'Patrocinadores'
+        children: [{
+            path: '/',
+            name: 'ListOrganizer',
+            component: ListOrganizer,
+            meta: {
+              title: 'Organizadores'
+            }
+          },
+          {
+            path: 'regist',
+            name: 'RegistOrganizer',
+            component: RegistOrganizer,
+            meta: {
+              title: 'Novo Organizador'
+            }
+          },
+          {
+            path: 'edit/:id',
+            name: 'EditOrganizer',
+            component: EditOrganizer,
+            meta: {
+              title: 'Editar Organizador'
+            },
+            props: true
+          }
+        ]
       },
-      children: [{
-        path: '/',
+      {
+        path: '/sponsor',
         name: 'ListSponsor',
-        component: ListSponsor,
+        component: View,
         meta: {
           title: 'Patrocinadores'
-        }
-      },
-      {
-        path: 'regist',
-        name: 'RegistSponsor',
-        component: RegistSponsor,
-        meta: {
-          title: 'Novo Patrocinador'
-        }
-      },
-      {
-        path: 'edit/:id',
-        name: 'EditSponsor',
-        component: EditSponsor,
-        meta: {
-          title: 'Editar Patrocinador'
         },
-        props: true
-      }
-      ]
-    },
-    {
-      path: '/events',
-      name: 'ListEvent',
-      component: View,
-      meta: {
-        title: 'Listar Eventos'
+        children: [{
+            path: '/',
+            name: 'ListSponsor',
+            component: ListSponsor,
+            meta: {
+              title: 'Patrocinadores'
+            }
+          },
+          {
+            path: 'regist',
+            name: 'RegistSponsor',
+            component: RegistSponsor,
+            meta: {
+              title: 'Novo Patrocinador'
+            }
+          },
+          {
+            path: 'edit/:id',
+            name: 'EditSponsor',
+            component: EditSponsor,
+            meta: {
+              title: 'Editar Patrocinador'
+            },
+            props: true
+          }
+        ]
       },
-      children: [{
-        path: '/',
+      {
+        path: '/events',
         name: 'ListEvent',
-        component: ListEvent,
+        component: View,
         meta: {
           title: 'Listar Eventos'
-        }
-      },
-      {
-        path: 'regist',
-        name: 'RegistEvent',
-        component: RegistEvent,
-        meta: {
-          title: 'Registar Evento'
-        }
-      },
-      {
-        path: 'edit/:id',
-        name: 'EditEvent',
-        component: EditEvent,
-        meta: {
-          title: 'Editar Evento'
         },
-        props: true
-      }
-      ]
-    },
-    {
-      path: '/companies',
-      name: 'ListCompany',
-      component: View,
-      meta: {
-        title: 'Listar Empresas'
+        children: [{
+            path: '/',
+            name: 'ListEvent',
+            component: ListEvent,
+            meta: {
+              title: 'Listar Eventos'
+            }
+          },
+          {
+            path: 'regist',
+            name: 'RegistEvent',
+            component: RegistEvent,
+            meta: {
+              title: 'Registar Evento'
+            }
+          },
+          {
+            path: 'edit/:id',
+            name: 'EditEvent',
+            component: EditEvent,
+            meta: {
+              title: 'Editar Evento'
+            },
+            props: true
+          }
+        ]
       },
-      children: [{
-        path: '/',
+      {
+        path: '/companies',
         name: 'ListCompany',
-        component: ListCompany,
+        component: View,
         meta: {
           title: 'Listar Empresas'
-        }
-      },
-      {
-        path: 'regist',
-        name: 'RegistCompany',
-        component: RegistCompany,
-        meta: {
-          title: 'Registar Empresa'
-        }
-      },
-      {
-        path: 'edit/:id',
-        name: 'EditCompany',
-        component: EditCompany,
-        meta: {
-          title: 'Editar Empresa'
         },
-        props: true
+        children: [{
+            path: '/',
+            name: 'ListCompany',
+            component: ListCompany,
+            meta: {
+              title: 'Listar Empresas'
+            }
+          },
+          {
+            path: 'regist',
+            name: 'RegistCompany',
+            component: RegistCompany,
+            meta: {
+              title: 'Registar Empresa'
+            }
+          },
+          {
+            path: 'edit/:id',
+            name: 'EditCompany',
+            component: EditCompany,
+            meta: {
+              title: 'Editar Empresa'
+            },
+            props: true
+          }
+        ]
       }
-      ]
-    }
     ]
   }]
 })

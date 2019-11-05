@@ -215,6 +215,7 @@
 <script>
 import moment from "moment";
 import UploadPhoto from "@/components/Form/Photo";
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   components: {

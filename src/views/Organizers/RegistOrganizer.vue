@@ -4,7 +4,7 @@
       <h1>Novo Organizador</h1>
     </div>
     <div class="panel-body">
-      <div class="row">
+     <div class="row">
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Empresa</label>
@@ -12,48 +12,92 @@
                 <option selected>Choose...</option>
                 <option :value="company.id" v-for="(company, index) of companies" :key="index" >{{company.name}}</option>
             </select>
-            <!-- <input type="text" class="form-control" v-model="form.email" id="Sponsor-name" placeholder="Nome do organizador" /> -->
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="event-name">Nome</label>
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.description')}"
+             name="form.description"
+             v-model="form.description"
+             id="Sponsor-name"
+             placeholder="Nome do Organizador"
+             v-validate="'required'"
+             data-vv-as="Nome do Organizador" />
+             <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Email</label>
-            <input type="text" class="form-control" v-model="form.email" id="Sponsor-name" placeholder="Email" />
+            <input type="text"
+            :class="{'form-control': true, 'is-input-danger': errors.has('form.email')}"
+            name="form.email"
+            v-model="form.email"
+            id="Sponsor-email"
+            placeholder="Email"
+             v-validate="'required|email'"
+            data-vv-as="Email" />
+             <span v-show="errors.has('form.email')" class="help is-danger">{{ errors.first('form.email') }}</span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Facebook</label>
-            <input type="text" class="form-control" v-model="form.facebook_url" id="Sponsor-name" placeholder="URL do Facebook" />
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.facebook_url')}"
+             name="form.facebook_url"
+             v-model="form.facebook_url"
+             id="Sponsor-Facebook"
+             placeholder="URL do Facebook"
+             v-validate="'required'"
+             data-vv-as="Facebook" />
+             <span v-show="errors.has('form.facebook_url')" class="help is-danger">{{ errors.first('form.facebook_url') }}</span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Instagram</label>
-            <input type="text" class="form-control" v-model="form.instagram_url" id="Sponsor-name" placeholder="URL do Instagram" />
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.instagram_url')}"
+             name="form.instagram_url"
+             v-model="form.instagram_url"
+             id="Sponsor-Instagram"
+             placeholder="URL do Instagram"
+             v-validate="'required'"
+             data-vv-as="Instagram" />
+             <span v-show="errors.has('form.instagram_url')" class="help is-danger">{{ errors.first('form.instagram_url') }}</span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Twitter</label>
-            <input type="text" class="form-control" v-model="form.twitter_url" id="Sponsor-name" placeholder="URL do Twitter" />
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.twitter_url')}"
+             name="form.twitter_url"
+             v-model="form.twitter_url"
+             id="Sponsor-Twitter"
+             placeholder="URL do Twitter"
+             v-validate="'required'"
+             data-vv-as="Twitter" />
+             <span v-show="errors.has('form.twitter_url')" class="help is-danger">{{ errors.first('form.twitter_url') }}</span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Telefone</label>
-            <input type="text" class="form-control" v-model="form.phone_number" id="Sponsor-name" placeholder="999 999 999" />
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.phone_number')}"
+             name="form.phone_number"
+             v-model="form.phone_number"
+             id="Sponsor-Telephone"
+             placeholder="999 999 999"
+             v-validate="'required'"
+             data-vv-as="Telefone" />
+             <span v-show="errors.has('form.phone_number')" class="help is-danger">{{ errors.first('form.phone_number') }}</span>
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for>Detalhes</label>
-            <div class="form-group">
-              <textarea class="form-control" rows="4" placeholder="Descrição do evento" v-model="form.description"></textarea>
-            </div>
-          </div>
-        </div>
-        <!-- <NextInput placeholder="Telefone, Email, Facebook, Instagram" /> -->
       </div>
       <div class="row flex">
           <Address></Address>
@@ -73,7 +117,7 @@
         size="lg"
         class="float-right"
         :disabled="isRequesting ? true : false"
-        @click="RegistSponsor">
+        @click="ProcessForm">
          <span v-if="!isRequesting"> Registar</span>
           <div class="loading-dots" v-if="isRequesting">
             <div class="loading-dots--dot"></div>

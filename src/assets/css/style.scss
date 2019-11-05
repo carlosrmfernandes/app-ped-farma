@@ -134,6 +134,20 @@ ul.CTAs a {
   transform: translateY(-20px);
 }
 
+.form-error {
+  color: red;
+  font-size: 12px;
+}
+
+.is-danger{
+    color:red;
+}
+
+.is-input-danger{
+    border: 1px solid red;
+}
+
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
