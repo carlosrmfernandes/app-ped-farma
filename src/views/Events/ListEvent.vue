@@ -11,6 +11,7 @@
           title="Eventos"
           :searchMethod="GetPosts"
           :detailMethod="GetEvent"
+          editRoute="EditEvent"
         />
       </div>
       <div class="panel-footer"></div>

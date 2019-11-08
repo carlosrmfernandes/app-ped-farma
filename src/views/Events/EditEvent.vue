@@ -1,9 +1,9 @@
 <template>
-  <div>Edit Event</div>
+  <div>Edit Event {{ $route.params.id }}</div>
 </template>
 
 <script>
-export default {}
+export default {};
 </script>
 
 <style>
