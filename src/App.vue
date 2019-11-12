@@ -3,12 +3,12 @@
     <router-view />
   </div>
 </template>
-
 <script>
 export default {
-  name: "App"
-};
-</script>
 
-<style>
+}
+</script>
+<style lang="scss">
+@import './assets/css/variables';
+@import './assets/css/bootstrap';
 </style>

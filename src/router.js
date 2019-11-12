@@ -11,10 +11,15 @@ import EditOrganizer from '@/views/Organizers/EditOrganizer'
 
 import RegistSponsor from '@/views/Sponsors/RegistSponsor'
 import ListSponsor from '@/views/Sponsors/ListSponsor'
+import EditSponsor from '@/views/Sponsors/EditSponsor'
 
 import RegistEvent from '@/views/Events/RegistEvent'
 import ListEvent from '@/views/Events/ListEvent'
 import EditEvent from '@/views/Events/EditEvent'
+
+import RegistCompany from '@/views/Company/RegistCompany'
+import ListCompany from '@/views/Company/ListCompany'
+import EditCompany from '@/views/Company/EditCompany'
 
 Vue.use(Router)
 
@@ -65,7 +70,8 @@ export default new Router({
             component: EditOrganizer,
             meta: {
               title: 'Editar Organizador'
-            }
+            },
+            props: true
           }
         ]
       },
@@ -91,6 +97,15 @@ export default new Router({
             meta: {
               title: 'Novo Patrocinador'
             }
+          },
+          {
+            path: 'edit/:id',
+            name: 'EditSponsor',
+            component: EditSponsor,
+            meta: {
+              title: 'Editar Patrocinador'
+            },
+            props: true
           }
         ]
       },
@@ -123,7 +138,42 @@ export default new Router({
             component: EditEvent,
             meta: {
               title: 'Editar Evento'
+            },
+            props: true
+          }
+        ]
+      },
+      {
+        path: '/companies',
+        name: 'ListCompany',
+        component: View,
+        meta: {
+          title: 'Listar Empresas'
+        },
+        children: [{
+            path: '/',
+            name: 'ListCompany',
+            component: ListCompany,
+            meta: {
+              title: 'Listar Empresas'
             }
+          },
+          {
+            path: 'regist',
+            name: 'RegistCompany',
+            component: RegistCompany,
+            meta: {
+              title: 'Registar Empresa'
+            }
+          },
+          {
+            path: 'edit/:id',
+            name: 'EditCompany',
+            component: EditCompany,
+            meta: {
+              title: 'Editar Empresa'
+            },
+            props: true
           }
         ]
       }

@@ -1,16 +1,22 @@
 <template>
-  <div id="b-main">
-    <b-dashboard></b-dashboard>
+  <div>
+    <Breadcrumbs></Breadcrumbs>
+    <Sidebar></Sidebar>
+    <RightContent></RightContent>
   </div>
 </template>
 
 <script>
-import Dashboard from "./dashboard/index";
+import Sidebar from '@/components/Layouts/Sidebar.vue'
+import RightContent from '@/components/Layouts/Right-Content.vue'
+import Breadcrumbs from '@/components/Layouts/Breadcrumbs.vue'
 
 export default {
   name: "home",
   components: {
-    Dashboard
+    Sidebar,
+    RightContent,
+    Breadcrumbs
   }
 };
 </script>
