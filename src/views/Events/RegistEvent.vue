@@ -423,7 +423,20 @@
         </div>
       </div>
       <button @click.prevent="prev()" class="btn btn-primary">Anterior</button>
-      <button @click.prevent="submit()" class="btn btn-primary ml-2">Finalizar</button>
+      <b-button
+        variant="primary"
+        size="md ml-2"
+        class="float-left"
+        :disabled="isRequesting ? true : false"
+        @click="ProcessForm(3)"
+      >
+        <span v-if="!isRequesting">Finalizar</span>
+        <div class="loading-dots" v-if="isRequesting">
+          <div class="loading-dots--dot"></div>
+          <div class="loading-dots--dot"></div>
+          <div class="loading-dots--dot"></div>
+        </div>
+      </b-button>
     </section>
     <!-- Step three -->
   </div>
@@ -588,9 +601,6 @@ export default {
           });
 
           if (res) {
-            // Get this party_event_id
-            // this.party_event_id = res.data;
-            console.log("Enviado! Passo 2.");
             // Next step
             this.step++;
           }
@@ -602,6 +612,33 @@ export default {
         }
         this.isRequesting = false;
       } else {
+        this.isRequesting = true;
+        try {
+          // Fire the PUT request
+          const res = await this.axios({
+            url: `/party_events/step_3`,
+            method: "patch",
+            headers: { "Content-Type": "application/json" },
+            params: {
+              party_event_id: this.party_event_id,
+              sponsor_id: this.sponsors_id
+            },
+            data: {}
+          });
+
+          if (res) {
+            console.log("Enviado! Passo 3.");
+            // Next step
+            this.step++;
+            // Redirect to the Event views
+            this.$router.push({ name: "ListEvent" });
+          }
+        } catch (e) {
+          this.hadError =
+            "Não foi possível realizar esta operação. Tente novamente";
+          console.log(e);
+        }
+        this.isRequesting = false;
       }
     },
     SelectPoster(file) {
@@ -616,8 +653,9 @@ export default {
     submit: function() {}
   },
   created() {
-    this.step = 3;
+    this.step++;
     this.getLocations();
+    this.getSponsors();
   }
 };
 </script>
