@@ -9,11 +9,16 @@
         :cols="cols"
         :data="companies"
         title="Empresas"
-        :searchMethod="GetPosts"
-        :detailMethod="GetCompany"
+        :searchMethod="GetCompanies"
+        :detailMethod="GetCompanies"
+        :pagination="pagination"
+        :paginationMethod="GetCompanies"
+        :sortMethod="GetCompanies"
+        :changePage="changePage"
         :needGrid="true"
         resource="company"
         editRoute="EditCompany"
+        :pageCount="pageCount"
         />
       </div>
       <div class="panel-footer">
@@ -29,14 +34,19 @@ export default {
   },
   data () {
     return {
-      form: {},
       cols: [
         { name: 'name', label: 'Nome' }
       ],
       isRequesting: false,
+      pagination: {
+        perPage: 10,
+        pageable: { pageNumber: 1 }
+      },
       companies: [],
       hadError: '',
-      editID: ''
+      editID: '',
+      pageCount: 0
+
     }
   },
   methods: {
@@ -49,17 +59,38 @@ export default {
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-    async GetCompanies () {
+    async GetCompanies (type, sort = '', search = '') {
       this.isRequesting = true
+
+      if (type === 'next') {
+        this.pagination.pageable.pageNumber += 1
+      }
+
+      if (type === 'prev') {
+        this.pagination.pageable.pageNumber -= 1
+      }
+
+      // API query options like: sorts and pagination
+      let query = ''
+      query += `pageNumber=${this.pagination.pageable.pageNumber}`
+      query += `&pageSize=${this.pagination.perPage}`
+      // query += sort ? `&sortBy=${sort}` : ''
+      query += search ? `&search=${search}` : ''
+
       try {
-        const result = await this.axios.get(`/companies/pages`)
+        const result = await this.axios.get(`/companies/pages?${query}`)
         const res = result.data
         this.companies = res.data
+
+        this.pageCount = res.pages_count
       } catch (e) {
         this.hadError =
           'Não foi possível carregar as encomendas. Actualize a página.'
       }
       this.isRequesting = false
+    },
+    changePage (page) {
+      this.pagination.pageable.pageNumber = page
     }
   },
   created () {
