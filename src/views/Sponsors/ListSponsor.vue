@@ -7,10 +7,12 @@
       <div>
         <Table
         :cols="cols"
-        :data="companies"
+        :data="sponsors"
         title="Patrocinador"
+        :pagination="pagination"
+        :paginationMethod="GetSponsors"
         :searchMethod="GetPosts"
-        :detailMethod="GetCompany"
+        :sortMethod="GetSponsors"
         :needGrid="true"
         resource="company"
         editRoute="EditSponsor"
@@ -45,7 +47,10 @@ export default {
         { name: 'phone_number', label: 'Telefone' }
       ],
       isRequesting: false,
-      companies: [],
+      sponsors: [],
+      pagination: {
+        perPage: 13
+      },
       hadError: '',
       hadSuccess: '',
       editID: ''
@@ -54,19 +59,20 @@ export default {
   methods: {
     async GetPosts () {
       // eslint-disable-next-line no-unused-expressions
-      this.companies
+      this.sponsors
     },
     /*
      *  GetCompanies: This method will fire a GET request
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-    async GetCompanies () {
+    async GetSponsors () {
       this.isRequesting = true
       try {
         const result = await this.axios.get(`/sponsors/all`)
-        const res = result.data
-        this.companies = res.data
+        this.sponsors = result.data
+        // Set Pagination
+        delete result.data.content
       } catch (e) {
         this.hadError =
           'Não foi possível carregar as encomendas. Actualize a página.'
@@ -76,7 +82,7 @@ export default {
   },
   created () {
     // Get customer orders
-    this.GetCompanies()
+    this.GetSponsors()
   }
 }
 </script>
