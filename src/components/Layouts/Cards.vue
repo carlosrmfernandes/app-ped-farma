@@ -4,7 +4,7 @@
       <div class="card-principal" v-for="(row, i) in results" :key="i">
         <aside class="profile-card">
           <header>
-              <img :src="row.img" v-on:click="showModal(row.id)" />
+              <img :src="row.img" @click="clickCard({ name: editRoute, params: { id: row.id } })" />
           </header>
         </aside>
         <div class="profile-bio">
@@ -24,8 +24,8 @@ export default {
     getImageEndpoint: {
       type: String
     },
-    detailMethod: {
-      type: Function
+    editRoute: {
+      type: String
     },
     resource: {
       type: String,
@@ -47,13 +47,8 @@ export default {
     }
   },
   methods: {
-    showModal (id) {
-      // Set the ID value on store Global variable for using with modal
-      this.$store.state.tableDetailID = id
-      // Get the especific resource with the saved ID, on your list on table
-      this.detailMethod()
-      // Show modal for deatils
-      this.$bvModal.show('bv-modal-example')
+    clickCard (router) {
+      this.$router.push(router)
     }
   },
   computed: {
@@ -70,6 +65,10 @@ export default {
           data[k]['img'] = result.poster_path
         } else if (this.resource === 'company') {
           data[k]['img'] = `${this.root}/company_logos/${element.logo_path}`
+        } else if (this.resource === 'organizer') {
+          data[k]['img'] = `${this.root}/company_logos/${element.company_logo}`
+        } else if (this.resource === 'sponsor') {
+          data[k]['img'] = `${this.root}/company_logos/${element.company_logo}`
         }
 
         k++
