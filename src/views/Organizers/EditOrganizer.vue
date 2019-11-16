@@ -253,7 +253,7 @@
   </div>
 </template>
 <script>
-import { add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress } from './helpers/functions.js'
+import { RemoveOrganizer, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress } from './helpers/functions.js'
 
 export default {
   props: {
@@ -316,25 +316,6 @@ export default {
       this.isRequesting = false
     },
     /**
-     * GetOrganizer: This method will fire a GET request and then
-     * assign the response data into the state property: form
-     */
-    async RemoveOrganizer () {
-      this.isRequesting = true
-
-      try {
-        // Redirect to the Organizer views
-        const res = await this.axios.delete(`/organizers/${this.id}`)
-        if (res) {
-          // Redirect to the Organizer views
-          this.$router.push({ name: 'ListOrganizer' })
-        }
-      } catch (e) {
-        this.hadError = 'Não foi possível efetuar esta operação.'
-      }
-      this.isRequesting = false
-    },
-    /**
      * UpdateOraganizer: This method will send form to serve, for update
      */
     async UpdateOrganizer () {
@@ -380,6 +361,7 @@ export default {
     addTelephone,
     addNewAddress,
     removeAddress,
+    RemoveOrganizer,
     rebuildArrayTel,
     rebuildArrayEmails,
     rebuildArrayAddress
