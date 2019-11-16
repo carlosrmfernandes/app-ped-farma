@@ -9,7 +9,8 @@ export default new Vuex.Store({
     Functions
   },
   state: {
-    tableDetailID: String
+    tableDetailID: String,
+    ids: Array
   },
   mutations: {
 
