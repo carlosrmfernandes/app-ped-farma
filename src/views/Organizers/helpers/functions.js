@@ -1,3 +1,31 @@
+/**
+ * GetOrganizer: This method will fire a GET request and then
+ * assign the response data into the state property: form
+ */
+async function RemoveOrganizer (ids = []) {
+  this.isRequesting = true
+  try {
+    let res = []
+
+    if (ids.length >= 1) {
+      for (const id of ids) {
+        res = await this.axios.delete(`/organizers/${id}`)
+      }
+    } else {
+      // Redirect to the Organizer views
+      res = await this.axios.delete(`/organizers/${this.id}`)
+    }
+
+    if (res) {
+      // Redirect to the Organizer views
+      this.$router.push({ name: 'ListOrganizer' })
+    }
+  } catch (e) {
+    this.hadError = 'Não foi possível efetuar esta operação.'
+  }
+  this.isRequesting = false
+}
+
 async function addEmail () {
   this.isRequestingEmail = true
   var result = ''
@@ -109,6 +137,7 @@ async function getTelephone () {
 }
 
 async function add (index, type) {
+  alert()
   if (type === 'email') {
     this.emails.push({ name: '' })
   } else if (type === 'phone') {
@@ -184,7 +213,7 @@ function rebuildArrayAddress (datas) {
   return addresses
 }
 
-export { add, remove, removeAddress,
+export { RemoveOrganizer, add, remove, removeAddress,
   addNewAddress, addEmail, addTelephone,
   addAddress, getAddress, getEmail, getTelephone,
   rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress }
