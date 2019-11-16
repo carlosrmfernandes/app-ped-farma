@@ -13,7 +13,16 @@
             </div>
           </div>
         </div>
+
         <div class="gridOrList" v-if="needGrid" @click="tableGrid">
+          <b-button
+          variant="outline-danger"
+          size="sm"
+          class="float-right"
+          v-on:click.stop
+          @click="remove"
+          v-show="selected.length >= 1"
+          >Apagar</b-button>
           <span><i class="fas fa-th fa-lg" v-if="gridOrList"></i></span>
           <span><i class="fa fa-bars fa-lg" v-if="!gridOrList"></i></span>
         </div>
@@ -22,6 +31,12 @@
         <table class="table" v-if="!grid">
           <thead class="thead-dark">
             <tr>
+              <th>
+                <label class="checkbox first">
+                <input type="checkbox" v-model="selectAll" @click="select" />
+                <div class="square"></div>
+              </label>
+              </th>
               <th v-for="(col, index) in cols" :key="index">{{ col.label }}</th>
             </tr>
           </thead>
@@ -31,6 +46,12 @@
               :key="index"
               @click="clickArrow({ name: editRoute, params: { id: row.id } })"
             >
+            <td class="chcBox" v-on:click.stop>
+              <label class="checkbox">
+                <input type="checkbox" :value="row.id" v-model="selected" />
+                <div class="square"></div>
+              </label>
+            </td>
               <td v-for="(col, index) in cols" :key="index">{{row[col.name]}}</td>
             </tr>
           </tbody>
@@ -117,6 +138,13 @@ export default {
     },
     pageCount: {
       type: Number
+    },
+    allowMultiSelect: {
+      type: Boolean,
+      default: true
+    },
+    removeResource: {
+      type: Function
     }
   },
   data () {
@@ -134,7 +162,9 @@ export default {
       selectedSort: '',
       selectedColumn: '',
       paginationDirection: '',
-      paginationArray: []
+      paginationArray: [],
+      selected: [],
+      selectAll: false
     }
   },
   methods: {
@@ -187,6 +217,19 @@ export default {
         this.paginationDirection,
         this.selectedSort
       )
+    },
+    select () {
+      this.selected = []
+      this.$store.state.ids = []
+      if (!this.selectAll) {
+        for (let i in this.results) {
+          this.selected.push(this.results[i].id)
+          // this.$store.state.ids.push(this.results[i].id)
+        }
+      }
+    },
+    remove () {
+      this.removeResource(this.selected)
     }
   },
   computed: {
@@ -194,16 +237,6 @@ export default {
       let data = this.data
       let sortColumn = this.sortColumn
       let order = this.sortOrder ? 1 : -1
-
-      // if (this.searchInput) {
-      //   data = data.filter(
-      //     item =>
-      //       item[this.searchParam]
-      //         .toLowerCase()
-      //         .indexOf(this.searchInput.toLowerCase()) > -1
-      //   )
-      //   this.paginationArray = data
-      // }
 
       if (sortColumn) {
         data = data.slice().sort((a, b) => {
@@ -316,5 +349,37 @@ span.deleteicon span {
   background: url(http://cdn.sstatic.net/stackoverflow/img/sprites.png?v=4) 0 -690px;
   cursor: pointer;
   font-size: 30px;
+}
+
+.checkbox {
+  user-select: none;
+}
+
+.checkbox .square {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #343A4E;
+  border-radius: 4px;
+  display: inline-block;
+}
+.checkbox.first {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox input:checked + .square {
+  background-color: #d05d1c;
+}
+
+.float-right{
+  margin-left: 10px;
+  margin-top: -5px;
 }
 </style>
