@@ -18,6 +18,7 @@
         resource="organizer"
         editRoute="EditOrganizer"
         :pageCount="pageCount"
+        :removeResource="removeMostOrganizers"
         />
       </div>
       <div class="panel-footer">
@@ -26,6 +27,8 @@
   </div>
 </template>
 <script>
+import { RemoveOrganizer } from './helpers/functions.js'
+
 import Table from '@/components/Layouts/Table'
 export default {
   components: {
@@ -48,38 +51,7 @@ export default {
         perPage: 14,
         pageable: { pageNumber: 1 }
       },
-      data: [
-        {
-          id: 1,
-          name: 'Spider Man',
-          img: 'http://cdn.collider.com/wp-content/uploads/2019/05/spider-man-far-from-home-poster-fury-mysterio-2.jpg',
-          status: 'Available'
-        },
-        {
-          id: 2,
-          name: 'Avangers',
-          img: 'http://br.web.img3.acsta.net/r_1920_1080/pictures/19/04/26/17/30/2428965.jpg',
-          status: 'Pending'
-        },
-        {
-          id: 3,
-          name: 'Man in Black',
-          img: 'https://m.media-amazon.com/images/I/51jcUqVa4EL._SL500_.jpg',
-          status: 'Canceled'
-        },
-        {
-          id: 4,
-          name: 'Ana',
-          img: 'https://filmspot.com.pt/images/filmes/posters/big/484641_pt.jpg',
-          status: 'Available'
-        },
-        {
-          id: 5,
-          name: 'Simba',
-          img: 'https://filmspot.com.pt/images/filmes/posters/big/420818_pt.jpg',
-          status: 'Available'
-        }
-      ],
+      ids: [],
       hadError: '',
       hadSuccess: '',
       editID: '',
@@ -130,7 +102,11 @@ export default {
     },
     changePage (page) {
       this.pagination.pageable.pageNumber = page
-    }
+    },
+    removeMostOrganizers (ids) {
+      this.RemoveOrganizer(ids)
+    },
+    RemoveOrganizer
   },
   created () {
     // Get customer orders
