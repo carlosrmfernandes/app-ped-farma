@@ -20,7 +20,7 @@
           size="sm"
           class="float-right"
           v-on:click.stop
-          @click="remove"
+          @click="showRemoveModal"
           v-show="selected.length >= 1"
           >Apagar</b-button>
           <span><i class="fas fa-th fa-lg" v-if="gridOrList"></i></span>
@@ -92,6 +92,23 @@
         </div>
       </div>
     </div>
+    <!-- Remove Modal-->
+    <b-modal id="modal-remove" title="Organizador">
+      <p class="my-4">Tem certeza que deseja remover?</p>
+      <template v-slot:modal-footer>
+        <div class="w-100">
+          <b-button variant="primary" size="sm" class="float-right" @click="remove">
+            <span>Sim</span>
+          </b-button>
+          <b-button
+            variant="outline-danger"
+            size="sm"
+            class="float-right mr-2"
+            @click="hideRemoveModal"
+          >Não</b-button>
+        </div>
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -227,6 +244,14 @@ export default {
           // this.$store.state.ids.push(this.results[i].id)
         }
       }
+    },
+    showRemoveModal () {
+      // Show modal for deatils
+      this.$bvModal.show('modal-remove')
+    },
+    hideRemoveModal () {
+      // Show modal for deatils
+      this.$bvModal.hide('modal-remove')
     },
     remove () {
       this.removeResource(this.selected)
@@ -370,12 +395,17 @@ span.deleteicon span {
   display: inline-block;
 }
 
+.checkbox.first input:checked + .square {
+  border: none;
+}
+
 .checkbox input[type="checkbox"] {
   display: none;
 }
 
 .checkbox input:checked + .square {
   background-color: #d05d1c;
+  /* border: 1px solid #fff; */
 }
 
 .float-right{
