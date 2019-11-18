@@ -48,7 +48,7 @@ export default {
       isRequesting: false,
       organizers: [],
       pagination: {
-        perPage: 14,
+        perPage: 12,
         pageable: { pageNumber: 1 }
       },
       ids: [],
