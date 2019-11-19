@@ -1,14 +1,14 @@
 <template>
-  <div id="steps-form">
-    <h1>Novo Evento</h1>
-    <section v-if="step === 1">
-      <h2>
-        Identificação do Evento
-        <span class="badge badge-pill badge-info">1</span>
-      </h2>
-      <hr />
-      <div>
-        <div class="row">
+  <div class="panel">
+    <div class="panel-header">
+      <h1>Novo Evento</h1>
+      <!-- step one section -->
+      <section v-if="step === 1">
+        <h2>
+          Identificação do Evento
+          <span class="badge badge-pill badge-info">1</span>
+        </h2>
+        <div class="row mt-5">
           <div class="col-md-3">
             <div class="form-group">
               <label for="event-name">Nome</label>
@@ -49,49 +49,52 @@
               >{{ errors.first('location_id') }}</span>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="form-group">
-                <label for="event-class">Classificação</label>
-                <select
-                  required
-                  v-model="classification"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('classification')}"
-                  name="classification"
-                  v-validate="'required'"
-                  data-vv-as="Classificação"
-                >
-                  <option selected id="classification">A</option>
-                  <option id="classification">E</option>
-                  <option id="classification">T</option>
-                </select>
-                <span
-                  v-show="errors.has('classification')"
-                  class="help is-danger"
-                >{{ errors.first('classification') }}</span>
-              </div>
-              <div class="form-group ml-3 col-md-3">
-                <label for="event-class">Data do Evento</label>
-                <input
-                  required
-                  type="date"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('starts_at')}"
-                  id="startsAt"
-                  v-model="starts_at"
-                  name="starts_at"
-                  v-validate="'required'"
-                  data-vv-as="Data do Evento"
-                />
-                <span
-                  v-show="errors.has('starts_at')"
-                  class="help is-danger"
-                >{{ errors.first('starts_at') }}</span>
-              </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="event-class">Classificação</label>
+              <select
+                required
+                v-model="classification"
+                :class="{'form-control': true, 'is-input-danger': errors.has('classification')}"
+                name="classification"
+                v-validate="'required'"
+                data-vv-as="Classificação"
+              >
+                <option selected id="classification">A</option>
+                <option id="classification">E</option>
+                <option id="classification">T</option>
+                <option id="classification">G</option>
+                <option id="classification">PG</option>
+                <option id="classification">PG13</option>
+                <option id="classification">R</option>
+                <option id="classification">NC17</option>
+              </select>
+              <span
+                v-show="errors.has('classification')"
+                class="help is-danger"
+              >{{ errors.first('classification') }}</span>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="event-class">Data do Evento</label>
+              <input
+                required
+                type="date"
+                :class="{'form-control': true, 'is-input-danger': errors.has('starts_at')}"
+                id="startsAt"
+                v-model="starts_at"
+                name="starts_at"
+                v-validate="'required'"
+                data-vv-as="Data do Evento"
+              />
+              <span
+                v-show="errors.has('starts_at')"
+                class="help is-danger"
+              >{{ errors.first('starts_at') }}</span>
+            </div>
+          </div>
+          <div class="col-md-3">
             <div class="form-group">
               <label for>Detalhes</label>
               <div class="form-group">
@@ -112,36 +115,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-2">
-            Poster
-            <UploadPhoto
-              :OnChange="SelectPoster"
-              v-model="poster"
-              width="140px"
-              height="185px"
-              name="poster"
-              v-validate="'required'"
-              data-vv-as="Poster"
-            />
-            <span v-show="errors.has('poster')" class="help is-danger">{{ errors.first('poster') }}</span>
-          </div>
-          <div class="col-md-2">
-            Backdrop
-            <UploadPhoto
-              :OnChange="SelectBackdrop"
-              v-model="backdrop"
-              width="140px"
-              height="185px"
-              name="backdrop"
-              v-validate="'required'"
-              data-vv-as="Backdrop"
-            />
-            <span
-              v-show="errors.has('backdrop')"
-              class="help is-danger"
-            >{{ errors.first('backdrop') }}</span>
-          </div>
-          <div class="col-md-3 form-group mt-4">
+          <div class="col-md-3">
             <div class="form-group">
               <label for="evideoId">ID do Vídeo Promocional</label>
               <input
@@ -160,8 +134,60 @@
               >{{ errors.first('video_id') }}</span>
             </div>
           </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="event-class">Organizador</label>
+              <select
+                required
+                id="organizer"
+                :class="{'form-control': true, 'is-input-danger': errors.has('organizer_id')}"
+                v-model="organizer_id"
+                name="organizer_id"
+                v-validate="'required'"
+                data-vv-as="Organizador"
+              >
+                <option
+                  v-for="organizer in organizers"
+                  :value="organizer.id"
+                  :key="organizer.name"
+                >{{ organizer.name }}</option>
+              </select>
+              <span
+                v-show="errors.has('organizer_id')"
+                class="help is-danger"
+              >{{ errors.first('organizer_id') }}</span>
+            </div>
+          </div>
+          <div class="col-md-1 mr-3">
+            Poster
+            <UploadPhoto
+              :OnChange="SelectPoster"
+              v-model="poster"
+              width="140px"
+              height="185px"
+              name="poster"
+              v-validate="'required'"
+              data-vv-as="Poster"
+            />
+            <span v-show="errors.has('poster')" class="help is-danger">{{ errors.first('poster') }}</span>
+          </div>
+          <div class="col-md-1 ml-4">
+            Backdrop
+            <UploadPhoto
+              :OnChange="SelectBackdrop"
+              v-model="backdrop"
+              width="140px"
+              height="185px"
+              name="backdrop"
+              v-validate="'required'"
+              data-vv-as="Backdrop"
+            />
+            <span
+              v-show="errors.has('backdrop')"
+              class="help is-danger"
+            >{{ errors.first('backdrop') }}</span>
+          </div>
         </div>
-        <!-- <button @click.prevent="postPartyEvent(1)" class="btn btn-primary">Próximo</button> -->
         <b-button
           variant="primary"
           size="lg"
@@ -176,77 +202,68 @@
             <div class="loading-dots--dot"></div>
           </div>
         </b-button>
-      </div>
-    </section>
-    <!-- Step one -->
-
-    <section v-if="step === 2">
-      <h2>
-        Serviços Adicionais no Evento
-        <span class="badge badge-pill badge-info">2</span>
-      </h2>
-
-      <div class="row">
-        <div class="col-md-6 mb-4">
-          <h5>Sessões</h5>
-          <div class="row">
-            <div class="col-md-5">
+      </section>
+      <!-- ends step one section -->
+      <!-- step two section -->
+      <section v-if="step === 2">
+        <h2>
+          Serviços Adicionais no Evento
+          <span class="badge badge-pill badge-info">2</span>
+        </h2>
+        <div class="row mt-5">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="event-name">Início da Sessão</label>
               <input
-                type="date"
+                type="datetime-local"
                 :class="{'form-control': true, 'is-input-danger': errors.has('event_session.starts_at')}"
-                v-validate="'required'"
-                data-vv-as="Início de Vendas"
                 name="event_session.starts_at"
                 v-model="event_session.starts_at"
                 id="session_starts_at"
               />
-              <span
-                v-show="errors.has('event_session.starts_at')"
-                class="help is-danger"
-              >{{ errors.first('event_session.starts_at') }}</span>
-              <small class="form-text text-muted">Início de vendas</small>
+              <small class="form-text text-muted">Data e Hora</small>
             </div>
-            <div class="col-md-5">
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="event-name">Fim da Sessão</label>
               <input
-                type="date"
+                type="datetime-local"
                 :class="{'form-control': true, 'is-input-danger': errors.has('event_session.ends_at')}"
-                v-validate="'required'"
-                data-vv-as="Fim de Vendas"
                 name="event_session.ends_at"
                 v-model="event_session.ends_at"
                 id="event_session_ends_at"
               />
+              <small class="form-text text-muted">Data e Hora</small>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="event-class">Localização</label>
+              <select
+                required
+                id="location_id"
+                :class="{'form-control': true, 'is-input-danger': errors.has('event_session.location_id')}"
+                v-model="event_session.location_id"
+                name="event_session.location_id"
+                v-validate="'required'"
+                data-vv-as="Localização"
+              >
+                <option
+                  v-for="location in locations"
+                  :value="location.id"
+                  :key="location.id"
+                >{{ location.description }}</option>
+              </select>
               <span
-                v-show="errors.has('event_session.ends_at')"
+                v-show="errors.has('event_session.location_id')"
                 class="help is-danger"
-              >{{ errors.first('event_session.ends_at') }}</span>
-              <small class="form-text text-muted">Fim de vendas</small>
+              >{{ errors.first('event_session.location_id') }}</span>
             </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="event-class">Localização</label>
-                <select
-                  required
-                  id="location_id"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('event_session.location_id')}"
-                  v-model="event_session.location_id"
-                  name="event_session.location_id"
-                  v-validate="'required'"
-                  data-vv-as="Localização"
-                >
-                  <option
-                    v-for="location in locations"
-                    :value="location.id"
-                    :key="location.id"
-                  >{{ location.description }}</option>
-                </select>
-                <span
-                  v-show="errors.has('event_session.location_id')"
-                  class="help is-danger"
-                >{{ errors.first('event_session.location_id') }}</span>
-              </div>
-            </div>
-            <div class="col-md-5">
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="event-class">Preço</label>
               <input
                 type="number"
                 :class="{'form-control': true, 'is-input-danger': errors.has('event_session.price')}"
@@ -264,188 +281,182 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 mb-4">
-          <h5>Produtos</h5>
+        <div class="jumbotron">
+          <h2>Tickets</h2>
           <div class="row">
-            <div class="col-md-5">
-              <input
-                type="number"
-                :class="{'form-control': true, 'is-input-danger': errors.has('session_product.amount')}"
-                v-validate="'required'"
-                data-vv-as="Quantidade"
-                v-model="session_product.amount"
-                name="session_product.amount"
-                id="amount"
-              />
-              <span
-                v-show="errors.has('session_product.amount')"
-                class="help is-danger"
-              >{{ errors.first('session_product.amount') }}</span>
-              <small class="form-text text-muted">Quantidade</small>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="event-class">Quantidade</label>
+                <input
+                  type="number"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('tickets.amount')}"
+                  v-validate="'required'"
+                  data-vv-as="Quantidade"
+                  v-model="tickets.amount"
+                  name="tickets.amount"
+                  id="ticket_amount"
+                />
+                <span
+                  v-show="errors.has('tickets.amount')"
+                  class="help is-danger"
+                >{{ errors.first('tickets.amount') }}</span>
+                <small class="form-text text-muted">Quantidade</small>
+              </div>
             </div>
-            <div class="col-md-5">
-              <input
-                type="number"
-                :class="{'form-control': true, 'is-input-danger': errors.has('session_product.price')}"
-                v-validate="'required'"
-                data-vv-as="Preço"
-                name="session_product.price"
-                v-model="session_product.price"
-                id="price"
-              />
-              <span
-                v-show="errors.has('session_product.price')"
-                class="help is-danger"
-              >{{ errors.first('session_product.price') }}</span>
-              <small class="form-text text-muted">Preço</small>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="event-class">Preço</label>
+                <input
+                  type="number"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('tickets.price')}"
+                  v-validate="'required'"
+                  data-vv-as="Preço"
+                  name="tickets.price"
+                  v-model="tickets.price"
+                  id="ticket_price"
+                />
+                <span
+                  v-show="errors.has('tickets.price')"
+                  class="help is-danger"
+                >{{ errors.first('tickets.price') }}</span>
+                <small class="form-text text-muted">Preço</small>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="event-class">Tipo</label>
+                <select
+                  required
+                  v-model="tickets.ticketType"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('tickets.ticketType')}"
+                  name="tickets.ticketType"
+                  v-validate="'required'"
+                  data-vv-as="Tipo"
+                >
+                  <option id="ticketType">COUPLE</option>
+                  <option id="ticketType">WOMAN</option>
+                  <option id="ticketType">IMAX_3DX</option>
+                  <option id="ticketType">IMAX_4DX</option>
+                  <option id="ticketType">KID</option>
+                  <option id="ticketType">VIP_3D</option>
+                  <option id="ticketType">VIP_2D</option>
+                  <option id="ticketType">ECONOMIC</option>
+                  <option id="ticketType">$2D</option>
+                  <option id="ticketType">MAN</option>
+                  <option id="ticketType">IMAX</option>
+                  <option id="ticketType">REGULAR</option>
+                  <option id="ticketType">VIP</option>
+                  <option id="ticketType">VIP_COUPLE</option>
+                  <option id="ticketType">$4DX</option>
+                  <option id="ticketType">$3D</option>
+                  <option id="ticketType">VIP_KID</option>
+                </select>
+                <span
+                  v-show="errors.has('tickets.ticketType')"
+                  class="help is-danger"
+                >{{ errors.first('tickets.ticketType') }}</span>
+                <small class="form-text text-muted">Tipo de Ingresso</small>
+              </div>
             </div>
           </div>
+          <!-- End tickets section -->
+          <button class="btn btn-primary">Adicionar Ticket</button>
         </div>
-        <div class="col-md-8 mb-4">
-          <h5>Ingressos</h5>
+        <div class="jumbotron">
+          <h2>Produtos</h2>
           <div class="row">
-            <div class="col-md-4">
-              <input
-                type="number"
-                :class="{'form-control': true, 'is-input-danger': errors.has('tickets.amount')}"
-                v-validate="'required'"
-                data-vv-as="Quantidade"
-                v-model="tickets.amount"
-                name="tickets.amount"
-                id="ticket_amount"
-              />
-              <span
-                v-show="errors.has('tickets.amount')"
-                class="help is-danger"
-              >{{ errors.first('tickets.amount') }}</span>
-              <small class="form-text text-muted">Quantidade</small>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="event-class">Produto</label>
+                <select
+                  required
+                  id="companyProductId"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('session_product.companyProductId')}"
+                  v-model="session_product.companyProductId"
+                  name="session_product.companyProductId"
+                  v-validate="'required'"
+                  data-vv-as="Produto"
+                >
+                  <option
+                    v-for="product in products"
+                    :value="product.id"
+                    :key="product.id"
+                  >{{ product.name }}</option>
+                </select>
+                <span
+                  v-show="errors.has('session_product.companyProductId')"
+                  class="help is-danger"
+                >{{ errors.first('session_product.companyProductId') }}</span>
+              </div>
             </div>
-            <div class="col-md-4">
-              <input
-                type="number"
-                :class="{'form-control': true, 'is-input-danger': errors.has('tickets.price')}"
-                v-validate="'required'"
-                data-vv-as="Preço"
-                name="tickets.price"
-                v-model="tickets.price"
-                id="ticket_price"
-              />
-              <span
-                v-show="errors.has('tickets.price')"
-                class="help is-danger"
-              >{{ errors.first('tickets.price') }}</span>
-              <small class="form-text text-muted">Preço</small>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="event-class">Quantidade</label>
+                <input
+                  type="number"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('session_product.amount')}"
+                  v-validate="'required'"
+                  data-vv-as="Quantidade"
+                  v-model="session_product.amount"
+                  name="session_product.amount"
+                  id="amount"
+                />
+                <span
+                  v-show="errors.has('session_product.amount')"
+                  class="help is-danger"
+                >{{ errors.first('session_product.amount') }}</span>
+                <small class="form-text text-muted">Quantidade</small>
+              </div>
             </div>
-            <div class="col-md-4">
-              <select
-                required
-                v-model="tickets.ticket_type"
-                :class="{'form-control': true, 'is-input-danger': errors.has('tickets.ticket_type')}"
-                name="tickets.ticket_type"
-                v-validate="'required'"
-                data-vv-as="Tipo"
-              >
-                <option id="ticket_type">COUPLE</option>
-                <option id="ticket_type">WOMAN</option>
-                <option id="ticket_type">IMAX_3DX</option>
-                <option id="ticket_type">IMAX_4DX</option>
-                <option id="ticket_type">KID</option>
-                <option id="ticket_type">VIP_3D</option>
-                <option id="ticket_type">VIP_2D</option>
-                <option id="ticket_type">ECONOMIC</option>
-                <option id="ticket_type">$2D</option>
-                <option id="ticket_type">MAN</option>
-                <option id="ticket_type">IMAX</option>
-                <option id="ticket_type">REGULAR</option>
-                <option id="ticket_type">VIP</option>
-                <option id="ticket_type">VIP_COUPLE</option>
-                <option id="ticket_type">$4DX</option>
-                <option id="ticket_type">$3D</option>
-                <option id="ticket_type">VIP_KID</option>
-              </select>
-              <span
-                v-show="errors.has('tickets.ticket_type')"
-                class="help is-danger"
-              >{{ errors.first('tickets.ticket_type') }}</span>
-              <small class="form-text text-muted">Tipo de Ingresso</small>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="event-class">Preço</label>
+                <input
+                  type="number"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('session_product.price')}"
+                  v-validate="'required'"
+                  data-vv-as="Preço"
+                  name="session_product.price"
+                  v-model="session_product.price"
+                  id="price"
+                />
+                <span
+                  v-show="errors.has('session_product.price')"
+                  class="help is-danger"
+                >{{ errors.first('session_product.price') }}</span>
+                <small class="form-text text-muted">Preço</small>
+              </div>
             </div>
           </div>
+          <button class="btn btn-primary">Adicionar Produto</button>
         </div>
-      </div>
-      <button @click.prevent="prev()" class="btn btn-primary">Anterior</button>
-      <b-button
-        variant="primary"
-        size="md mr-2"
-        class="float-left"
-        :disabled="isRequesting ? true : false"
-        @click="ProcessForm(2)"
-      >
-        <span v-if="!isRequesting">Próximo</span>
-        <div class="loading-dots" v-if="isRequesting">
-          <div class="loading-dots--dot"></div>
-          <div class="loading-dots--dot"></div>
-          <div class="loading-dots--dot"></div>
-        </div>
-      </b-button>
-    </section>
-    <!-- Step two -->
-
-    <section v-if="step === 3">
-      <h2>
-        Patrocinadores
-        <span class="badge badge-pill badge-info">3</span>
-      </h2>
-
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="event-class">Patrocinador</label>
-            <select
-              required
-              id="location_id"
-              :class="{'form-control': true, 'is-input-danger': errors.has('sponsors_id')}"
-              v-model="sponsors_id"
-              name="sponsors_id"
-              v-validate="'required'"
-              data-vv-as="Patrocinador"
-            >
-              <option
-                v-for="sponsor in sponsors"
-                :value="sponsor.id"
-                :key="sponsor.id"
-              >{{ sponsor.description }}</option>
-            </select>
-            <span
-              v-show="errors.has('sponsors_id')"
-              class="help is-danger"
-            >{{ errors.first('sponsors_id') }}</span>
+        <b-button
+          variant="primary"
+          size="lg"
+          class="float-left mb-5 col-md-2"
+          :disabled="isRequesting ? true : false"
+          @click="ProcessForm(2)"
+        >
+          <span v-if="!isRequesting">Próximo</span>
+          <div class="loading-dots" v-if="isRequesting">
+            <div class="loading-dots--dot"></div>
+            <div class="loading-dots--dot"></div>
+            <div class="loading-dots--dot"></div>
           </div>
-        </div>
-      </div>
-      <button @click.prevent="prev()" class="btn btn-primary">Anterior</button>
-      <b-button
-        variant="primary"
-        size="md ml-2"
-        class="float-left"
-        :disabled="isRequesting ? true : false"
-        @click="ProcessForm(3)"
-      >
-        <span v-if="!isRequesting">Finalizar</span>
-        <div class="loading-dots" v-if="isRequesting">
-          <div class="loading-dots--dot"></div>
-          <div class="loading-dots--dot"></div>
-          <div class="loading-dots--dot"></div>
-        </div>
-      </b-button>
-    </section>
-    <!-- Step three -->
+        </b-button>
+        <button class="btn btn-dark btn-lg mb-5 col-md-2 ml-3">
+          <span>Adicionar Sessão</span>
+        </button>
+      </section>
+      <!-- ends step two section -->
+    </div>
+    <div class="panel-body"></div>
   </div>
 </template>
 
 <script>
 import moment from "moment";
 import UploadPhoto from "@/components/Form/Photo";
-import { required } from "vuelidate/lib/validators";
 
 export default {
   components: {
@@ -456,6 +467,8 @@ export default {
       step: 0,
       stepCount: 3,
       locations: "",
+      organizers: "",
+      organizer_id: "",
       classifications: "",
       poster: "",
       backdrop: "",
@@ -466,6 +479,7 @@ export default {
       video_id: "",
       location_id: "",
       party_event_id: "",
+      products: "",
       startsAt: "",
       company_product_id: "",
       event_session: {},
@@ -491,6 +505,19 @@ export default {
         this.hadError = "Não foi possível carregar as informações.";
       }
     },
+    /*
+     * getOrganizers: This method will fire a GET request and then
+     * assign the response data into the state property: form
+     */
+    async getOrganizers() {
+      try {
+        const result = await this.axios.get(`/organizers?sorters=CREATED_AT`);
+        const res = result.data;
+        this.organizers = res.data;
+      } catch (e) {
+        this.hadError = "Não foi possível carregar as informações.";
+      }
+    },
     async getClassifications() {
       try {
         // this.axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.TOKEN}`;
@@ -500,16 +527,30 @@ export default {
         this.hadError = "Não foi possível carregar as informações.";
       }
     },
+    /*
+     *  getSponsors: This method will fire a GET request and then
+     * assign the response data into the state property: form.
+     */
     async getSponsors() {
       try {
-        const result = await this.axios.get(`/sponsors/all`);
+        const result = await this.axios.get(`/sponsors`);
         this.sponsors = result.data;
       } catch (e) {
         this.hadError = "Não foi possível carregar as informações.";
       }
     },
-    formatDate(date) {
-      return moment(date).toISOString();
+    /*
+     *  getProducts: This method will fire a GET request and then
+     * assign the response data into the state property: form.
+     */
+    async getProducts() {
+      try {
+        const result = await this.axios.get(`/company_products?sorters=NAME`);
+        const res = result.data;
+        this.products = res.data;
+      } catch (e) {
+        this.hadError = "Não foi possível carregar as informações.";
+      }
     },
     /*
      *  ProcessForm: This method will validate the form using vee-validate
@@ -526,26 +567,24 @@ export default {
      *  new party event and then redirect to the ListEvent component.
      */
     async postPartyEvent(step) {
-      // /api/party_events/company/8cdf8e59-356e-4e09-9a96-bda0db2b12f3/step_1
       if (step === 1) {
         this.isRequesting = true;
         try {
-          this.starts_at = this.formatDate(this.starts_at);
-
           const fData = new FormData();
 
           fData.append("poster", this.poster);
           fData.append("backdrop", this.backdrop);
           fData.append("classification", this.classification);
-          fData.append("locationId", this.location_id);
-          fData.append("videoId", this.video_id);
+          fData.append("location_id", this.location_id);
+          fData.append("organizer_id", this.organizer_id);
+          fData.append("video_id", this.video_id);
           fData.append("description", this.description);
-          fData.append("startsAt", this.starts_at);
+          fData.append("starts_at", this.starts_at);
           fData.append("title", this.title);
 
           // Fire the PUT request
           const res = await this.axios({
-            url: `/party_events/company/ec04cccf-aaf4-4166-a558-38a2e68f167a/step_1`,
+            url: `/party_events/step_1`,
             method: "post",
             headers: { "Content-Type": "multipart/form-data" },
             data: fData
@@ -553,8 +592,8 @@ export default {
 
           if (res) {
             // Get this party_event_id
-            this.party_event_id = res.data;
-            console.log("Enviado! Passo 1.");
+            this.party_event_id = res.data.id;
+            console.log("Party event ID: ", this.party_event_id);
             // Next step
             this.step++;
           }
@@ -567,12 +606,12 @@ export default {
       } else if (step === 2) {
         this.isRequesting = true;
         try {
-          this.event_session.starts_at = this.formatDate(
-            this.event_session.starts_at
-          );
-          this.event_session.ends_at = this.formatDate(
-            this.event_session.ends_at
-          );
+          // this.event_session.starts_at = this.formatDate(
+          //   this.event_session.starts_at
+          // );
+          // this.event_session.ends_at = this.formatDate(
+          //   this.event_session.ends_at
+          // );
           this.event_session.price = parseInt(this.event_session.price, 10);
 
           this.session_product.amount = parseInt(
@@ -586,17 +625,20 @@ export default {
 
           // Fire the PUT request
           const res = await this.axios({
-            url: `/party_events/step_2`,
-            method: "patch",
+            url: `/party_events/${this.party_event_id}/step_2`,
+            method: "put",
             headers: { "Content-Type": "application/json" },
-            params: {
-              party_event_id: this.party_event_id,
-              company_product_id: "013593df-7376-4b0b-9a7a-1a7404e0c8b2"
-            },
             data: {
-              event_session: this.event_session,
-              session_product: this.session_product,
-              tickets: this.tickets
+              sessions: [
+                {
+                  ends_at: this.event_session.ends_at,
+                  location_id: this.event_session.location_id,
+                  price: this.event_session.price,
+                  starts_at: this.event_session.starts_at,
+                  products: [this.session_product],
+                  tickets: [this.tickets]
+                }
+              ]
             }
           });
 
@@ -608,16 +650,16 @@ export default {
           this.hadError =
             "Não foi possível realizar esta operação. Tente novamente";
           console.log(e);
-          console.log("Erro!");
         }
         this.isRequesting = false;
       } else {
+        cd;
         this.isRequesting = true;
         try {
           // Fire the PUT request
           const res = await this.axios({
             url: `/party_events/step_3`,
-            method: "patch",
+            method: "put",
             headers: { "Content-Type": "application/json" },
             params: {
               party_event_id: this.party_event_id,
@@ -656,6 +698,8 @@ export default {
     this.step++;
     this.getLocations();
     this.getSponsors();
+    this.getOrganizers();
+    this.getProducts();
   }
 };
 </script>
