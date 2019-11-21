@@ -9,13 +9,16 @@
         :cols="cols"
         :data="sponsors"
         title="Patrocinador"
+        :searchMethod="GetSponsors"
         :pagination="pagination"
         :paginationMethod="GetSponsors"
-        :searchMethod="GetPosts"
         :sortMethod="GetSponsors"
         :needGrid="true"
+        :changePage="changePage"
         resource="company"
         editRoute="EditSponsor"
+        :pageCount="pageCount"
+        :removeResource="removeMostSponsors"
         />
       </div>
       <div class="panel-footer">
@@ -25,6 +28,9 @@
 </template>
 <script>
 import Table from '@/components/Layouts/Table'
+
+import { RemoveSponsors } from './helpers/functions.js'
+
 export default {
   components: {
     Table
@@ -39,21 +45,24 @@ export default {
     return {
       form: {},
       cols: [
-        { name: 'description', label: 'Nome' },
+        { name: 'name', label: 'Nome' },
         { name: 'email', label: 'Email' },
-        { name: 'facebook_url', label: 'Facebook' },
-        { name: 'instagram_url', label: 'Instagram' },
-        { name: 'twitter_url', label: 'Twitter' },
+        { name: 'facebook', label: 'Facebook' },
+        { name: 'instagram', label: 'Instagram' },
+        { name: 'twitter', label: 'Twitter' },
         { name: 'phone_number', label: 'Telefone' }
       ],
       isRequesting: false,
       sponsors: [],
       pagination: {
-        perPage: 13
+        perPage: 10,
+        pageable: { pageNumber: 1 }
       },
+      ids: [],
       hadError: '',
       hadSuccess: '',
-      editID: ''
+      editID: '',
+      pageCount: 0
     }
   },
   methods: {
@@ -66,19 +75,45 @@ export default {
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-    async GetSponsors () {
+    async GetSponsors (type, sort = '', search = '') {
       this.isRequesting = true
+
+      if (type === 'next') {
+        this.pagination.pageable.pageNumber += 1
+      }
+
+      if (type === 'prev') {
+        this.pagination.pageable.pageNumber -= 1
+      }
+
+      // API query options like: sorts and pagination
+      let query = ''
+      query += `pageNumber=${this.pagination.pageable.pageNumber}`
+      query += `&pageSize=${this.pagination.perPage}`
+      // query += sort ? `&sortBy=${sort}` : ''
+      query += search ? `&search=${search}` : ''
+
       try {
-        const result = await this.axios.get(`/sponsors/all`)
-        this.sponsors = result.data
+        const result = await this.axios.get(`/sponsors?${query}`)
+        const res = result.data
+        this.sponsors = res.data
+
+        this.pageCount = res.pages_count
         // Set Pagination
-        delete result.data.content
+        // delete res.data.content
       } catch (e) {
         this.hadError =
           'Não foi possível carregar as encomendas. Actualize a página.'
       }
       this.isRequesting = false
-    }
+    },
+    changePage (page) {
+      this.pagination.pageable.pageNumber = page
+    },
+    removeMostSponsors (ids) {
+      this.RemoveSponsors(ids)
+    },
+    RemoveSponsors
   },
   created () {
     // Get customer orders

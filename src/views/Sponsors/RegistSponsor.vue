@@ -38,7 +38,7 @@
             <input type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.facebook')}"
              name="form.facebook"
-             v-model="form.facebook_url"
+             v-model="form.facebook"
              id="Sponsor-Facebook"
              placeholder="URL do Facebook"
              data-vv-as="Facebook" />
@@ -64,7 +64,7 @@
             <input type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.twitter')}"
              name="form.twitter"
-             v-model="form.twitter_url"
+             v-model="form.twitter"
              id="Sponsor-Twitter"
              placeholder="URL do Twitter"
              data-vv-as="Twitter" />
@@ -129,50 +129,41 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-3" >
-            <label for="">Email</label>
-            <div class="form-group" >
-              <div class="col-md-12" v-for="(email,k) in emails" :key="k">
+        <div class="col-md-3">
+          <label for="">Email</label>
+          <div class="form-group" >
+              <div class="col-md-12">
                 <input type="text"
-                :class="{'form-control': true, 'is-input-danger': errors.has('email.email')}"
-                id="Sponsor-email"
-                name="email.email"
-                placeholder="Email(s) de Contacto"
-                v-model="email.email"
+                :class="{'form-control': true, 'is-input-danger': errors.has('form.email')}"
+                id="Organizer-email"
+                name="form.email"
+                placeholder="Email de Contacto"
+                v-model="form.email"
                 v-validate="'required'"
-                data-vv-as="Email(s)" />
-                <span class="addOrRemove">
-                    <i class="fa fa-minus-circle" @click="remove(k,'email')" v-show="(k  || ( !k && emails.length > 1)) && (k != emails.length-1) "></i>
-                    <i class="fa fa-plus-circle" @click="add(k,'email')" v-show="k == emails.length-1"></i>
-                </span>
+                data-vv-as="Email" />
+              </div>
             </div>
-                <span v-show="errors.has('email.email')" class="help is-danger">{{ errors.first('email.email') }}</span>
-          </div>
         </div>
         <div class="col-md-3" >
             <label for="">Telefone</label>
             <div class="form-group" >
-              <div class="col-md-12" v-for="(telephone,k) in telephones" :key="k">
+              <div class="col-md-12">
                 <input type="text"
-                :class="{'form-control': true, 'is-input-danger': errors.has('telephone.phone_number')}"
-                id="Sponsor-Telephone"
-                name="telephone.phone_number"
-                placeholder="Telefone(s) de Contacto"
-                v-model="telephone.phone_number"
+                :class="{'form-control': true, 'is-input-danger': errors.has('form.phone_number')}"
+                id="Organizer-Telephone"
+                name="form.phone_number"
+                placeholder="Telefone de Contacto"
+                v-model="form.phone_number"
                 v-validate="'required'"
                 data-vv-as="Telefone(s)" />
-                <span class="addOrRemove">
-                    <i class="fa fa-minus-circle" @click="remove(k,'phone')" v-show="(k  || ( !k && telephones.length > 1)) && (k != telephones.length-1) "></i>
-                    <i class="fa fa-plus-circle" @click="add(k,'phone')" v-show="k == telephones.length-1"></i>
-                </span>
+              </div>
+                <span v-show="errors.has('form.phone_number')" class="help is-danger">{{ errors.first('form.phone_number') }}</span>
             </div>
-                <span v-show="errors.has('telephone.phone_number')" class="help is-danger">{{ errors.first('telephone.phone_number') }}</span>
-          </div>
         </div>
       </div>
       <div class="row">
         <UploadPhoto
-          :defaultImage="form.file"
+          :defaultImage="form.logo"
           :OnChange="SelectImage"
           width="140px"
           height="185px"
@@ -250,6 +241,71 @@ export default {
       const result = await this.$validator.validateAll()
       return result ? this.RegistSponsor() : result
     },
+    /*
+     *  RegistSponsor: This method will create a post request to regist a
+     *  new Sponsor and then redirect to the ListSponsor component.
+     */
+    async RegistSponsor () {
+      this.isRequesting = true
+      try {
+        if (this.existCompany) {
+          // eslint-disable-next-line no-const-assign
+          const result = await this.axios.post('/sponsors', this.form)
+
+          if (result) {
+          // Redirect to the Organizer views
+            this.$router.push({ name: 'ListSponsor' })
+          }
+        } else {
+          let formData = new FormData()
+          formData.append('name', this.form.name)
+          formData.append('description', this.form.description)
+          formData.append('facebook', this.form.facebook)
+          formData.append('instagram', this.form.instagram)
+          formData.append('twitter', this.form.twitter)
+          formData.append('province', this.form.province)
+          formData.append('municipality', this.form.municipality)
+          formData.append('address', this.form.address)
+          formData.append('logo', this.file)
+          formData.append('phone_number', this.form.phone_number)
+          formData.append('email', this.form.email)
+
+          // eslint-disable-next-line no-const-assign
+          const res = await this.axios({
+            url: `/sponsors/with_company`,
+            method: 'post',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: formData
+          })
+
+          if (res) {
+          // Redirect to the Organizer views
+            this.$router.push({ name: 'ListSponsor' })
+          }
+        }
+
+        this.file = ''
+        this.hadSuccess = true
+        this.isOrderSaved = true
+      } catch (e) {
+        this.hadError =
+          'Não foi possível realizar esta operação. Tente novamente'
+      }
+      this.isRequesting = false
+    },
+    async allCompanies () {
+      try {
+        const result = await this.axios.get(`/companies/pages`)
+        const res = result.data
+        this.companies = res.data
+      } catch (e) {
+        this.hadError =
+            'Não foi possível carregar as encomendas. Actualize a página.'
+      }
+    },
+    SelectImage (file) {
+      this.file = file
+    },
     showModalExistence () {
       // Show modal for deatils
       this.$bvModal.show('modal-company-existence')
@@ -274,76 +330,12 @@ export default {
     },
     noBelongs () {
       this.$bvModal.hide('modal-company-existence')
-    },
-    /*
-     *  RegistSponsor: This method will create a post request to regist a
-     *  new Sponsor and then redirect to the ListSponsor component.
-     */
-    async RegistSponsor () {
-      this.isRequesting = true
-      try {
-        let formData = new FormData()
-        // formData.append('company_id', this.form.company_id)
-        formData.append('description', this.form.description)
-        formData.append('facebookURL', this.form.facebook_url)
-        formData.append('instagramURL', this.form.instagram_url)
-        formData.append('twitterURL', this.form.twitter_url)
-        formData.append('file', this.file)
-        formData.append('phoneNumber', this.telephones[0].phone_number)
-        formData.append('email', this.emails[0].email)
-
-        const result = await this.axios({
-          url: `/sponsors`,
-          method: 'post',
-          headers: { 'Content-Type': 'multipart/form-data' },
-          data: formData
-        })
-
-        if (this.telephones.length > 1) {
-          // Send requisition to OrganizerTelephone Endpoint
-        }
-
-        if (this.emails.length > 1) {
-          // Send requisition to OrganizerEmail Endpoint
-        }
-
-        if (result) {
-          // Redirect to the Sponsor views
-          this.$router.push({ name: 'ListSponsor' })
-        }
-
-        this.hadSuccess = true
-        this.isOrderSaved = true
-      } catch (e) {
-        this.hadError =
-          'Não foi possível realizar esta operação. Tente novamente'
-      }
-      this.isRequesting = false
-    },
-    async allCompanies () {
-      try {
-        const result = await this.axios.get(`/companies/pages`)
-        const res = result.data
-        this.companies = res.data
-      } catch (e) {
-        this.hadError =
-            'Não foi possível carregar as encomendas. Actualize a página.'
-      }
-    },
-    SelectImage (file) {
-      this.file = file
     }
   },
   mounted: function () {
     this.showModalExistence()
   },
   created () {
-    this.telephones.push(
-      { phone_number: 888999000 },
-      { phone_number: 888999111 },
-      { phone_number: 888999222 },
-      { phone_number: 888999333 }
-    )
     this.allCompanies()
   }
 }

@@ -6,14 +6,14 @@
         variant="outline-primary"
         size="sm"
         class="float-right"
-        @click="editOrganizer"
+        @click="editSponsor"
         v-show="isEditable"
       >Editar</b-button>
       <b-button
         variant="success"
         size="sm"
         class="float-right"
-        @click="UpdateOrganizer"
+        @click="UpdateSponsor"
         v-show="!isEditable"
       >
         <span v-if="!isRequesting">salvar</span>
@@ -85,51 +85,6 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="sponsor-province">Provincia</label>
-            <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.province')}"
-             name="form.province"
-             v-model="form.province"
-             id="Organizer-Province"
-             placeholder="Provincia"
-             v-validate="''"
-             :disabled="isEditable"
-             data-vv-as="Provincia" />
-             <span v-show="errors.has('form.province')" class="help is-danger">{{ errors.first('form.province') }}</span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="sponsor-municipality">Municipio</label>
-            <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.municipality')}"
-             name="form.municipality"
-             v-model="form.municipality"
-             id="Organizer-Municipality"
-             placeholder="Municipio"
-             v-validate="''"
-             :disabled="isEditable"
-             data-vv-as="Municipio" />
-             <span v-show="errors.has('form.municipality')" class="help is-danger">{{ errors.first('form.municipality') }}</span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="sponsor-address">Bairro</label>
-            <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.address')}"
-             name="form.address"
-             v-model="form.address"
-             id="Organizer-Address"
-             placeholder="Bairro"
-             v-validate="''"
-             :disabled="isEditable"
-             data-vv-as="bairro" />
-             <span v-show="errors.has('form.address')" class="help is-danger">{{ errors.first('form.address') }}</span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
             <label for="sponsor-description">Descricao</label>
             <textarea type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.description')}"
@@ -143,6 +98,67 @@
              <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
           </div>
         </div>
+      </div>
+      <div class="row" v-for="(address, j) in addresses" :key="j">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="organizer-province">Provincia</label>
+              <input type="text"
+              :class="{'form-control': true, 'is-input-danger': errors.has('address.province')}"
+              name="address.province"
+              v-model="address.province"
+              id="Organizer-Province"
+              placeholder="Provincia"
+              v-validate="'required'"
+              :disabled="isEditable"
+              data-vv-as="Provincia" />
+              <span v-show="errors.has('address.province')" class="help is-danger">{{ errors.first('address.province') }}</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="organizer-municipality">Municipio</label>
+              <input type="text"
+              :class="{'form-control': true, 'is-input-danger': errors.has('address.municipality')}"
+              name="address.municipality"
+              v-model="address.municipality"
+              id="Organizer-Municipality"
+              placeholder="Municipio"
+              v-validate="'required'"
+              :disabled="isEditable"
+              data-vv-as="Municipio" />
+              <span v-show="errors.has('address.municipality')" class="help is-danger">{{ errors.first('address.municipality') }}</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="organizer-address">Bairro</label>
+              <input type="text"
+              :class="{'form-control': true, 'is-input-danger': errors.has('address.address')}"
+              name="address.address"
+              v-model="address.address"
+              id="Organizer-Address"
+              placeholder="Bairro"
+              v-validate="'required'"
+              :disabled="isEditable"
+              data-vv-as="bairro" />
+              <span v-show="errors.has('address.address')" class="help is-danger">{{ errors.first('address.address') }}</span>
+            </div>
+          </div>
+          <div class="col-md-1 btns">
+              <span class="addOrRemove">
+                  <i class="fa fa-minus-circle" @click="removeAddress(j)" v-show="(j  || ( !j && addresses.length > 1)) && (j != addresses.length-1) "></i>
+                  <i class="fa fa-plus-circle" @click="addNewAddress(j)" v-show="j == addresses.length-1"></i>
+                  <b-button variant="success" size="sm" class="float-right" @click="addAddress" v-show="j == addresses.length-1">
+                    <span v-if="!isRequestingAddress">Salvar</span>
+                    <div class="loading-dots" v-if="isRequestingAddress">
+                      <div class="loading-dots--dot"></div>
+                      <div class="loading-dots--dot"></div>
+                      <div class="loading-dots--dot"></div>
+                    </div>
+                </b-button>
+              </span>
+          </div>
       </div>
       <div class="row">
         <div class="col-md-3" >
@@ -163,6 +179,20 @@
                     <i class="fa fa-plus-circle" @click="add(k,'email')" v-show="k == emails.length-1"></i>
                 </span>
             </div>
+            <span v-show="errors.has('email.email')" class="help is-danger">{{ errors.first('email.email') }}</span>
+              <b-button
+                variant="success"
+                size="sm"
+                class="float-left"
+                @click="addEmail"
+              >
+                <span v-if="!isRequestingEmail">Salvar</span>
+                <div class="loading-dots" v-if="isRequestingEmail">
+                  <div class="loading-dots--dot"></div>
+                  <div class="loading-dots--dot"></div>
+                  <div class="loading-dots--dot"></div>
+                </div>
+              </b-button>
           </div>
         </div>
         <div class="col-md-3" >
@@ -184,6 +214,19 @@
                 </span>
             </div>
                 <span v-show="errors.has('telephone.phone_number')" class="help is-danger">{{ errors.first('telephone.phone_number') }}</span>
+                <b-button
+                  variant="success"
+                  size="sm"
+                  class="float-left"
+                  @click="addTelephone"
+                >
+                <span v-if="!isRequestingTel">Salvar</span>
+                <div class="loading-dots" v-if="isRequestingTel">
+                  <div class="loading-dots--dot"></div>
+                  <div class="loading-dots--dot"></div>
+                  <div class="loading-dots--dot"></div>
+                </div>
+              </b-button>
           </div>
         </div>
       </div>
@@ -215,7 +258,7 @@
   </div>
 </template>
 <script>
-import { add, remove, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone } from './helpers/functions.js'
+import { RemoveSponsors, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress } from './helpers/functions.js'
 
 export default {
   components: {
@@ -234,6 +277,9 @@ export default {
       form: {},
       companies: [],
       isRequesting: false,
+      isRequestingEmail: false,
+      isRequestingTel: false,
+      isRequestingAddress: false,
       isOrderSaved: false,
       hadError: '',
       hadSuccess: '',
@@ -243,6 +289,11 @@ export default {
       }],
       telephones: [{
         phone_number: ''
+      }],
+      addresses: [{
+        province: '',
+        municipality: '',
+        address: ''
       }]
     }
   },
@@ -272,29 +323,11 @@ export default {
       this.isRequesting = false
     },
     /**
-     * GetCompany: This method will fire a GET request and then
-     * assign the response data into the state property: form
-     */
-    async RemoveSponsor () {
-      this.isRequesting = true
-
-      try {
-        // Redirect to the Organizer views
-        await this.axios.delete(`/sponsors/${this.id}`)
-        this.$router.push({ name: 'ListSponsor' })
-      } catch (e) {
-        this.hadError = 'Não foi possível efetuar esta operação.'
-      }
-      this.isRequesting = false
-    },
-    /**
      * UpdateCompany: This method will send form to serve, for update
      */
     async UpdateSponsor () {
       this.isRequesting = true
       try {
-        this.form.phone_number = this.telephones[0].phone_number
-        this.form.email = this.emails[0].email
         const result = await this.axios.patch(`/sponsors/${this.id}`, this.form)
 
         if (result) {
@@ -331,12 +364,19 @@ export default {
     getAddress,
     addAddress,
     getTelephone,
-    addTelephone
+    addTelephone,
+    addNewAddress,
+    removeAddress,
+    RemoveSponsors,
+    rebuildArrayTel,
+    rebuildArrayEmails,
+    rebuildArrayAddress
   },
   created () {
     this.GetSponsor()
-    // this.getEmail()
-    // this.getTelephone()
+    this.getEmail()
+    this.getTelephone()
+    this.getAddress()
   }
 }
 </script>
@@ -359,5 +399,32 @@ export default {
   /* border: 1px solid red; */
   margin-top: 40px;
   height: 40px;
+}
+
+.add-input{
+  display: flex;
+}
+.form-group .addOrRemove{
+  padding: 5px;
+  padding-top: 8px;
+  padding-right: 0;
+}
+.float-right{
+  margin-left: 10px;
+}
+.btns{
+  display: flex;
+  margin-top: 40px;
+}
+
+@media (min-width: 768px){
+  .col-md-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    display: flex;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 20px;
+  }
 }
 </style>

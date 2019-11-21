@@ -1,24 +1,23 @@
 /**
- * GetOrganizer: This method will fire a GET request and then
- * assign the response data into the state property: form
+ * RemoveOrganizer: This method will fire a DELETE request and then
+ * remove all organizers id
  */
 async function RemoveOrganizer (ids = []) {
   this.isRequesting = true
   try {
-    let res = []
-
     if (ids.length >= 1) {
       for (const id of ids) {
-        res = await this.axios.delete(`/organizers/${id}`)
+        await this.axios.delete(`/organizers/${id}`)
+
+        // Redirect to the Organizer views
+        this.$router.go()
       }
     } else {
       // Redirect to the Organizer views
-      res = await this.axios.delete(`/organizers/${this.id}`)
-    }
+      await this.axios.delete(`/organizers/${this.id}`)
 
-    if (res) {
       // Redirect to the Organizer views
-      this.$router.push({ name: 'ListOrganizer' })
+      this.$router.go()
     }
   } catch (e) {
     this.hadError = 'Não foi possível efetuar esta operação.'
