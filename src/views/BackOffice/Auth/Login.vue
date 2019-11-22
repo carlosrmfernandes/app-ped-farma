@@ -5,6 +5,11 @@
         <div class="box-login-header">
           <img src="../../../assets/box- logo.svg" alt="">
         </div>
+        <div class="row errors">
+            <div class="alert alert-danger col-md-11" v-if="hadError" role="alert">
+              {{hadError}}
+            </div>
+        </div>
         <div class="box-login-body">
           <div class="row">
             <div class="col-md-12">
@@ -27,7 +32,7 @@
                 <label for="">Senha</label>
                 <div class="form-group" >
                   <div class="col-md-12">
-                    <input type="text"
+                    <input type="password"
                     :class="{'form-control': true, 'is-input-danger': errors.has('form.password')}"
                     id="User-Password"
                     name="form.password"
@@ -174,7 +179,7 @@ export default {
   height: 100px;
   /* border: 1px solid white; */
   flex-grow: 1;
-  padding-top: 120px;
+  padding-top: 50px;
 }
 
 label{
@@ -198,5 +203,12 @@ label{
   background-color: #30C9B1;
   color: #212132;
   border: none;
+}
+
+.errors{
+  margin-right: 0px;
+  margin-left: 0px;
+  justify-content: center;
+  margin-top: 15px;
 }
 </style>
