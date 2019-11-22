@@ -30,7 +30,7 @@
         <table class="table" v-if="!grid">
           <thead class="thead-dark">
             <tr>
-              <th>
+              <th v-if="canRemove">
                 <label class="checkbox first">
                 <input type="checkbox" v-model="selectAll" @click="select" />
                 <div class="square"></div>
@@ -45,7 +45,7 @@
               :key="index"
               @click="clickArrow({ name: editRoute, params: { id: row.id } })"
             >
-            <td class="chcBox" v-on:click.stop>
+            <td class="chcBox" v-on:click.stop v-if="canRemove">
               <label class="checkbox">
                 <input type="checkbox" :value="row.id" v-model="selected" />
                 <div class="square"></div>
@@ -161,6 +161,10 @@ export default {
     },
     removeResource: {
       type: Function
+    },
+    canRemove: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
