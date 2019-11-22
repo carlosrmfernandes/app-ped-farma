@@ -9,9 +9,17 @@
           :cols="cols"
           :data="events"
           title="Eventos"
-          :searchMethod="GetPosts"
-          :detailMethod="GetEvent"
+          :detailMethod="getEvents"
           editRoute="EditEvent"
+          :searchMethod="getEvents"
+          :pagination="pagination"
+          :paginationMethod="getEvents"
+          :sortMethod="getEvents"
+          :needGrid="true"
+          :changePage="changePage"
+          resource="event"
+          :pageCount="pageCount"
+          :canRemove="false"
         />
       </div>
       <div class="panel-footer"></div>
@@ -27,13 +35,15 @@
             class="float-right"
             @click="editEvents"
             :disabled="isEditable"
-          >Editar</b-button>
+            >Editar</b-button
+          >
           <b-button
             variant="outline-danger"
             size="lg"
             class="float-right mr-2"
             @click="showRemoveModal"
-          >Remover</b-button>
+            >Remover</b-button
+          >
         </div>
       </template>
       <div class="d-block text-center">
@@ -58,7 +68,8 @@
             size="lg"
             class="float-right"
             @click="hideModal"
-          >Fechar</b-button>
+            >Fechar</b-button
+          >
         </div>
       </template>
     </b-modal>
@@ -67,13 +78,20 @@
       <p class="my-4">Tem certeza que deseja remover?</p>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="outline-primary" size="lg" class="float-right" @click="RemoveEvent">Sim</b-button>
+          <b-button
+            variant="outline-primary"
+            size="lg"
+            class="float-right"
+            @click="RemoveEvent"
+            >Sim</b-button
+          >
           <b-button
             variant="outline-danger"
             size="lg"
             class="float-right mr-2"
             @click="hideRemoveModal"
-          >Nao</b-button>
+            >Nao</b-button
+          >
         </div>
       </template>
     </b-modal>
@@ -105,7 +123,16 @@ export default {
       isRequesting: false,
       events: [],
       hadError: "",
-      editID: ""
+      editID: "",
+      pagination: {
+        perPage: 8,
+        pageable: { pageNumber: 1 }
+      },
+      ids: [],
+      hadError: "",
+      hadSuccess: "",
+      editID: "",
+      pageCount: 0
     };
   },
   methods: {
@@ -121,10 +148,26 @@ export default {
      *  to fetch the events and the will store the result
      *  into the orders local state property
      */
-    async Getevents() {
+    async getEvents(type, sort = "", search = "") {
       this.isRequesting = true;
+
+      if (type === "next") {
+        this.pagination.pageable.pageNumber += 1;
+      }
+
+      if (type === "prev") {
+        this.pagination.pageable.pageNumber -= 1;
+      }
+
+      // API query options like: sorts and pagination
+      let query = "";
+      query += `pageNumber=${this.pagination.pageable.pageNumber}`;
+      query += `&pageSize=${this.pagination.perPage}`;
+      // query += sort ? `&sortBy=${sort}` : ''
+      query += search ? `&search=${search}` : "";
+
       try {
-        const result = await this.axios.get(`/events`);
+        const result = await this.axios.get(`/events?${query}`);
         const res = result.data;
         this.events = res.data;
       } catch (e) {
@@ -133,6 +176,10 @@ export default {
       }
       this.isRequesting = false;
     },
+    changePage(page) {
+      this.pagination.pageable.pageNumber = page;
+    },
+    removeMostOrganizers(ids) {},
     /**
      * GetEvent: This method will fire a GET request and then
      * assign the response data into the state property: form
@@ -185,7 +232,7 @@ export default {
   },
   created() {
     // Get customer orders
-    this.Getevents();
+    this.getEvents();
   }
 };
 </script>

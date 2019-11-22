@@ -834,7 +834,7 @@ export default {
     submit: function() {}
   },
   created() {
-    this.step = 3;
+    this.step++;
     this.getLocations();
     this.getSponsors();
     this.getOrganizers();

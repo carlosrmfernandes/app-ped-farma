@@ -19,9 +19,9 @@ import ListSponsor from '@/views/BackOffice/Sponsors/ListSponsor'
 import EditSponsor from '@/views/BackOffice/Sponsors/EditSponsor'
 
 // Events
-import RegistEvent from '@/views/Events/RegistEvent'
-import ListEvent from '@/views/Events/ListEvent'
-import EditEvent from '@/views/Events/EditEvent'
+import RegistEvent from '@/views/BackOffice/Events/RegistEvent'
+import ListEvent from '@/views/BackOffice/Events/ListEvent'
+import EditEvent from '@/views/BackOffice/Events/EditEvent'
 
 // Companies
 import RegistCompany from '@/views/BackOffice/Company/RegistCompany'
@@ -29,8 +29,7 @@ import ListCompany from '@/views/BackOffice/Company/ListCompany'
 import EditCompany from '@/views/BackOffice/Company/EditCompany'
 
 // Auth routes
-const Auth = [
-  {
+const Auth = [{
     path: '/',
     redirect: Login
   },
@@ -39,82 +38,78 @@ const Auth = [
     component: AuthBaseView,
     redirect: Login,
     children: [{
-      path: '/',
-      name: 'Login',
-      component: Login,
-      meta: {
-        title: 'Login'
+        path: '/',
+        name: 'Login',
+        component: Login,
+        meta: {
+          title: 'Login'
+        }
+      },
+      {
+        path: 'login',
+        name: 'Login',
+        component: Login,
+        meta: {
+          title: 'Login'
+        }
+      },
+      {
+        path: 'reset-password',
+        name: 'AdminResetPassword',
+        component: AdminResetPassword,
+        meta: {
+          title: 'Redefinir Password'
+        }
       }
-    },
-    {
-      path: 'login',
-      name: 'Login',
-      component: Login,
-      meta: {
-        title: 'Login'
-      }
-    },
-    {
-      path: 'reset-password',
-      name: 'AdminResetPassword',
-      component: AdminResetPassword,
-      meta: {
-        title: 'Redefinir Password'
-      }
-    }
     ]
   }
 ]
 
 // Organizers routes
-const Organizers = [
-  {
-    path: '/organizer',
-    name: 'ListOrganizer',
-    component: View,
-    meta: {
-      title: 'Organizadores'
-    },
-    children: [
-      {
-        path: '/',
-        name: 'ListOrganizer',
-        component: ListOrganizer,
-        meta: {
-          title: 'Organizadores'
-        }
-      },
-      {
-        path: 'regist',
-        name: 'RegistOrganizer',
-        component: RegistOrganizer,
-        meta: {
-          title: 'Novo Organizador'
-        }
-      },
-      {
-        path: 'edit/:id',
-        name: 'EditOrganizer',
-        component: EditOrganizer,
-        meta: {
-          title: 'Editar Organizador'
-        },
-        props: true
+const Organizers = [{
+  path: '/organizer',
+  name: 'ListOrganizer',
+  component: View,
+  meta: {
+    title: 'Organizadores'
+  },
+  children: [{
+      path: '/',
+      name: 'ListOrganizer',
+      component: ListOrganizer,
+      meta: {
+        title: 'Organizadores'
       }
-    ]
-  }
-]
+    },
+    {
+      path: 'regist',
+      name: 'RegistOrganizer',
+      component: RegistOrganizer,
+      meta: {
+        title: 'Novo Organizador'
+      }
+    },
+    {
+      path: 'edit/:id',
+      name: 'EditOrganizer',
+      component: EditOrganizer,
+      meta: {
+        title: 'Editar Organizador'
+      },
+      props: true
+    }
+  ]
+}]
 
 // Sponsors routes
-const Sponsors = [
-  {
-    path: '/sponsor',
-    name: 'ListSponsor',
-    component: View,
-    meta: {
-      title: 'Patrocinadores'
-    },
-    children: [{
+const Sponsors = [{
+  path: '/sponsor',
+  name: 'ListSponsor',
+  component: View,
+  meta: {
+    title: 'Patrocinadores'
+  },
+  children: [{
       path: '/',
       name: 'ListSponsor',
       component: ListSponsor,
@@ -139,26 +134,25 @@ const Sponsors = [
       },
       props: true
     }
-    ]
-  }
-]
+  ]
+}]
 
 // Comapnies routes
-const Comapnies = [
-  {
-    path: '/companies',
-    name: 'ListCompany',
-    component: View,
-    meta: {
-      title: 'Listar Empresas'
-    },
-    children: [{
+const Comapnies = [{
+  path: '/companies',
+  name: 'ListCompany',
+  component: View,
+  meta: {
+    title: 'Listar Empresas'
+  },
+  children: [{
       path: '/',
       name: 'ListCompany',
       component: ListCompany,
       meta: {
         title: 'Listar Empresas'
-      } },
+      }
+    },
     {
       path: 'regist',
       name: 'RegistCompany',
@@ -176,37 +170,34 @@ const Comapnies = [
       },
       props: true
     }
-    ]
-  }
-]
+  ]
+}]
 
 // Admin routes
-const Admin = [
-  {
-    path: '/admin/all',
-    component: AdminBaseView,
-    redirect: Dashboard,
-    meta: {
-      title: 'Início',
-      name: 'Dashboard'
+const Admin = [{
+  path: '/admin/all',
+  component: AdminBaseView,
+  redirect: Dashboard,
+  meta: {
+    title: 'Início',
+    name: 'Dashboard'
+  },
+  children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: Dashboard,
+      meta: {
+        title: 'Dashboard'
+      }
     },
-    children: [
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: Dashboard,
-        meta: {
-          title: 'Dashboard'
-        }
+    {
+      path: '/events',
+      name: 'ListEvent',
+      component: View,
+      meta: {
+        title: 'Listar Eventos'
       },
-      {
-        path: '/events',
-        name: 'ListEvent',
-        component: View,
-        meta: {
-          title: 'Listar Eventos'
-        },
-        children: [{
+      children: [{
           path: '/',
           name: 'ListEvent',
           component: ListEvent,
@@ -231,14 +222,13 @@ const Admin = [
           },
           props: true
         }
-        ]
-      },
-      ...Organizers,
-      ...Sponsors,
-      ...Comapnies
-    ]
-  }
-]
+      ]
+    },
+    ...Organizers,
+    ...Sponsors,
+    ...Comapnies
+  ]
+}]
 
 // Home page
 export default [...Auth, ...Admin]
