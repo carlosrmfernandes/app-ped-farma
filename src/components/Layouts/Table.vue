@@ -13,7 +13,6 @@
             </div>
           </div>
         </div>
-
         <div class="gridOrList" v-if="needGrid" @click="tableGrid">
           <b-button
           variant="outline-danger"

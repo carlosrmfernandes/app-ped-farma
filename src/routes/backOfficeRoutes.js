@@ -9,14 +9,14 @@ import AdminResetPassword from '@/views/BackOffice/Auth/AdminResetPassword'
 import Dashboard from '@/views/BackOffice/Dashboard/Dashboard'
 
 // Organizers
-import RegistOrganizer from '@/views/Organizers/RegistOrganizer'
-import ListOrganizer from '@/views/Organizers/ListOrganizer'
-import EditOrganizer from '@/views/Organizers/EditOrganizer'
+import RegistOrganizer from '@/views/BackOffice/Organizers/RegistOrganizer'
+import ListOrganizer from '@/views/BackOffice/Organizers/ListOrganizer'
+import EditOrganizer from '@/views/BackOffice/Organizers/EditOrganizer'
 
 // Sponsors
-import RegistSponsor from '@/views/Sponsors/RegistSponsor'
-import ListSponsor from '@/views/Sponsors/ListSponsor'
-import EditSponsor from '@/views/Sponsors/EditSponsor'
+import RegistSponsor from '@/views/BackOffice/Sponsors/RegistSponsor'
+import ListSponsor from '@/views/BackOffice/Sponsors/ListSponsor'
+import EditSponsor from '@/views/BackOffice/Sponsors/EditSponsor'
 
 // Events
 import RegistEvent from '@/views/Events/RegistEvent'
@@ -24,16 +24,16 @@ import ListEvent from '@/views/Events/ListEvent'
 import EditEvent from '@/views/Events/EditEvent'
 
 // Companies
-import RegistCompany from '@/views/Company/RegistCompany'
-import ListCompany from '@/views/Company/ListCompany'
-import EditCompany from '@/views/Company/EditCompany'
+import RegistCompany from '@/views/BackOffice/Company/RegistCompany'
+import ListCompany from '@/views/BackOffice/Company/ListCompany'
+import EditCompany from '@/views/BackOffice/Company/EditCompany'
 
 // Auth routes
 const Auth = [
-  // {
-  //   path: '/admin',
-  //   redirect: Login
-  // },
+  {
+    path: '/',
+    redirect: Login
+  },
   {
     path: '/admin',
     component: AuthBaseView,
