@@ -12,7 +12,7 @@ import { BootstrapVue } from 'bootstrap-vue'
 import VeeValidate, { Validator } from 'vee-validate'
 import pt from 'vee-validate/dist/locale/pt_PT'
 
-Vue.config.productionTip = true
+Vue.config.productionTip = false
 
 // Set libraries
 moment.locale('pt_PT')
