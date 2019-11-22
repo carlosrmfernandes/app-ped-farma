@@ -327,34 +327,34 @@
                 <label for="event-class">Tipo</label>
                 <select
                   required
-                  v-model="tickets.ticketType"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('tickets.ticketType')}"
-                  name="tickets.ticketType"
+                  v-model="tickets.ticket_type"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('tickets.ticket_type')}"
+                  name="tickets.ticket_type"
                   v-validate="'required'"
                   data-vv-as="Tipo"
                 >
-                  <option id="ticketType">COUPLE</option>
-                  <option id="ticketType">WOMAN</option>
-                  <option id="ticketType">IMAX_3DX</option>
-                  <option id="ticketType">IMAX_4DX</option>
-                  <option id="ticketType">KID</option>
-                  <option id="ticketType">VIP_3D</option>
-                  <option id="ticketType">VIP_2D</option>
-                  <option id="ticketType">ECONOMIC</option>
-                  <option id="ticketType">$2D</option>
-                  <option id="ticketType">MAN</option>
-                  <option id="ticketType">IMAX</option>
-                  <option id="ticketType">REGULAR</option>
-                  <option id="ticketType">VIP</option>
-                  <option id="ticketType">VIP_COUPLE</option>
-                  <option id="ticketType">$4DX</option>
-                  <option id="ticketType">$3D</option>
-                  <option id="ticketType">VIP_KID</option>
+                  <option id="ticket_type">COUPLE</option>
+                  <option id="ticket_type">WOMAN</option>
+                  <option id="ticket_type">IMAX_3DX</option>
+                  <option id="ticket_type">IMAX_4DX</option>
+                  <option id="ticket_type">KID</option>
+                  <option id="ticket_type">VIP_3D</option>
+                  <option id="ticket_type">VIP_2D</option>
+                  <option id="ticket_type">ECONOMIC</option>
+                  <option id="ticket_type">$2D</option>
+                  <option id="ticket_type">MAN</option>
+                  <option id="ticket_type">IMAX</option>
+                  <option id="ticket_type">REGULAR</option>
+                  <option id="ticket_type">VIP</option>
+                  <option id="ticket_type">VIP_COUPLE</option>
+                  <option id="ticket_type">$4DX</option>
+                  <option id="ticket_type">$3D</option>
+                  <option id="ticket_type">VIP_KID</option>
                 </select>
                 <span
-                  v-show="errors.has('tickets.ticketType')"
+                  v-show="errors.has('tickets.ticket_type')"
                   class="help is-danger"
-                >{{ errors.first('tickets.ticketType') }}</span>
+                >{{ errors.first('tickets.ticket_type') }}</span>
                 <small class="form-text text-muted">Tipo de Ingresso</small>
               </div>
             </div>
@@ -370,10 +370,10 @@
                 <label for="event-class">Produto</label>
                 <select
                   required
-                  id="companyProductId"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('session_product.companyProductId')}"
-                  v-model="session_product.companyProductId"
-                  name="session_product.companyProductId"
+                  id="company_product_id"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('session_product.company_product_id')}"
+                  v-model="session_product.company_product_id"
+                  name="session_product.company_product_id"
                   v-validate="'required'"
                   data-vv-as="Produto"
                 >
@@ -384,9 +384,9 @@
                   >{{ product.name }}</option>
                 </select>
                 <span
-                  v-show="errors.has('session_product.companyProductId')"
+                  v-show="errors.has('session_product.company_product_id')"
                   class="help is-danger"
-                >{{ errors.first('session_product.companyProductId') }}</span>
+                >{{ errors.first('session_product.company_product_id') }}</span>
               </div>
             </div>
             <div class="col-md-3">
@@ -449,6 +449,70 @@
         </button>
       </section>
       <!-- ends step two section -->
+      <section v-if="step === 3">
+        <h2>
+          Patrocinadores
+          <span class="badge badge-pill badge-info">3</span>
+        </h2>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="event-class">Patrocinador</label>
+              <select
+                required
+                id="location_id"
+                :class="{'form-control': true, 'is-input-danger': errors.has('sponsors_id')}"
+                v-model="sponsors_id"
+                name="sponsors_id"
+                v-validate="'required'"
+                data-vv-as="Patrocinador"
+              >
+                <option
+                  v-for="sponsor in sponsors"
+                  :value="sponsor.id"
+                  :key="sponsor.id"
+                >{{ sponsor.description }}</option>
+              </select>
+              <span
+                v-show="errors.has('sponsors_id')"
+                class="help is-danger"
+              >{{ errors.first('sponsors_id') }}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="event-class">Tags</label>
+              <input
+                type="text"
+                :class="{'form-control': true, 'is-input-danger': errors.has('tags')}"
+                v-validate="'required'"
+                data-vv-as="Tags"
+                v-model="tags"
+                name="tags"
+                id="tags"
+              />
+              <span v-show="errors.has('tags')" class="help is-danger">{{ errors.first('tags') }}</span>
+            </div>
+          </div>
+        </div>
+        <button @click.prevent="prev()" class="btn btn-primary ml-2">Anterior</button>
+        <b-button
+          variant="primary"
+          size="md ml-2"
+          class="float-left"
+          :disabled="isRequesting ? true : false"
+          @click="ProcessForm(3)"
+        >
+          <span v-if="!isRequesting">Finalizar</span>
+          <div class="loading-dots" v-if="isRequesting">
+            <div class="loading-dots--dot"></div>
+            <div class="loading-dots--dot"></div>
+            <div class="loading-dots--dot"></div>
+          </div>
+        </b-button>
+      </section>
+      <!-- Step three -->
     </div>
     <div class="panel-body"></div>
   </div>
@@ -474,6 +538,7 @@ export default {
       backdrop: "",
       classification: "",
       title: "",
+      tags: "",
       description: "",
       starts_at: "",
       video_id: "",
@@ -534,7 +599,8 @@ export default {
     async getSponsors() {
       try {
         const result = await this.axios.get(`/sponsors`);
-        this.sponsors = result.data;
+        const res = result.data;
+        this.sponsors = res.data;
       } catch (e) {
         this.hadError = "Não foi possível carregar as informações.";
       }
@@ -652,24 +718,20 @@ export default {
           console.log(e);
         }
         this.isRequesting = false;
-      } else {
-        cd;
+      } else if (step == 3) {
         this.isRequesting = true;
         try {
           // Fire the PUT request
           const res = await this.axios({
-            url: `/party_events/step_3`,
+            url: `/party_events/${this.party_event_id}/step_3`,
             method: "put",
             headers: { "Content-Type": "application/json" },
-            params: {
-              party_event_id: this.party_event_id,
-              sponsor_id: this.sponsors_id
-            },
-            data: {}
+            data: {
+              sponsors: [this.sponsors_id]
+            }
           });
 
           if (res) {
-            console.log("Enviado! Passo 3.");
             // Next step
             this.step++;
             // Redirect to the Event views
@@ -695,7 +757,7 @@ export default {
     submit: function() {}
   },
   created() {
-    this.step++;
+    this.step = 3;
     this.getLocations();
     this.getSponsors();
     this.getOrganizers();
