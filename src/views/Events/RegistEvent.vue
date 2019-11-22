@@ -14,7 +14,10 @@
               <label for="event-name">Nome</label>
               <input
                 type="text"
-                :class="{'form-control': true, 'is-input-danger': errors.has('title')}"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('title')
+                }"
                 id="title"
                 v-model="title"
                 name="title"
@@ -22,7 +25,9 @@
                 v-validate="'required'"
                 data-vv-as="Nome"
               />
-              <span v-show="errors.has('title')" class="help is-danger">{{ errors.first('title') }}</span>
+              <span v-show="errors.has('title')" class="help is-danger">{{
+                errors.first("title")
+              }}</span>
             </div>
           </div>
           <div class="col-md-3">
@@ -31,7 +36,10 @@
               <select
                 required
                 id="location"
-                :class="{'form-control': true, 'is-input-danger': errors.has('location_id')}"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('location_id')
+                }"
                 v-model="location_id"
                 name="location_id"
                 v-validate="'required'"
@@ -41,12 +49,12 @@
                   v-for="location in locations"
                   :value="location.id"
                   :key="location.id"
-                >{{ location.description }}</option>
+                  >{{ location.description }}</option
+                >
               </select>
-              <span
-                v-show="errors.has('location_id')"
-                class="help is-danger"
-              >{{ errors.first('location_id') }}</span>
+              <span v-show="errors.has('location_id')" class="help is-danger">{{
+                errors.first("location_id")
+              }}</span>
             </div>
           </div>
           <div class="col-md-3">
@@ -55,7 +63,10 @@
               <select
                 required
                 v-model="classification"
-                :class="{'form-control': true, 'is-input-danger': errors.has('classification')}"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('classification')
+                }"
                 name="classification"
                 v-validate="'required'"
                 data-vv-as="Classificação"
@@ -72,7 +83,8 @@
               <span
                 v-show="errors.has('classification')"
                 class="help is-danger"
-              >{{ errors.first('classification') }}</span>
+                >{{ errors.first("classification") }}</span
+              >
             </div>
           </div>
           <div class="col-md-3">
@@ -81,17 +93,19 @@
               <input
                 required
                 type="date"
-                :class="{'form-control': true, 'is-input-danger': errors.has('starts_at')}"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('starts_at')
+                }"
                 id="startsAt"
                 v-model="starts_at"
                 name="starts_at"
                 v-validate="'required'"
                 data-vv-as="Data do Evento"
               />
-              <span
-                v-show="errors.has('starts_at')"
-                class="help is-danger"
-              >{{ errors.first('starts_at') }}</span>
+              <span v-show="errors.has('starts_at')" class="help is-danger">{{
+                errors.first("starts_at")
+              }}</span>
             </div>
           </div>
           <div class="col-md-3">
@@ -99,7 +113,10 @@
               <label for>Detalhes</label>
               <div class="form-group">
                 <textarea
-                  :class="{'form-control': true, 'is-input-danger': errors.has('description')}"
+                  :class="{
+                    'form-control': true,
+                    'is-input-danger': errors.has('description')
+                  }"
                   id="description"
                   v-model="description"
                   rows="4"
@@ -111,7 +128,8 @@
                 <span
                   v-show="errors.has('description')"
                   class="help is-danger"
-                >{{ errors.first('description') }}</span>
+                  >{{ errors.first("description") }}</span
+                >
               </div>
             </div>
           </div>
@@ -128,10 +146,9 @@
                 v-validate="'required'"
                 data-vv-as="ID do Vídeo Promocional"
               />
-              <span
-                v-show="errors.has('video_id')"
-                class="help is-danger"
-              >{{ errors.first('video_id') }}</span>
+              <span v-show="errors.has('video_id')" class="help is-danger">{{
+                errors.first("video_id")
+              }}</span>
             </div>
           </div>
           <div class="col-md-3">
@@ -140,7 +157,10 @@
               <select
                 required
                 id="organizer"
-                :class="{'form-control': true, 'is-input-danger': errors.has('organizer_id')}"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('organizer_id')
+                }"
                 v-model="organizer_id"
                 name="organizer_id"
                 v-validate="'required'"
@@ -150,12 +170,14 @@
                   v-for="organizer in organizers"
                   :value="organizer.id"
                   :key="organizer.name"
-                >{{ organizer.name }}</option>
+                  >{{ organizer.name }}</option
+                >
               </select>
               <span
                 v-show="errors.has('organizer_id')"
                 class="help is-danger"
-              >{{ errors.first('organizer_id') }}</span>
+                >{{ errors.first("organizer_id") }}</span
+              >
             </div>
           </div>
           <div class="col-md-1 mr-3">
@@ -169,7 +191,9 @@
               v-validate="'required'"
               data-vv-as="Poster"
             />
-            <span v-show="errors.has('poster')" class="help is-danger">{{ errors.first('poster') }}</span>
+            <span v-show="errors.has('poster')" class="help is-danger">{{
+              errors.first("poster")
+            }}</span>
           </div>
           <div class="col-md-1 ml-4">
             Backdrop
@@ -182,10 +206,9 @@
               v-validate="'required'"
               data-vv-as="Backdrop"
             />
-            <span
-              v-show="errors.has('backdrop')"
-              class="help is-danger"
-            >{{ errors.first('backdrop') }}</span>
+            <span v-show="errors.has('backdrop')" class="help is-danger">{{
+              errors.first("backdrop")
+            }}</span>
           </div>
         </div>
         <b-button
@@ -216,7 +239,10 @@
               <label for="event-name">Início da Sessão</label>
               <input
                 type="datetime-local"
-                :class="{'form-control': true, 'is-input-danger': errors.has('event_session.starts_at')}"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('event_session.starts_at')
+                }"
                 name="event_session.starts_at"
                 v-model="event_session.starts_at"
                 id="session_starts_at"
@@ -229,7 +255,10 @@
               <label for="event-name">Fim da Sessão</label>
               <input
                 type="datetime-local"
-                :class="{'form-control': true, 'is-input-danger': errors.has('event_session.ends_at')}"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('event_session.ends_at')
+                }"
                 name="event_session.ends_at"
                 v-model="event_session.ends_at"
                 id="event_session_ends_at"
@@ -243,7 +272,10 @@
               <select
                 required
                 id="location_id"
-                :class="{'form-control': true, 'is-input-danger': errors.has('event_session.location_id')}"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('event_session.location_id')
+                }"
                 v-model="event_session.location_id"
                 name="event_session.location_id"
                 v-validate="'required'"
@@ -253,12 +285,14 @@
                   v-for="location in locations"
                   :value="location.id"
                   :key="location.id"
-                >{{ location.description }}</option>
+                  >{{ location.description }}</option
+                >
               </select>
               <span
                 v-show="errors.has('event_session.location_id')"
                 class="help is-danger"
-              >{{ errors.first('event_session.location_id') }}</span>
+                >{{ errors.first("event_session.location_id") }}</span
+              >
             </div>
           </div>
           <div class="col-md-3">
@@ -266,7 +300,10 @@
               <label for="event-class">Preço</label>
               <input
                 type="number"
-                :class="{'form-control': true, 'is-input-danger': errors.has('event_session.price')}"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('event_session.price')
+                }"
                 v-validate="'required'"
                 data-vv-as="Preço"
                 name="event_session.price"
@@ -276,7 +313,8 @@
               <span
                 v-show="errors.has('event_session.price')"
                 class="help is-danger"
-              >{{ errors.first('event_session.price') }}</span>
+                >{{ errors.first("event_session.price") }}</span
+              >
               <small class="form-text text-muted">Preço</small>
             </div>
           </div>
@@ -289,7 +327,10 @@
                 <label for="event-class">Quantidade</label>
                 <input
                   type="number"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('tickets.amount')}"
+                  :class="{
+                    'form-control': true,
+                    'is-input-danger': errors.has('tickets.amount')
+                  }"
                   v-validate="'required'"
                   data-vv-as="Quantidade"
                   v-model="tickets.amount"
@@ -299,7 +340,8 @@
                 <span
                   v-show="errors.has('tickets.amount')"
                   class="help is-danger"
-                >{{ errors.first('tickets.amount') }}</span>
+                  >{{ errors.first("tickets.amount") }}</span
+                >
                 <small class="form-text text-muted">Quantidade</small>
               </div>
             </div>
@@ -308,7 +350,10 @@
                 <label for="event-class">Preço</label>
                 <input
                   type="number"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('tickets.price')}"
+                  :class="{
+                    'form-control': true,
+                    'is-input-danger': errors.has('tickets.price')
+                  }"
                   v-validate="'required'"
                   data-vv-as="Preço"
                   name="tickets.price"
@@ -318,7 +363,8 @@
                 <span
                   v-show="errors.has('tickets.price')"
                   class="help is-danger"
-                >{{ errors.first('tickets.price') }}</span>
+                  >{{ errors.first("tickets.price") }}</span
+                >
                 <small class="form-text text-muted">Preço</small>
               </div>
             </div>
@@ -328,7 +374,10 @@
                 <select
                   required
                   v-model="tickets.ticket_type"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('tickets.ticket_type')}"
+                  :class="{
+                    'form-control': true,
+                    'is-input-danger': errors.has('tickets.ticket_type')
+                  }"
                   name="tickets.ticket_type"
                   v-validate="'required'"
                   data-vv-as="Tipo"
@@ -354,7 +403,8 @@
                 <span
                   v-show="errors.has('tickets.ticket_type')"
                   class="help is-danger"
-                >{{ errors.first('tickets.ticket_type') }}</span>
+                  >{{ errors.first("tickets.ticket_type") }}</span
+                >
                 <small class="form-text text-muted">Tipo de Ingresso</small>
               </div>
             </div>
@@ -371,7 +421,12 @@
                 <select
                   required
                   id="company_product_id"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('session_product.company_product_id')}"
+                  :class="{
+                    'form-control': true,
+                    'is-input-danger': errors.has(
+                      'session_product.company_product_id'
+                    )
+                  }"
                   v-model="session_product.company_product_id"
                   name="session_product.company_product_id"
                   v-validate="'required'"
@@ -381,12 +436,16 @@
                     v-for="product in products"
                     :value="product.id"
                     :key="product.id"
-                  >{{ product.name }}</option>
+                    >{{ product.name }}</option
+                  >
                 </select>
                 <span
                   v-show="errors.has('session_product.company_product_id')"
                   class="help is-danger"
-                >{{ errors.first('session_product.company_product_id') }}</span>
+                  >{{
+                    errors.first("session_product.company_product_id")
+                  }}</span
+                >
               </div>
             </div>
             <div class="col-md-3">
@@ -394,7 +453,10 @@
                 <label for="event-class">Quantidade</label>
                 <input
                   type="number"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('session_product.amount')}"
+                  :class="{
+                    'form-control': true,
+                    'is-input-danger': errors.has('session_product.amount')
+                  }"
                   v-validate="'required'"
                   data-vv-as="Quantidade"
                   v-model="session_product.amount"
@@ -404,7 +466,8 @@
                 <span
                   v-show="errors.has('session_product.amount')"
                   class="help is-danger"
-                >{{ errors.first('session_product.amount') }}</span>
+                  >{{ errors.first("session_product.amount") }}</span
+                >
                 <small class="form-text text-muted">Quantidade</small>
               </div>
             </div>
@@ -413,7 +476,10 @@
                 <label for="event-class">Preço</label>
                 <input
                   type="number"
-                  :class="{'form-control': true, 'is-input-danger': errors.has('session_product.price')}"
+                  :class="{
+                    'form-control': true,
+                    'is-input-danger': errors.has('session_product.price')
+                  }"
                   v-validate="'required'"
                   data-vv-as="Preço"
                   name="session_product.price"
@@ -423,7 +489,8 @@
                 <span
                   v-show="errors.has('session_product.price')"
                   class="help is-danger"
-                >{{ errors.first('session_product.price') }}</span>
+                  >{{ errors.first("session_product.price") }}</span
+                >
                 <small class="form-text text-muted">Preço</small>
               </div>
             </div>
@@ -462,7 +529,10 @@
               <select
                 required
                 id="location_id"
-                :class="{'form-control': true, 'is-input-danger': errors.has('sponsors_id')}"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('sponsors_id')
+                }"
                 v-model="sponsors_id"
                 name="sponsors_id"
                 v-validate="'required'"
@@ -472,31 +542,35 @@
                   v-for="sponsor in sponsors"
                   :value="sponsor.id"
                   :key="sponsor.id"
-                >{{ sponsor.description }}</option>
+                  >{{ sponsor.description }}</option
+                >
               </select>
-              <span
-                v-show="errors.has('sponsors_id')"
-                class="help is-danger"
-              >{{ errors.first('sponsors_id') }}</span>
+              <span v-show="errors.has('sponsors_id')" class="help is-danger">{{
+                errors.first("sponsors_id")
+              }}</span>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="event-class">Tags</label>
-              <input
-                type="text"
-                :class="{'form-control': true, 'is-input-danger': errors.has('tags')}"
+              <vue-tags-input
+                v-model="tag"
+                :class="{
+                  'is-input-danger': errors.has('tag')
+                }"
                 v-validate="'required'"
                 data-vv-as="Tags"
-                v-model="tags"
-                name="tags"
-                id="tags"
+                :tags="tags"
+                @tags-changed="newTags => (tags = newTags)"
               />
-              <span v-show="errors.has('tags')" class="help is-danger">{{ errors.first('tags') }}</span>
+              <span v-show="errors.has('tag')" class="help is-danger">{{
+                errors.first("tag")
+              }}</span>
             </div>
           </div>
         </div>
-        <button @click.prevent="prev()" class="btn btn-primary ml-2">Anterior</button>
+        <button @click.prevent="prev()" class="btn btn-primary ml-2">
+          Anterior
+        </button>
         <b-button
           variant="primary"
           size="md ml-2"
@@ -521,9 +595,11 @@
 <script>
 import moment from "moment";
 import UploadPhoto from "@/components/Form/Photo";
+import VueTagsInput from "@johmun/vue-tags-input";
 
 export default {
   components: {
+    VueTagsInput,
     UploadPhoto
   },
   data: function() {
@@ -538,7 +614,8 @@ export default {
       backdrop: "",
       classification: "",
       title: "",
-      tags: "",
+      tags: [],
+      tag: "",
       description: "",
       starts_at: "",
       video_id: "",
@@ -766,5 +843,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
