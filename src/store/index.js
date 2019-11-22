@@ -10,6 +10,7 @@ export default new Vuex.Store({
   modules: {
     Functions,
     Admins
+
   },
   plugins: [
     createPersistedState()
