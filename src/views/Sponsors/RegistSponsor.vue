@@ -4,105 +4,162 @@
       <h1>Novo Patrocinador</h1>
     </div>
     <div class="panel-body">
-      <div class="row">
-        <div class="col-md-3">
+     <div class="row">
+       <div class="col-md-3" v-if="existCompany">
           <div class="form-group">
             <label for="event-name">Empresa</label>
             <select class="custom-select" v-model="form.company_id">
-                <option selected>Choose...</option>
-                <option :value="company.id" v-for="(company, index) of companies" :key="index" >{{company.name}}</option>
+              <option selected>Choose...</option>
+              <option
+                :value="company.id"
+                v-for="(company, index) of companies"
+                :key="index"
+              >{{company.name}}</option>
             </select>
-            <!-- <input type="text" class="form-control" v-model="form.email" id="Sponsor-name" placeholder="Nome do organizador" /> -->
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" v-if="!existCompany">
           <div class="form-group">
             <label for="event-name">Nome</label>
             <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.description')}"
-             name="form.description"
-             v-model="form.description"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.name')}"
+             name="form.name"
+             v-model="form.name"
              id="Sponsor-name"
              placeholder="Nome do Patrocinador"
              v-validate="'required'"
              data-vv-as="Nome do Patrocinador" />
-             <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="event-name">Email</label>
-            <input type="text"
-            :class="{'form-control': true, 'is-input-danger': errors.has('form.email')}"
-            name="form.email"
-            v-model="form.email"
-            id="Sponsor-email"
-            placeholder="Email"
-             v-validate="'required|email'"
-            data-vv-as="Email" />
-             <span v-show="errors.has('form.email')" class="help is-danger">{{ errors.first('form.email') }}</span>
+             <span v-show="errors.has('form.name')" class="help is-danger">{{ errors.first('form.name') }}</span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Facebook</label>
             <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.facebook_url')}"
-             name="form.facebook_url"
-             v-model="form.facebook_url"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.facebook')}"
+             name="form.facebook"
+             v-model="form.facebook"
              id="Sponsor-Facebook"
              placeholder="URL do Facebook"
-             v-validate="'required'"
              data-vv-as="Facebook" />
-             <span v-show="errors.has('form.facebook_url')" class="help is-danger">{{ errors.first('form.facebook_url') }}</span>
+             <span v-show="errors.has('form.facebook')" class="help is-danger">{{ errors.first('form.facebook') }}</span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Instagram</label>
             <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.instagram_url')}"
-             name="form.instagram_url"
-             v-model="form.instagram_url"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.instagram')}"
+             name="form.instagram"
+             v-model="form.instagram"
              id="Sponsor-Instagram"
              placeholder="URL do Instagram"
-             v-validate="'required'"
              data-vv-as="Instagram" />
-             <span v-show="errors.has('form.instagram_url')" class="help is-danger">{{ errors.first('form.instagram_url') }}</span>
+             <span v-show="errors.has('form.instagram')" class="help is-danger">{{ errors.first('form.instagram') }}</span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Twitter</label>
             <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.twitter_url')}"
-             name="form.twitter_url"
-             v-model="form.twitter_url"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.twitter')}"
+             name="form.twitter"
+             v-model="form.twitter"
              id="Sponsor-Twitter"
              placeholder="URL do Twitter"
-             v-validate="'required'"
              data-vv-as="Twitter" />
-             <span v-show="errors.has('form.twitter_url')" class="help is-danger">{{ errors.first('form.twitter_url') }}</span>
+             <span v-show="errors.has('form.twitter')" class="help is-danger">{{ errors.first('form.twitter') }}</span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="event-name">Telefone</label>
+            <label for="organizer-province">Provincia</label>
             <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.phone_number')}"
-             name="form.phone_number"
-             v-model="form.phone_number"
-             id="Sponsor-Telephone"
-             placeholder="999 999 999"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.province')}"
+             name="form.province"
+             v-model="form.province"
+             id="Organizer-Province"
+             placeholder="Provincia"
              v-validate="'required'"
-             data-vv-as="Telefone" />
-             <span v-show="errors.has('form.phone_number')" class="help is-danger">{{ errors.first('form.phone_number') }}</span>
+             data-vv-as="Provincia" />
+             <span v-show="errors.has('form.province')" class="help is-danger">{{ errors.first('form.province') }}</span>
           </div>
         </div>
-        <input style="display:none;" type="text" v-model="form.avatar" value="Testando Imagem">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="organizer-municipality">Municipio</label>
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.municipality')}"
+             name="form.municipality"
+             v-model="form.municipality"
+             id="Organizer-Municipality"
+             placeholder="Municipio"
+             v-validate="'required'"
+             data-vv-as="Municipio" />
+             <span v-show="errors.has('form.municipality')" class="help is-danger">{{ errors.first('form.municipality') }}</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="organizer-address">Bairro</label>
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.address')}"
+             name="form.address"
+             v-model="form.address"
+             id="Organizer-Address"
+             placeholder="Bairro"
+             v-validate="'required'"
+             data-vv-as="bairro" />
+             <span v-show="errors.has('form.address')" class="help is-danger">{{ errors.first('form.address') }}</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="organizer-description">Descricao</label>
+            <textarea type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.description')}"
+             name="form.description"
+             v-model="form.description"
+             id="Sponsor-Description"
+             placeholder="Descricao do Organizador"
+             v-validate="'required'"
+             data-vv-as="Descricao" />
+             <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
+          </div>
+        </div>
       </div>
-      <div class="row flex">
-          <Address></Address>
+      <div class="row">
+        <div class="col-md-3">
+          <label for="">Email</label>
+          <div class="form-group" >
+              <div class="col-md-12">
+                <input type="text"
+                :class="{'form-control': true, 'is-input-danger': errors.has('form.email')}"
+                id="Organizer-email"
+                name="form.email"
+                placeholder="Email de Contacto"
+                v-model="form.email"
+                v-validate="'required'"
+                data-vv-as="Email" />
+              </div>
+            </div>
+        </div>
+        <div class="col-md-3" >
+            <label for="">Telefone</label>
+            <div class="form-group" >
+              <div class="col-md-12">
+                <input type="text"
+                :class="{'form-control': true, 'is-input-danger': errors.has('form.phone_number')}"
+                id="Organizer-Telephone"
+                name="form.phone_number"
+                placeholder="Telefone de Contacto"
+                v-model="form.phone_number"
+                v-validate="'required'"
+                data-vv-as="Telefone(s)" />
+              </div>
+                <span v-show="errors.has('form.phone_number')" class="help is-danger">{{ errors.first('form.phone_number') }}</span>
+            </div>
+        </div>
       </div>
       <div class="row">
         <UploadPhoto
@@ -110,6 +167,7 @@
           :OnChange="SelectImage"
           width="140px"
           height="185px"
+          v-if="!existCompany"
         />
       </div>
       <div class="panel-footer">
@@ -128,16 +186,30 @@
         </b-button>
       </div>
     </div>
+    <!-- Remove Modal-->
+    <b-modal id="modal-company-existence" title="NOVO PATROCINADOR!">
+      <p class="my-4">Este Patrocinador pertecence a uma entidade cadastrada?</p>
+      <template v-slot:modal-footer>
+        <div class="w-100">
+          <b-button variant="primary" size="lg" class="float-right" @click="yesBelongs">
+            <span v-if="!isRequesting">Sim</span>
+          </b-button>
+          <b-button
+            variant="outline-danger"
+            size="lg"
+            class="float-right mr-2"
+            @click="noBelongs"
+          >Não</b-button>
+        </div>
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
-// import NextInput from '@/components/Form/NextInput'
-import Address from '@/components/Form/Address'
 import UploadPhoto from '@/components/Form/Photo'
 
 export default {
   components: {
-    Address,
     UploadPhoto
   },
   data () {
@@ -148,7 +220,14 @@ export default {
       hadSuccess: false,
       isOrderSaved: false,
       hadError: '',
-      file: ''
+      file: '',
+      emails: [{
+        email: ''
+      }],
+      telephones: [{
+        phone_number: ''
+      }],
+      existCompany: false
     }
   },
   methods: {
@@ -169,25 +248,43 @@ export default {
     async RegistSponsor () {
       this.isRequesting = true
       try {
-        const result = await this.axios.post('/sponsors', this.form)
-        if (result) {
-          // Create a new form data object
-          const fData = new FormData()
-          fData.append('logo', this.file)
-          // Fire the PUT request
+        if (this.existCompany) {
+          // eslint-disable-next-line no-const-assign
+          const result = await this.axios.post('/sponsors', this.form)
+
+          if (result) {
+          // Redirect to the Organizer views
+            this.$router.push({ name: 'ListSponsor' })
+          }
+        } else {
+          let formData = new FormData()
+          formData.append('name', this.form.name)
+          formData.append('description', this.form.description)
+          formData.append('facebook', this.form.facebook)
+          formData.append('instagram', this.form.instagram)
+          formData.append('twitter', this.form.twitter)
+          formData.append('province', this.form.province)
+          formData.append('municipality', this.form.municipality)
+          formData.append('address', this.form.address)
+          formData.append('logo', this.file)
+          formData.append('phone_number', this.form.phone_number)
+          formData.append('email', this.form.email)
+
+          // eslint-disable-next-line no-const-assign
           const res = await this.axios({
-            url: `/companies/${result.data['id']}/company_logos`,
-            method: 'put',
+            url: `/sponsors/with_company`,
+            method: 'post',
             headers: { 'Content-Type': 'multipart/form-data' },
-            data: fData
+            data: formData
           })
-          this.file = ''
 
           if (res) {
-            // Redirect to the Sponsor views
+          // Redirect to the Organizer views
             this.$router.push({ name: 'ListSponsor' })
           }
         }
+
+        this.file = ''
         this.hadSuccess = true
         this.isOrderSaved = true
       } catch (e) {
@@ -208,7 +305,35 @@ export default {
     },
     SelectImage (file) {
       this.file = file
+    },
+    showModalExistence () {
+      // Show modal for deatils
+      this.$bvModal.show('modal-company-existence')
+    },
+    add (index, type) {
+      if (type === 'email') {
+        this.emails.push({ name: '' })
+      } else if (type === 'phone') {
+        this.telephones.push({ name: '' })
+      }
+    },
+    remove (index, type) {
+      if (type === 'email') {
+        this.emails.splice(index, 1)
+      } else if (type === 'phone') {
+        this.telephones.splice(index, 1)
+      }
+    },
+    yesBelongs () {
+      this.existCompany = true
+      this.$bvModal.hide('modal-company-existence')
+    },
+    noBelongs () {
+      this.$bvModal.hide('modal-company-existence')
     }
+  },
+  mounted: function () {
+    this.showModalExistence()
   },
   created () {
     this.allCompanies()
@@ -236,4 +361,24 @@ export default {
   height: 40px;
 }
 
+.add-input{
+    display: flex;
+}
+
+.form-group .addOrRemove{
+    padding: 5px;
+    padding-top: 8px;
+    padding-right: 0;
+}
+
+@media (min-width: 768px){
+  .col-md-12 {
+      flex: 0 0 100%;
+      max-width: 100%;
+      display: flex;
+      padding-left: 0;
+      padding-right: 0;
+      padding-bottom: 20px;
+  }
+}
 </style>

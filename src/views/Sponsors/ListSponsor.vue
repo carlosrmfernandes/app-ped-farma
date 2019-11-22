@@ -7,13 +7,18 @@
       <div>
         <Table
         :cols="cols"
-        :data="companies"
+        :data="sponsors"
         title="Patrocinador"
-        :searchMethod="GetPosts"
-        :detailMethod="GetCompany"
+        :searchMethod="GetSponsors"
+        :pagination="pagination"
+        :paginationMethod="GetSponsors"
+        :sortMethod="GetSponsors"
         :needGrid="true"
+        :changePage="changePage"
         resource="company"
         editRoute="EditSponsor"
+        :pageCount="pageCount"
+        :removeResource="removeMostSponsors"
         />
       </div>
       <div class="panel-footer">
@@ -23,6 +28,9 @@
 </template>
 <script>
 import Table from '@/components/Layouts/Table'
+
+import { RemoveSponsors } from './helpers/functions.js'
+
 export default {
   components: {
     Table
@@ -37,46 +45,79 @@ export default {
     return {
       form: {},
       cols: [
-        { name: 'description', label: 'Nome' },
+        { name: 'name', label: 'Nome' },
         { name: 'email', label: 'Email' },
-        { name: 'facebook_url', label: 'Facebook' },
-        { name: 'instagram_url', label: 'Instagram' },
-        { name: 'twitter_url', label: 'Twitter' },
+        { name: 'facebook', label: 'Facebook' },
+        { name: 'instagram', label: 'Instagram' },
+        { name: 'twitter', label: 'Twitter' },
         { name: 'phone_number', label: 'Telefone' }
       ],
       isRequesting: false,
-      companies: [],
+      sponsors: [],
+      pagination: {
+        perPage: 10,
+        pageable: { pageNumber: 1 }
+      },
+      ids: [],
       hadError: '',
       hadSuccess: '',
-      editID: ''
+      editID: '',
+      pageCount: 0
     }
   },
   methods: {
     async GetPosts () {
       // eslint-disable-next-line no-unused-expressions
-      this.companies
+      this.sponsors
     },
     /*
      *  GetCompanies: This method will fire a GET request
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-    async GetCompanies () {
+    async GetSponsors (type, sort = '', search = '') {
       this.isRequesting = true
+
+      if (type === 'next') {
+        this.pagination.pageable.pageNumber += 1
+      }
+
+      if (type === 'prev') {
+        this.pagination.pageable.pageNumber -= 1
+      }
+
+      // API query options like: sorts and pagination
+      let query = ''
+      query += `pageNumber=${this.pagination.pageable.pageNumber}`
+      query += `&pageSize=${this.pagination.perPage}`
+      // query += sort ? `&sortBy=${sort}` : ''
+      query += search ? `&search=${search}` : ''
+
       try {
-        const result = await this.axios.get(`/sponsors/all`)
+        const result = await this.axios.get(`/sponsors?${query}`)
         const res = result.data
-        this.companies = res.data
+        this.sponsors = res.data
+
+        this.pageCount = res.pages_count
+        // Set Pagination
+        // delete res.data.content
       } catch (e) {
         this.hadError =
           'Não foi possível carregar as encomendas. Actualize a página.'
       }
       this.isRequesting = false
-    }
+    },
+    changePage (page) {
+      this.pagination.pageable.pageNumber = page
+    },
+    removeMostSponsors (ids) {
+      this.RemoveSponsors(ids)
+    },
+    RemoveSponsors
   },
   created () {
     // Get customer orders
-    this.GetCompanies()
+    this.GetSponsors()
   }
 }
 </script>

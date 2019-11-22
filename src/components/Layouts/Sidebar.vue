@@ -2,11 +2,12 @@
   <!-- Sidebar Holder -->
   <nav id="sidebar">
     <div class="sidebar-header">
-      <h3>BOX Admin</h3>
+      <avatar :fullname="user.name" :size="96"></avatar>
+      <h3>{{user.name}}</h3>
     </div>
-    <ul class="list-unstyled components">
+    <!-- <ul class="list-unstyled components">
       <p>Admin</p>
-    </ul>
+    </ul> -->
     <Collapse icon="nextbss-bar-chart" title="Dashboard"></Collapse>
     <Collapse title="Eventos">
       <router-link :to="{name: 'ListEvent'}" tag="a">
@@ -41,20 +42,55 @@
       </router-link>
     </Collapse>
     <ul class="list-unstyled CTAs">
-      <li>
-        <a href="#" class="article">Sair</a>
+      <li @click="DoLogout">
+        <a href="#" class="article"><span>Sair</span> <i class="fa fa-power-off fa-lg" aria-hidden="true"></i></a>
       </li>
     </ul>
   </nav>
 </template>
 <script>
 import '../../assets/css/style.scss'
-
+import {
+  mapState,
+  mapActions
+} from 'vuex'
+import Avatar from 'vue-avatar-component'
 import Collapse from './Collapse'
 
 export default {
-  data () {},
-  components: { Collapse },
-  methods: {}
+  name: 'Sidebar',
+  components: { Collapse, Avatar },
+  data () {
+    return {
+      username: ''
+    }
+  },
+  computed: {
+    ...mapState('Admins', ['user'])
+  },
+  methods: {
+    ...mapActions('Admins', ['Logout']),
+    async DoLogout () {
+      // Call the Logout method from the admin store.
+      this.Logout()
+      this.$router.push({ name: 'Login' })
+    }
+  },
+  created () {
+  }
 }
 </script>
+<style scoped>
+li{
+ display: flex;
+}
+
+li span{
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.sidebar-header h3{
+  margin-top: 20px;
+}
+</style>

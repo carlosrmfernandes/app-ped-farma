@@ -1,16 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Functions from './store/helpers/functions'
+import Admins from './store/adminsModule'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    tableDetailID: String
+  modules: {
+    Functions,
+    Admins
   },
-  mutations: {
-
-  },
-  actions: {
-
-  }
+  plugins: [
+    createPersistedState()
+  ],
+  state: {},
+  mutations: {},
+  actions: {}
 })

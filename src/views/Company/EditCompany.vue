@@ -165,6 +165,12 @@ export default {
         this.hadError = 'Não foi possível realizar esta operação.'
       }
       this.isRequesting = false
+      setTimeout(() => {
+        this.hadSuccess = ''
+      }, 500)
+    },
+    SelectImage (file) {
+      this.file = file
     },
     showRemoveModal () {
       // Show modal for deatils
@@ -173,9 +179,6 @@ export default {
     hideRemoveModal () {
       // Show modal for deatils
       this.$bvModal.hide('modal-remove')
-    },
-    SelectImage (file) {
-      this.file = file
     }
   },
   created () {
