@@ -31,7 +31,7 @@ Vue.use(PortalVue)
 Vue.use(BootstrapVue)
 
 // Other Configurations
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 new Vue({
   router,
