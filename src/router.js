@@ -8,12 +8,10 @@ Vue.use(Router)
 /*
  *  Not found
  */
-const NotFound = [
-  {
-    path: '*',
-    redirect: '/'
-  }
-]
+const NotFound = [{
+  path: '*',
+  redirect: '/'
+}]
 
 /*
  *  Main router object
@@ -38,7 +36,7 @@ const router = new Router({
  * @param {string} localStorageObject
  * @param {object} redirectPath
  */
-function CanUserAccessThisRoute (
+function CanUserAccessThisRoute(
   to,
   next,
   path,
@@ -63,7 +61,9 @@ function CanUserAccessThisRoute (
  */
 router.beforeEach((to, from, next) => {
   // Guard admin routes
-  const adminLoginPath = { name: 'Login' }
+  const adminLoginPath = {
+    name: 'Login'
+  }
   CanUserAccessThisRoute(to, next, '/admin/all', 'box_admin', adminLoginPath)
 })
 

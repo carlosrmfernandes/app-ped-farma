@@ -1,49 +1,48 @@
 <template>
- <div class="panel">
+  <div class="panel">
     <div class="panel-header">
       <h1>Organizadores</h1>
     </div>
     <div class="panel-body">
       <div>
         <Table
-        :cols="cols"
-        :data="organizers"
-        title="Organizador"
-        :searchMethod="GetOrganizers"
-        :pagination="pagination"
-        :paginationMethod="GetOrganizers"
-        :sortMethod="GetOrganizers"
-        :needGrid="true"
-        :changePage="changePage"
-        resource="organizer"
-        editRoute="EditOrganizer"
-        :pageCount="pageCount"
-        :removeResource="removeMostOrganizers"
+          :cols="cols"
+          :data="organizers"
+          title="Organizador"
+          :searchMethod="GetOrganizers"
+          :pagination="pagination"
+          :paginationMethod="GetOrganizers"
+          :sortMethod="GetOrganizers"
+          :needGrid="true"
+          :changePage="changePage"
+          resource="organizer"
+          editRoute="EditOrganizer"
+          :pageCount="pageCount"
+          :removeResource="removeMostOrganizers"
         />
       </div>
-      <div class="panel-footer">
-      </div>
+      <div class="panel-footer"></div>
     </div>
   </div>
 </template>
 <script>
-import { RemoveOrganizer } from './helpers/functions.js'
+import { RemoveOrganizer } from "./helpers/functions.js";
 
-import Table from '@/components/Layouts/Table'
+import Table from "@/components/Layouts/Table";
 export default {
   components: {
     Table
   },
-  data () {
+  data() {
     return {
       form: {},
       cols: [
-        { name: 'name', label: 'Nome' },
-        { name: 'email', label: 'Email' },
-        { name: 'facebook', label: 'Facebook' },
-        { name: 'instagram', label: 'Instagram' },
-        { name: 'twitter', label: 'Twitter' },
-        { name: 'phone_number', label: 'Telefone' }
+        { name: "name", label: "Nome" },
+        { name: "email", label: "Email" },
+        { name: "facebook", label: "Facebook" },
+        { name: "instagram", label: "Instagram" },
+        { name: "twitter", label: "Twitter" },
+        { name: "phone_number", label: "Telefone" }
       ],
       isRequesting: false,
       organizers: [],
@@ -52,67 +51,67 @@ export default {
         pageable: { pageNumber: 1 }
       },
       ids: [],
-      hadError: '',
-      hadSuccess: '',
-      editID: '',
+      hadError: "",
+      hadSuccess: "",
+      editID: "",
       pageCount: 0
-    }
+    };
   },
   methods: {
-    async GetPosts () {
+    async GetPosts() {
       // eslint-disable-next-line no-unused-expressions
-      this.organizers
+      this.organizers;
     },
     /*
      *  GetCompanies: This method will fire a GET request
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-    async GetOrganizers (type, sort = '', search = '') {
-      this.isRequesting = true
+    async GetOrganizers(type, sort = "", search = "") {
+      this.isRequesting = true;
 
-      if (type === 'next') {
-        this.pagination.pageable.pageNumber += 1
+      if (type === "next") {
+        this.pagination.pageable.pageNumber += 1;
       }
 
-      if (type === 'prev') {
-        this.pagination.pageable.pageNumber -= 1
+      if (type === "prev") {
+        this.pagination.pageable.pageNumber -= 1;
       }
 
       // API query options like: sorts and pagination
-      let query = ''
-      query += `pageNumber=${this.pagination.pageable.pageNumber}`
-      query += `&pageSize=${this.pagination.perPage}`
+      let query = "";
+      query += `pageNumber=${this.pagination.pageable.pageNumber}`;
+      query += `&pageSize=${this.pagination.perPage}`;
       // query += sort ? `&sortBy=${sort}` : ''
-      query += search ? `&search=${search}` : ''
+      query += search ? `&search=${search}` : "";
 
       try {
-        const result = await this.axios.get(`/organizers?${query}`)
-        const res = result.data
-        this.organizers = res.data
+        const result = await this.axios.get(`/organizers?${query}`);
+        const res = result.data;
+        this.organizers = res.data;
 
-        this.pageCount = res.pages_count
+        this.pageCount = res.pages_count;
         // Set Pagination
         // delete res.data.content
       } catch (e) {
         this.hadError =
-          'Não foi possível carregar as encomendas. Actualize a página.'
+          "Não foi possível carregar as encomendas. Actualize a página.";
       }
-      this.isRequesting = false
+      this.isRequesting = false;
     },
-    changePage (page) {
-      this.pagination.pageable.pageNumber = page
+    changePage(page) {
+      this.pagination.pageable.pageNumber = page;
     },
-    removeMostOrganizers (ids) {
-      this.RemoveOrganizer(ids)
+    removeMostOrganizers(ids) {
+      this.RemoveOrganizer(ids);
     },
     RemoveOrganizer
   },
-  created () {
+  created() {
     // Get customer orders
-    this.GetOrganizers()
+    this.GetOrganizers();
   }
-}
+};
 </script>
 <style>
 .panel {
@@ -134,10 +133,10 @@ export default {
   margin-top: 40px;
   height: 40px;
 }
-label{
+label {
   float: left !important;
 }
-.modal-content{
+.modal-content {
   margin-top: 15% !important;
 }
 </style>
