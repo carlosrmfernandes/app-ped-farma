@@ -12,8 +12,6 @@ import { BootstrapVue } from 'bootstrap-vue'
 import VeeValidate, { Validator } from 'vee-validate'
 import pt from 'vee-validate/dist/locale/pt_PT'
 
-Vue.config.productionTip = false
-
 // Set libraries
 moment.locale('pt_PT')
 Vue.use(VeeValidate)
@@ -22,8 +20,18 @@ Vue.use(VueAxios, axios)
 axios.defaults.baseURL = process.env.VUE_APP_API
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
+// Get Token evertime we realod the page
+const token = localStorage.getItem('user_token')
+if (token) {
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+}
+
+// Components
 Vue.use(PortalVue)
 Vue.use(BootstrapVue)
+
+// Other Configurations
+Vue.config.productionTip = false
 
 new Vue({
   router,
