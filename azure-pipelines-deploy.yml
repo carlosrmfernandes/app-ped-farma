@@ -30,7 +30,7 @@ steps:
 - task: AzureFileCopy@3
   inputs:
     SourcePath: '$(System.DefaultWorkingDirectory)/dist'
-    azureSubscription: 'NEXTBSS'
+    azureSubscription: $(azureSubscription)
     Destination: 'AzureBlob'
     storage: 'staticnextwebsites'
     ContainerName: '$web'
