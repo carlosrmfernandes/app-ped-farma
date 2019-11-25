@@ -3,12 +3,14 @@ import axios from 'axios'
 const Login = async ({ commit }, form) => {
   try {
     const result = await axios.post('/v1/admins/login', form)
+    const token = result.data.token
     // Commit data
     commit('SET_ADMIN', result.data)
     // Save data to the localstorage
     localStorage.setItem('box_admin', JSON.stringify(result.data))
+    localStorage.setItem('user_token', token)
     axios.defaults.headers.common['Authorization'] =
-      'Bearer ' + result.data.token
+      'Bearer ' + token
     return Promise.resolve(result.data)
   } catch (e) {
     return Promise.reject(e)
@@ -30,6 +32,7 @@ const Logout = ({ commit }) => {
     commit('SET_ADMIN', {})
     // Clear the localstorage
     localStorage.removeItem('box_admin')
+    localStorage.removeItem('user_token')
     // Clear the auth headers
     axios.defaults.headers.common['Authorization'] = ''
     Promise.resolve(true)
