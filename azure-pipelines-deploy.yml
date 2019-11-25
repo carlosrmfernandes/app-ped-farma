@@ -10,7 +10,7 @@ pool:
   vmImage: 'vs2017-win2016'
 
 variables:
-  azureSubscription: '3f61955d-5274-4b0b-b3d8-fd9a88f50c06'
+  azureSubscription: 'c48ab3c9-cda7-4478-b6d9-3326f86a3004'
 
 steps:
 - task: NodeTool@0
