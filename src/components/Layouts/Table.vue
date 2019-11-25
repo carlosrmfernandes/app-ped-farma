@@ -35,6 +35,7 @@
                 <input type="checkbox" v-model="selectAll" @click="select" />
                 <div class="square"></div>
               </label>
+              <!-- <span>Tudo</span> -->
               </th>
               <th v-for="(col, index) in cols" :key="index">{{ col.label }}</th>
             </tr>
@@ -396,6 +397,10 @@ span.deleteicon span {
   border: 1px solid #fff;
   border-radius: 4px;
   display: inline-block;
+}
+
+.checkbox.first .square {
+  border: 1px solid #fff;
 }
 
 .checkbox.first input:checked + .square {
