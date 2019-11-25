@@ -550,20 +550,24 @@
               }}</span>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
             <div class="form-group">
-              <vue-tags-input
-                v-model="tag"
+              <label for="event-class">Tags</label>
+              <input
+                type="text"
                 :class="{
-                  'is-input-danger': errors.has('tag')
+                  'form-control': true,
+                  'is-input-danger': errors.has('tags')
                 }"
                 v-validate="'required'"
                 data-vv-as="Tags"
-                :tags="tags"
-                @tags-changed="newTags => (tags = newTags)"
+                v-model="tags"
+                name="tags"
+                id="tags"
               />
-              <span v-show="errors.has('tag')" class="help is-danger">{{
-                errors.first("tag")
+              <small class="form-text text-muted">Ex.: festa, evento</small>
+              <span v-show="errors.has('tags')" class="help is-danger">{{
+                errors.first("tags")
               }}</span>
             </div>
           </div>
@@ -595,11 +599,9 @@
 <script>
 import moment from "moment";
 import UploadPhoto from "@/components/Form/Photo";
-import VueTagsInput from "@johmun/vue-tags-input";
 
 export default {
   components: {
-    VueTagsInput,
     UploadPhoto
   },
   data: function() {
@@ -614,8 +616,7 @@ export default {
       backdrop: "",
       classification: "",
       title: "",
-      tags: [],
-      tag: "",
+      tags: "",
       description: "",
       starts_at: "",
       video_id: "",
@@ -795,8 +796,10 @@ export default {
           console.log(e);
         }
         this.isRequesting = false;
-      } else if (step == 3) {
+      } else if (step === 3) {
         this.isRequesting = true;
+        this.tags = this.tags.split(", ");
+
         try {
           // Fire the PUT request
           const res = await this.axios({
@@ -804,13 +807,12 @@ export default {
             method: "put",
             headers: { "Content-Type": "application/json" },
             data: {
-              sponsors: [this.sponsors_id]
+              sponsors: [this.sponsors_id],
+              tags: this.tags
             }
           });
 
           if (res) {
-            // Next step
-            this.step++;
             // Redirect to the Event views
             this.$router.push({ name: "ListEvent" });
           }
@@ -830,11 +832,10 @@ export default {
     },
     prev: function() {
       this.step--;
-    },
-    submit: function() {}
+    }
   },
   created() {
-    this.step++;
+    this.step = 3;
     this.getLocations();
     this.getSponsors();
     this.getOrganizers();
@@ -843,4 +844,21 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.ti-input {
+  margin-top: 31px;
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 3px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+</style>
