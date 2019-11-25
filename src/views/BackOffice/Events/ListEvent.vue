@@ -125,7 +125,7 @@ export default {
       hadError: "",
       editID: "",
       pagination: {
-        perPage: 8,
+        perPage: 12,
         pageable: { pageNumber: 1 }
       },
       ids: [],
@@ -170,6 +170,8 @@ export default {
         const result = await this.axios.get(`/events?${query}`);
         const res = result.data;
         this.events = res.data;
+
+        this.pageCount = res.pages_count;
       } catch (e) {
         this.hadError =
           "Não foi possível carregar o evento. Actualize a página.";
