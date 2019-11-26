@@ -91,7 +91,8 @@
              placeholder="Descricao do Organizador"
              v-validate="'required'"
              :disabled="isEditable"
-             data-vv-as="Descricao" />
+             data-vv-as="Descricao"
+             rows="4" />
              <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
           </div>
         </div>
@@ -168,6 +169,7 @@
                 name="email.email"
                 placeholder="Email(s) de Contacto"
                 v-model="email.email"
+                :disabled="isEditable"
                 v-validate="'required|email'"
                 data-vv-as="Email(s)"/>
                 <span class="addOrRemove">
@@ -201,6 +203,7 @@
                 name="telephone.phone_number"
                 placeholder="Telefone(s) de Contacto"
                 v-model="telephone.phone_number"
+                :disabled="isEditable"
                 v-validate="'required'"
                 data-vv-as="Telefone(s)" />
                 <span class="addOrRemove">
