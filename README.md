@@ -1,29 +1,52 @@
-# second-tailwind
+# Box - Backoffice
 
-## Project setup
+## Requirements
+
+- [Node](https://nodejs.org/en/download/) >= 10.16.3
+- [Vue CLI](https://cli.vuejs.org/guide/installation.html) >= 4.0.3
+
+  - Using NPM
+
+  ```sh
+  npm install -g @vue/cli-service-global
+  ```
+
+  - Using Yarn
+
+  ```sh
+  yarn global add @vue/cli-service-global
+  ```
+
+### Installing Dependencies
+
+```sh
+yarn install
 ```
+
+or
+
+```sh
 npm install
 ```
 
 ### Compiles and hot-reloads for development
-```
-npm run serve
+
+```sh
+yarn serve
 ```
 
 ### Compiles and minifies for production
-```
-npm run build
-```
 
-### Run your tests
-```
-npm run test
+```sh
+yarn build
 ```
 
 ### Lints and fixes files
-```
-npm run lint
+
+```sh
+yarn lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -12,11 +12,11 @@ import RightContent from '@/components/Layouts/Right-Content.vue'
 import Breadcrumbs from '@/components/Layouts/Breadcrumbs.vue'
 
 export default {
-  name: 'home',
+  name: "home",
   components: {
     Sidebar,
     RightContent,
     Breadcrumbs
   }
-}
+};
 </script>
