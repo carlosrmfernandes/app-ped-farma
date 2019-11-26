@@ -71,7 +71,7 @@
                 v-validate="'required'"
                 data-vv-as="Classificação"
               >
-                <option selected id="classification">A</option>
+                <option selected="selected" id="classification">A</option>
                 <option id="classification">E</option>
                 <option id="classification">T</option>
                 <option id="classification">G</option>
@@ -110,38 +110,13 @@
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for>Detalhes</label>
-              <div class="form-group">
-                <textarea
-                  :class="{
-                    'form-control': true,
-                    'is-input-danger': errors.has('description')
-                  }"
-                  id="description"
-                  v-model="description"
-                  rows="4"
-                  placeholder="Descrição do evento"
-                  name="description"
-                  v-validate="'required'"
-                  data-vv-as="Detalhes do evento"
-                ></textarea>
-                <span
-                  v-show="errors.has('description')"
-                  class="help is-danger"
-                  >{{ errors.first("description") }}</span
-                >
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
               <label for="evideoId">ID do Vídeo Promocional</label>
               <input
                 type="text"
                 class="form-control"
                 id="videoId"
                 v-model="video_id"
-                placeholder="Ex.: "
+                placeholder="Ex.: A_YQzKo5Ows"
                 name="video_id"
                 v-validate="'required'"
                 data-vv-as="ID do Vídeo Promocional"
@@ -149,6 +124,11 @@
               <span v-show="errors.has('video_id')" class="help is-danger">{{
                 errors.first("video_id")
               }}</span>
+              <small class="form-text text-muted"
+                >Exemplo: https://www.youtube.com/watch?v=<b
+                  >A_YQzKo5Ows</b
+                ></small
+              >
             </div>
           </div>
           <div class="col-md-3">
@@ -180,35 +160,64 @@
               >
             </div>
           </div>
-          <div class="col-md-1 mr-3">
-            Poster
-            <UploadPhoto
-              :OnChange="SelectPoster"
-              v-model="poster"
-              width="140px"
-              height="185px"
-              name="poster"
-              v-validate="'required'"
-              data-vv-as="Poster"
-            />
-            <span v-show="errors.has('poster')" class="help is-danger">{{
-              errors.first("poster")
-            }}</span>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for>Detalhes</label>
+              <div class="form-group">
+                <textarea
+                  :class="{
+                    'form-control': true,
+                    'is-input-danger': errors.has('description')
+                  }"
+                  id="description"
+                  v-model="description"
+                  rows="4"
+                  placeholder="Descrição do evento"
+                  name="description"
+                  v-validate="'required'"
+                  data-vv-as="Detalhes do evento"
+                ></textarea>
+                <span
+                  v-show="errors.has('description')"
+                  class="help is-danger"
+                  >{{ errors.first("description") }}</span
+                >
+              </div>
+            </div>
           </div>
-          <div class="col-md-1 ml-4">
-            Backdrop
-            <UploadPhoto
-              :OnChange="SelectBackdrop"
-              v-model="backdrop"
-              width="140px"
-              height="185px"
-              name="backdrop"
-              v-validate="'required'"
-              data-vv-as="Backdrop"
-            />
-            <span v-show="errors.has('backdrop')" class="help is-danger">{{
-              errors.first("backdrop")
-            }}</span>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4 mb-4">
+              Backdrop
+              <UploadPhoto
+                :OnChange="SelectBackdrop"
+                v-model="backdrop"
+                width="140px"
+                height="185px"
+                name="backdrop"
+                v-validate="'required'"
+                data-vv-as="Backdrop"
+              />
+              <span v-show="errors.has('backdrop')" class="help is-danger">{{
+                errors.first("backdrop")
+              }}</span>
+            </div>
+            <div class="col-md-4">
+              Poster
+              <UploadPhoto
+                :OnChange="SelectPoster"
+                v-model="poster"
+                width="140px"
+                height="185px"
+                name="poster"
+                v-validate="'required'"
+                data-vv-as="Poster"
+              />
+              <span v-show="errors.has('poster')" class="help is-danger">{{
+                errors.first("poster")
+              }}</span>
+            </div>
           </div>
         </div>
         <b-button
@@ -304,6 +313,7 @@
                   'form-control': true,
                   'is-input-danger': errors.has('event_session.price')
                 }"
+                placeholder="Ex.: 2500"
                 v-validate="'required'"
                 data-vv-as="Preço"
                 name="event_session.price"
@@ -331,6 +341,7 @@
                     'form-control': true,
                     'is-input-danger': errors.has('tickets.amount')
                   }"
+                  placeholder="Ex.: 1100"
                   v-validate="'required'"
                   data-vv-as="Quantidade"
                   v-model="tickets.amount"
@@ -354,6 +365,7 @@
                     'form-control': true,
                     'is-input-danger': errors.has('tickets.price')
                   }"
+                  placeholder="Ex.: 5500"
                   v-validate="'required'"
                   data-vv-as="Preço"
                   name="tickets.price"
@@ -382,7 +394,7 @@
                   v-validate="'required'"
                   data-vv-as="Tipo"
                 >
-                  <option id="ticket_type">COUPLE</option>
+                  <option selected id="ticket_type">COUPLE</option>
                   <option id="ticket_type">WOMAN</option>
                   <option id="ticket_type">IMAX_3DX</option>
                   <option id="ticket_type">IMAX_4DX</option>
@@ -457,6 +469,7 @@
                     'form-control': true,
                     'is-input-danger': errors.has('session_product.amount')
                   }"
+                  placeholder="Ex.: 3500"
                   v-validate="'required'"
                   data-vv-as="Quantidade"
                   v-model="session_product.amount"
@@ -480,6 +493,7 @@
                     'form-control': true,
                     'is-input-danger': errors.has('session_product.price')
                   }"
+                  placeholder="Ex.: 5000"
                   v-validate="'required'"
                   data-vv-as="Preço"
                   name="session_product.price"
@@ -835,7 +849,7 @@ export default {
     }
   },
   created() {
-    this.step++;
+    this.step = 2;
     this.getLocations();
     this.getSponsors();
     this.getOrganizers();
