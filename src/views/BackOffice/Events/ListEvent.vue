@@ -98,7 +98,7 @@
   </div>
 </template>
 <script>
-import Table from "@/components/Layouts/Table";
+import Table from '@/components/Layouts/Table';
 export default {
   components: {
     Table
@@ -109,134 +109,134 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       form: {},
       cols: [
-        { name: "title", label: "Titulo" },
-        { name: "status", label: "Status" },
-        { name: "classification", label: "Classificação" },
-        { name: "type", label: "Tipo" },
-        { name: "starts_at", label: "Data" },
-        { name: "created_at", label: "Criado Em" }
+        { name: 'title', label: 'Titulo' },
+        { name: 'status', label: 'Status' },
+        { name: 'classification', label: 'Classificação' },
+        { name: 'type', label: 'Tipo' },
+        { name: 'starts_at', label: 'Data' },
+        { name: 'created_at', label: 'Criado Em' }
       ],
       isRequesting: false,
       events: [],
-      hadError: "",
-      editID: "",
+      hadError: '',
+      editID: '',
       pagination: {
         perPage: 12,
         pageable: { pageNumber: 1 }
       },
       ids: [],
-      hadError: "",
-      hadSuccess: "",
-      editID: "",
+      hadError: '',
+      hadSuccess: '',
+      editID: '',
       pageCount: 0
-    };
+    }
   },
   methods: {
-    editEvents() {
-      this.isEditable = true;
+    editEvents () {
+      this.isEditable = true
     },
-    async GetPosts() {
+    async GetPosts () {
       // eslint-disable-next-line no-unused-expressions
-      this.events;
+      this.events
     },
     /*
      *  Getevents: This method will fire a GET request
      *  to fetch the events and the will store the result
      *  into the orders local state property
      */
-    async getEvents(type, sort = "", search = "") {
-      this.isRequesting = true;
+    async getEvents (type, sort = '', search = '') {
+      this.isRequesting = true
 
-      if (type === "next") {
-        this.pagination.pageable.pageNumber += 1;
+      if (type === 'next') {
+        this.pagination.pageable.pageNumber += 1
       }
 
-      if (type === "prev") {
-        this.pagination.pageable.pageNumber -= 1;
+      if (type === 'prev') {
+        this.pagination.pageable.pageNumber -= 1
       }
 
       // API query options like: sorts and pagination
-      let query = "";
-      query += `pageNumber=${this.pagination.pageable.pageNumber}`;
-      query += `&pageSize=${this.pagination.perPage}`;
+      let query = '';
+      query += `pageNumber=${this.pagination.pageable.pageNumber}`
+      query += `&pageSize=${this.pagination.perPage}`
       // query += sort ? `&sortBy=${sort}` : ''
-      query += search ? `&search=${search}` : "";
+      query += search ? `&search=${search}` : '';
 
       try {
-        const result = await this.axios.get(`/events?${query}`);
-        const res = result.data;
-        this.events = res.data;
+        const result = await this.axios.get(`/events?${query}`)
+        const res = result.data
+        this.events = res.data
 
-        this.pageCount = res.pages_count;
+        this.pageCount = res.pages_count
       } catch (e) {
         this.hadError =
-          "Não foi possível carregar o evento. Actualize a página.";
+          'Não foi possível carregar o evento. Actualize a página.';
       }
-      this.isRequesting = false;
+      this.isRequesting = false
     },
-    changePage(page) {
-      this.pagination.pageable.pageNumber = page;
+    changePage (page) {
+      this.pagination.pageable.pageNumber = page
     },
-    removeMostOrganizers(ids) {},
+    removeMostOrganizers (ids) {},
     /**
      * GetEvent: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
-    async GetEvent() {
-      this.isRequesting = true;
+    async GetEvent () {
+      this.isRequesting = true
       // Get the table rwo's details ID in store
-      this.editID = this.$store.state.tableDetailID;
+      this.editID = this.$store.state.tableDetailID
       try {
-        const result = await this.axios.get(`/events/${this.editID}`);
-        this.form = result.data;
+        const result = await this.axios.get(`/events/${this.editID}`)
+        this.form = result.data
       } catch (e) {
-        this.hadError = "Não foi possível carregar as informações.";
+        this.hadError = 'Não foi possível carregar as informações.';
       }
-      this.isRequesting = false;
+      this.isRequesting = false
     },
     /**
      * GetEvent: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
-    async RemoveEvent() {
-      this.isRequesting = true;
+    async RemoveEvent () {
+      this.isRequesting = true
       // Get the table rwo's details ID in store
-      this.editID = this.$store.state.tableDetailID;
+      this.editID = this.$store.state.tableDetailID
       try {
-        const result = await this.axios.delete(`/events/${this.editID}`);
-        this.form = result.data;
+        const result = await this.axios.delete(`/events/${this.editID}`)
+        this.form = result.data
       } catch (e) {
-        this.hadError = "Não foi possível efetuar esta operação.";
+        this.hadError = 'Não foi possível efetuar esta operação.';
       }
-      this.isRequesting = false;
-      this.$store.state.tableDetailID = "";
+      this.isRequesting = false
+      this.$store.state.tableDetailID = '';
     },
-    hideModal() {
-      this.$bvModal.hide("bv-modal-example");
+    hideModal () {
+      this.$bvModal.hide('bv-modal-example')
       // Set the value to empty
-      this.$store.state.tableDetailID = "";
+      this.$store.state.tableDetailID = '';
     },
-    showRemoveModal() {
+    showRemoveModal () {
       // this.$store.state.tableDetailID = id
       // Show modal for deatils
-      this.$bvModal.show("modal-remove");
+      this.$bvModal.show('modal-remove')
     },
-    hideRemoveModal() {
+    hideRemoveModal () {
       // Set the ID value on store Global variable for using with modal
-      this.$store.state.tableDetailID = "";
+      this.$store.state.tableDetailID = '';
       // Show modal for deatils
-      this.$bvModal.hide("modal-remove");
+      this.$bvModal.hide('modal-remove')
     }
   },
-  created() {
+  created () {
     // Get customer orders
-    this.getEvents();
+    this.getEvents()
   }
-};
+}
 </script>
 <style>
 .panel {

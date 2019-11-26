@@ -86,7 +86,6 @@
              v-model="form.description"
              id="Sponsor-Description"
              placeholder="Descricao do Organizador"
-             v-validate="'required'"
              :disabled="isEditable"
              data-vv-as="Descricao"
              rows="4" />

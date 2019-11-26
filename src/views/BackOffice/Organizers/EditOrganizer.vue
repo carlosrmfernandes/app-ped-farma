@@ -89,7 +89,6 @@
              v-model="form.description"
              id="Organizer-Description"
              placeholder="Descricao do Organizador"
-             v-validate="'required'"
              :disabled="isEditable"
              data-vv-as="Descricao"
              rows="4" />

@@ -119,7 +119,6 @@
              v-model="form.description"
              id="Organizer-Description"
              placeholder="Descricao do Organizador"
-             v-validate="'required'"
              data-vv-as="Descricao"
              rows="4" />
              <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
