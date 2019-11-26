@@ -139,7 +139,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 
 .container-login{
   width: 100%;
@@ -182,8 +182,8 @@ export default {
   padding-top: 50px;
 }
 
-label{
-  color: #fff;
+.box-login-body label{
+  color: #fff !important;
   margin-left: 14px;
 }
 

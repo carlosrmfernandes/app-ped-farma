@@ -42,7 +42,7 @@
       </router-link>
     </Collapse>
     <ul class="list-unstyled CTAs">
-      <li @click="DoLogout">
+      <li @click="DoLogout" >
         <a href="#" class="article"><span>Sair</span> <i class="fa fa-power-off fa-lg" aria-hidden="true"></i></a>
       </li>
     </ul>
@@ -66,7 +66,10 @@ export default {
     }
   },
   computed: {
-    ...mapState('Admins', ['user'])
+    ...mapState('Admins', ['user']),
+    isLoggedIn () {
+      return this.$store.getters.isLoggedIn
+    }
   },
   methods: {
     ...mapActions('Admins', ['Logout']),
