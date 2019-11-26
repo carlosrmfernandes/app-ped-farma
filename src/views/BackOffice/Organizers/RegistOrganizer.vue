@@ -139,6 +139,7 @@
                 v-validate="'required'"
                 data-vv-as="Email" />
               </div>
+                <span v-show="errors.has('form.email')" class="help is-danger">{{ errors.first('form.email') }}</span>
             </div>
         </div>
         <div class="col-md-3" >
