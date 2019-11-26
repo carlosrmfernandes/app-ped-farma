@@ -135,9 +135,7 @@
                 id="Organizer-email"
                 name="form.email"
                 placeholder="Email de Contacto"
-                v-model="form.email"
-                v-validate="'required'"
-                data-vv-as="Email" />
+                v-model="form.email"/>
               </div>
             </div>
         </div>
@@ -150,11 +148,8 @@
                 id="Organizer-Telephone"
                 name="form.phone_number"
                 placeholder="Telefone de Contacto"
-                v-model="form.phone_number"
-                v-validate="'required'"
-                data-vv-as="Telefone(s)" />
+                v-model="form.phone_number"/>
               </div>
-                <span v-show="errors.has('form.phone_number')" class="help is-danger">{{ errors.first('form.phone_number') }}</span>
             </div>
         </div>
       </div>
