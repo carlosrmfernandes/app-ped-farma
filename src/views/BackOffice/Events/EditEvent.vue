@@ -377,7 +377,7 @@
 </template>
 
 <script>
-import UploadPhoto from "@/components/Form/Photo";
+import UploadPhoto from '@/components/Form/Photo'
 
 export default {
   props: {
@@ -385,36 +385,36 @@ export default {
       type: String
     }
   },
-  data: function() {
+  data: function () {
     return {
       party_event_id: this.id,
-      party_event_data: "",
+      party_event_data: '',
       step: 0,
-      locations: "",
-      organizers: "",
-      organizer_id: "",
-      classifications: "",
-      poster: "",
-      backdrop: "",
-      classification: "",
-      title: "",
-      tags: "",
-      description: "",
-      starts_at: "",
-      video_id: "",
-      location_id: "",
-      products: "",
-      startsAt: "",
-      company_product_id: "",
+      locations: '',
+      organizers: '',
+      organizer_id: '',
+      classifications: '',
+      poster: '',
+      backdrop: '',
+      classification: '',
+      title: '',
+      tags: '',
+      description: '',
+      starts_at: '',
+      video_id: '',
+      location_id: '',
+      products: '',
+      startsAt: '',
+      company_product_id: '',
       event_session: {},
       session_product: {},
       tickets: {},
       sponsors: {},
-      sponsors_id: "",
+      sponsors_id: '',
       isRequesting: false,
       hadSuccess: false,
-      hadError: ""
-    };
+      hadError: ''
+    }
   },
   components: {
     UploadPhoto
@@ -424,25 +424,25 @@ export default {
      * updatePartyEvent: This method will fire a PATCH request and then
      * assign the response data into the state property: form
      */
-    async updatePartyEvent(step) {
+    async updatePartyEvent (step) {
       try {
         if (step == 2) {
-          this.event_session.price = parseInt(this.event_session.price, 10);
+          this.event_session.price = parseInt(this.event_session.price, 10)
 
           this.session_product.amount = parseInt(
             this.session_product.amount,
             10
-          );
-          this.session_product.price = parseInt(this.session_product.price, 10);
+          )
+          this.session_product.price = parseInt(this.session_product.price, 10)
 
-          this.tickets.amount = parseInt(this.tickets.amount, 10);
-          this.tickets.price = parseInt(this.tickets.price, 10);
+          this.tickets.amount = parseInt(this.tickets.amount, 10)
+          this.tickets.price = parseInt(this.tickets.price, 10)
 
           // Fire the PUT request
           const res = await this.axios({
             url: `/party_events/${this.party_event_id}/step_2`,
-            method: "put",
-            headers: { "Content-Type": "application/json" },
+            method: 'put',
+            headers: { 'Content-Type': 'application/json' },
             data: {
               sessions: [
                 {
@@ -455,133 +455,133 @@ export default {
                 }
               ]
             }
-          });
+          })
 
           if (res) {
             // Next step
-            this.step++;
+            this.step++
           }
         } else if (step == 3) {
-          this.isRequesting = true;
-          this.tags = this.tags.split(", ");
+          this.isRequesting = true
+          this.tags = this.tags.split(', ')
           try {
             // Fire the PUT request
             const res = await this.axios({
               url: `/party_events/${this.party_event_id}/step_3`,
-              method: "put",
-              headers: { "Content-Type": "application/json" },
+              method: 'put',
+              headers: { 'Content-Type': 'application/json' },
               data: {
                 sponsors: [this.sponsors_id],
                 tags: this.tags
               }
-            });
+            })
 
             if (res) {
               // Next step
-              this.step++;
+              this.step++
               // Redirect to the Event views
-              this.$router.push({ name: "ListEvent" });
+              this.$router.push({ name: 'ListEvent' })
             }
           } catch (e) {
             this.hadError =
-              "Não foi possível realizar esta operação. Tente novamente";
-            console.log(e);
+              'Não foi possível realizar esta operação. Tente novamente'
+            console.log(e)
           }
-          this.isRequesting = false;
+          this.isRequesting = false
         }
       } catch (e) {
         this.hadError =
-          "Não foi possível realizar esta operação. Tente novamente";
-        console.log(e);
+          'Não foi possível realizar esta operação. Tente novamente'
+        console.log(e)
       }
-      this.isRequesting = false;
+      this.isRequesting = false
     },
     /*
      * getEventStep: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
-    async getEventStep() {
+    async getEventStep () {
       try {
         const result = await this.axios.get(
           `/party_events/${this.party_event_id}`
-        );
+        )
         this.step =
           result.data.step != 3
             ? (result.data.step += 1)
-            : this.$router.push({ name: "ListEvent" });
+            : this.$router.push({ name: 'ListEvent' })
         if (this.step == 2) {
           const step_two_result = await this.axios.get(
             `/party_events/${this.party_event_id}/step_2`
-          );
-          this.party_event_data = step_two_result.data;
+          )
+          this.party_event_data = step_two_result.data
         } else if (this.step == 3) {
           const step_three_result = await this.axios.get(
             `/party_events/${this.party_event_id}/step_3`
-          );
-          this.party_event_data = step_three_result.data;
+          )
+          this.party_event_data = step_three_result.data
         }
       } catch (e) {
-        this.hadError = "Não foi possível carregar as informações.";
+        this.hadError = 'Não foi possível carregar as informações.'
       }
     },
     /*
      * getLocations: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
-    async getLocations() {
+    async getLocations () {
       try {
-        const result = await this.axios.get(`/locations`);
-        this.locations = result.data;
+        const result = await this.axios.get(`/locations`)
+        this.locations = result.data
       } catch (e) {
-        this.hadError = "Não foi possível carregar as informações.";
+        this.hadError = 'Não foi possível carregar as informações.'
       }
     },
     /*
      * getOrganizers: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
-    async getOrganizers() {
+    async getOrganizers () {
       try {
-        const result = await this.axios.get(`/organizers?sorters=CREATED_AT`);
-        const res = result.data;
-        this.organizers = res.data;
+        const result = await this.axios.get(`/organizers?sorters=CREATED_AT`)
+        const res = result.data
+        this.organizers = res.data
       } catch (e) {
-        this.hadError = "Não foi possível carregar as informações.";
+        this.hadError = 'Não foi possível carregar as informações.'
       }
     },
-    async getClassifications() {
+    async getClassifications () {
       try {
         // this.axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.TOKEN}`;
-        const result = await this.axios.get(`/party_events/classifications`);
-        this.classifications = result;
+        const result = await this.axios.get(`/party_events/classifications`)
+        this.classifications = result
       } catch (e) {
-        this.hadError = "Não foi possível carregar as informações.";
+        this.hadError = 'Não foi possível carregar as informações.'
       }
     },
     /*
      *  getSponsors: This method will fire a GET request and then
      * assign the response data into the state property: form.
      */
-    async getSponsors() {
+    async getSponsors () {
       try {
-        const result = await this.axios.get(`/sponsors`);
-        const res = result.data;
-        this.sponsors = res.data;
+        const result = await this.axios.get(`/sponsors`)
+        const res = result.data
+        this.sponsors = res.data
       } catch (e) {
-        this.hadError = "Não foi possível carregar as informações.";
+        this.hadError = 'Não foi possível carregar as informações.'
       }
     },
     /*
      *  getProducts: This method will fire a GET request and then
      * assign the response data into the state property: form.
      */
-    async getProducts() {
+    async getProducts () {
       try {
-        const result = await this.axios.get(`/company_products?sorters=NAME`);
-        const res = result.data;
-        this.products = res.data;
+        const result = await this.axios.get(`/company_products?sorters=NAME`)
+        const res = result.data
+        this.products = res.data
       } catch (e) {
-        this.hadError = "Não foi possível carregar as informações.";
+        this.hadError = 'Não foi possível carregar as informações.'
       }
     },
     /*
@@ -589,26 +589,26 @@ export default {
      *  component and then call the action method defined for this view
      *  if everything passes the validation.
      */
-    async ProcessForm(step) {
-      this.hadError = "";
-      const result = await this.$validator.validateAll();
-      return result ? this.updatePartyEvent(step) : result;
+    async ProcessForm (step) {
+      this.hadError = ''
+      const result = await this.$validator.validateAll()
+      return result ? this.updatePartyEvent(step) : result
     },
-    SelectPoster(file) {
-      this.poster = file;
+    SelectPoster (file) {
+      this.poster = file
     },
-    SelectBackdrop(file) {
-      this.backdrop = file;
+    SelectBackdrop (file) {
+      this.backdrop = file
     }
   },
-  created() {
-    this.getLocations();
-    this.getSponsors();
-    this.getOrganizers();
-    this.getProducts();
-    this.getEventStep();
+  created () {
+    this.getLocations()
+    this.getSponsors()
+    this.getOrganizers()
+    this.getProducts()
+    this.getEventStep()
   }
-};
+}
 </script>
 
 <style></style>
