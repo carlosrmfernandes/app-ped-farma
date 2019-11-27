@@ -98,7 +98,9 @@
   </div>
 </template>
 <script>
+
 import Table from '@/components/Layouts/Table'
+
 export default {
   components: {
     Table
