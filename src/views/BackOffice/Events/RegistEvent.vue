@@ -330,7 +330,7 @@
         </div>
         <div class="jumbotron">
           <h2>Tickets</h2>
-          <div class="row">
+          <div class="row"  v-for="(tickets, index) in collection_tickets">
             <div class="col-md-3">
               <div class="form-group">
                 <label for="ticket_amount">Quantidade</label>
@@ -407,13 +407,16 @@
                 >
               </div>
             </div>
+            <div v-show="index !== 0" class="col-md-3 mt-4 pt-2">
+              <button v-on:click="removeTicket(index)" class="btn btn-danger">Remover</button>
+            </div>
           </div>
           <!-- End tickets section -->
-          <button class="btn btn-primary">Adicionar Ticket</button>
+          <button class="btn btn-primary" v-on:click="addTicket">Adicionar Ticket</button>
         </div>
         <div class="jumbotron">
           <h2>Produtos</h2>
-          <div class="row">
+          <div class="row" v-for="(product, index) in collection_products">
             <div class="col-md-3">
               <div class="form-group">
                 <label for="company_product_id">Produto</label>
@@ -423,11 +426,11 @@
                   :class="{
                     'form-control': true,
                     'is-input-danger': errors.has(
-                      'session_product.company_product_id'
+                      'product.company_product_id'
                     )
                   }"
                   v-model="session_product.company_product_id"
-                  name="session_product.company_product_id"
+                  name="product.company_product_id"
                   v-validate="'required'"
                   data-vv-as="Produto"
                 >
@@ -439,10 +442,10 @@
                   >
                 </select>
                 <span
-                  v-show="errors.has('session_product.company_product_id')"
+                  v-show="errors.has('product.company_product_id')"
                   class="help is-danger"
                   >{{
-                    errors.first("session_product.company_product_id")
+                    errors.first("product.company_product_id")
                   }}</span
                 >
               </div>
@@ -454,19 +457,19 @@
                   type="number"
                   :class="{
                     'form-control': true,
-                    'is-input-danger': errors.has('session_product.amount')
+                    'is-input-danger': errors.has('product.amount')
                   }"
                   placeholder="Ex.: 3500"
                   v-validate="'required'"
                   data-vv-as="Quantidade"
-                  v-model="session_product.amount"
-                  name="session_product.amount"
+                  v-model="product.amount"
+                  name="product.amount"
                   id="amount"
                 />
                 <span
-                  v-show="errors.has('session_product.amount')"
+                  v-show="errors.has('product.amount')"
                   class="help is-danger"
-                  >{{ errors.first("session_product.amount") }}</span
+                  >{{ errors.first("product.amount") }}</span
                 >
               </div>
             </div>
@@ -477,24 +480,27 @@
                   type="number"
                   :class="{
                     'form-control': true,
-                    'is-input-danger': errors.has('session_product.price')
+                    'is-input-danger': errors.has('product.price')
                   }"
                   placeholder="Ex.: 5000"
                   v-validate="'required'"
                   data-vv-as="Preço"
-                  name="session_product.price"
-                  v-model="session_product.price"
+                  name="product.price"
+                  v-model="product.price"
                   id="price"
                 />
                 <span
-                  v-show="errors.has('session_product.price')"
+                  v-show="errors.has('product.price')"
                   class="help is-danger"
-                  >{{ errors.first("session_product.price") }}</span
+                  >{{ errors.first("product.price") }}</span
                 >
               </div>
             </div>
+            <div v-show="index !== 0" class="col-md-3 mt-4 pt-2">
+              <button v-on:click="removeProduct(index)" class="btn btn-danger">Remover</button>
+            </div>
           </div>
-          <button class="btn btn-primary">Adicionar Produto</button>
+          <button v-on:click="addProduct" class="btn btn-primary">Adicionar Produto</button>
         </div>
         <b-button
           variant="primary"
@@ -621,12 +627,14 @@ export default {
       video_id: '',
       location_id: '',
       party_event_id: '',
-      products: '',
+      collection_products: [],
+      products: {},
       startsAt: '',
       company_product_id: '',
       event_session: {},
       session_product: {},
       tickets: {},
+      collection_tickets: [],
       sponsors: {},
       sponsors_id: '',
       isRequesting: false,
@@ -778,8 +786,8 @@ export default {
                   location_id: this.event_session.location_id,
                   price: this.event_session.price,
                   starts_at: this.event_session.starts_at,
-                  products: [this.session_product],
-                  tickets: [this.tickets]
+                  products: this.collection_products,
+                  tickets: this.collection_tickets
                 }
               ]
             }
@@ -832,8 +840,17 @@ export default {
     prev: function () {
       this.step--
     },
-    formateDate: function (date) {
-      return moment(date).format()
+    addTicket: function () {
+      this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })
+    },
+    removeTicket: function (index) {
+      if (index !== 0) { this.collection_tickets.splice(index, 1) }
+    },
+    addProduct: function () {
+      this.collection_products.push({ amount: '', price: '', company_product_id: '' })
+    },
+    removeProduct: function (index) {
+      if (index !== 0) { this.collection_products.splice(index, 1) }
     }
   },
   created () {
@@ -842,6 +859,10 @@ export default {
     this.getSponsors()
     this.getOrganizers()
     this.getProducts()
+  },
+  mounted () {
+    this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })
+    this.collection_products.push({ amount: '', price: '', company_product_id: '' })
   }
 }
 </script>
