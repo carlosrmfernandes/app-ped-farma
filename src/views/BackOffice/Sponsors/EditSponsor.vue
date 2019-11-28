@@ -47,10 +47,8 @@
              v-model="form.facebook"
              id="Sponsor-Facebook"
              placeholder="URL do Facebook"
-             v-validate="'required'"
              :disabled="isEditable"
              data-vv-as="Facebook" />
-             <span v-show="errors.has('form.facebook')" class="help is-danger">{{ errors.first('form.facebook') }}</span>
           </div>
         </div>
         <div class="col-md-3">
@@ -62,10 +60,8 @@
              v-model="form.instagram"
              id="Sponsor-Instagram"
              placeholder="URL do Instagram"
-             v-validate="'required'"
              :disabled="isEditable"
              data-vv-as="Instagram" />
-             <span v-show="errors.has('form.instagram')" class="help is-danger">{{ errors.first('form.instagram') }}</span>
           </div>
         </div>
         <div class="col-md-3">
@@ -77,10 +73,8 @@
              v-model="form.twitter"
              id="Sponsor-Twitter"
              placeholder="URL do Twitter"
-             v-validate="'required'"
              :disabled="isEditable"
              data-vv-as="Twitter" />
-             <span v-show="errors.has('form.twitter')" class="help is-danger">{{ errors.first('form.twitter') }}</span>
           </div>
         </div>
         <div class="col-md-3">
@@ -92,9 +86,9 @@
              v-model="form.description"
              id="Sponsor-Description"
              placeholder="Descricao do Organizador"
-             v-validate="'required'"
              :disabled="isEditable"
-             data-vv-as="Descricao" />
+             data-vv-as="Descricao"
+             rows="4" />
              <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
           </div>
         </div>

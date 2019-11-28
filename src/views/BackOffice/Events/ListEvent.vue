@@ -98,7 +98,9 @@
   </div>
 </template>
 <script>
+
 import Table from '@/components/Layouts/Table'
+
 export default {
   components: {
     Table
@@ -129,9 +131,7 @@ export default {
         pageable: { pageNumber: 1 }
       },
       ids: [],
-      hadError: '',
       hadSuccess: '',
-      editID: '',
       pageCount: 0
     }
   },
