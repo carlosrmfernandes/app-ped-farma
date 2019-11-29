@@ -416,7 +416,7 @@
         </div>
         <div class="jumbotron">
           <h2>Produtos</h2>
-          <div class="row" v-for="(product, index) in collection_products">
+          <div class="row" v-for="(products, index) in collection_products">
             <div class="col-md-3">
               <div class="form-group">
                 <label for="company_product_id">Produto</label>
@@ -426,26 +426,26 @@
                   :class="{
                     'form-control': true,
                     'is-input-danger': errors.has(
-                      'product.company_product_id'
+                      'products.company_product_id'
                     )
                   }"
-                  v-model="session_product.company_product_id"
-                  name="product.company_product_id"
+                  v-model="products.company_product_id"
+                  name="products.company_product_id"
                   v-validate="'required'"
                   data-vv-as="Produto"
                 >
                   <option
-                    v-for="product in products"
+                    v-for="product in company_products"
                     :value="product.id"
                     :key="product.id"
                     >{{ product.name }}</option
                   >
                 </select>
                 <span
-                  v-show="errors.has('product.company_product_id')"
+                  v-show="errors.has('products.company_product_id')"
                   class="help is-danger"
                   >{{
-                    errors.first("product.company_product_id")
+                    errors.first("products.company_product_id")
                   }}</span
                 >
               </div>
@@ -457,19 +457,19 @@
                   type="number"
                   :class="{
                     'form-control': true,
-                    'is-input-danger': errors.has('product.amount')
+                    'is-input-danger': errors.has('products.amount')
                   }"
                   placeholder="Ex.: 3500"
                   v-validate="'required'"
                   data-vv-as="Quantidade"
-                  v-model="product.amount"
-                  name="product.amount"
+                  v-model="products.amount"
+                  name="products.amount"
                   id="amount"
                 />
                 <span
-                  v-show="errors.has('product.amount')"
+                  v-show="errors.has('products.amount')"
                   class="help is-danger"
-                  >{{ errors.first("product.amount") }}</span
+                  >{{ errors.first("products.amount") }}</span
                 >
               </div>
             </div>
@@ -480,19 +480,19 @@
                   type="number"
                   :class="{
                     'form-control': true,
-                    'is-input-danger': errors.has('product.price')
+                    'is-input-danger': errors.has('products.price')
                   }"
                   placeholder="Ex.: 5000"
                   v-validate="'required'"
                   data-vv-as="Preço"
-                  name="product.price"
-                  v-model="product.price"
+                  name="products.price"
+                  v-model="products.price"
                   id="price"
                 />
                 <span
-                  v-show="errors.has('product.price')"
+                  v-show="errors.has('products.price')"
                   class="help is-danger"
-                  >{{ errors.first("product.price") }}</span
+                  >{{ errors.first("products.price") }}</span
                 >
               </div>
             </div>
@@ -602,7 +602,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+
 import UploadPhoto from '@/components/Form/Photo'
 
 export default {
@@ -632,7 +632,7 @@ export default {
       startsAt: '',
       company_product_id: '',
       event_session: {},
-      session_product: {},
+      company_products: '',
       tickets: {},
       collection_tickets: [],
       sponsors: {},
@@ -698,7 +698,7 @@ export default {
       try {
         const result = await this.axios.get(`/company_products?sorters=NAME`)
         const res = result.data
-        this.products = res.data
+        this.company_products = res.data
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -765,11 +765,11 @@ export default {
           // );
           this.event_session.price = parseInt(this.event_session.price, 10)
 
-          this.session_product.amount = parseInt(
-            this.session_product.amount,
+          this.products.amount = parseInt(
+            this.products.amount,
             10
           )
-          this.session_product.price = parseInt(this.session_product.price, 10)
+          this.products.price = parseInt(this.products.price, 10)
 
           this.tickets.amount = parseInt(this.tickets.amount, 10)
           this.tickets.price = parseInt(this.tickets.price, 10)
