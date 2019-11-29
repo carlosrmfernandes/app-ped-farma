@@ -49,9 +49,9 @@
 
 <script>
 export default {
-  name: "Sidebar",
+  name: 'Sidebar',
   components: {}
-};
+}
 </script>
 
 <style lang="scss" scoped>

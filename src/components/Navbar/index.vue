@@ -93,9 +93,9 @@
 
 <script>
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   components: {}
-};
+}
 </script>
 
 <style scoped>

@@ -98,7 +98,9 @@
   </div>
 </template>
 <script>
-import Table from '@/components/Layouts/Table';
+
+import Table from '@/components/Layouts/Table'
+
 export default {
   components: {
     Table
@@ -129,9 +131,7 @@ export default {
         pageable: { pageNumber: 1 }
       },
       ids: [],
-      hadError: '',
       hadSuccess: '',
-      editID: '',
       pageCount: 0
     }
   },
@@ -160,11 +160,11 @@ export default {
       }
 
       // API query options like: sorts and pagination
-      let query = '';
+      let query = ''
       query += `pageNumber=${this.pagination.pageable.pageNumber}`
       query += `&pageSize=${this.pagination.perPage}`
       // query += sort ? `&sortBy=${sort}` : ''
-      query += search ? `&search=${search}` : '';
+      query += search ? `&search=${search}` : ''
 
       try {
         const result = await this.axios.get(`/events?${query}`)
@@ -174,7 +174,7 @@ export default {
         this.pageCount = res.pages_count
       } catch (e) {
         this.hadError =
-          'Não foi possível carregar o evento. Actualize a página.';
+          'Não foi possível carregar o evento. Actualize a página.'
       }
       this.isRequesting = false
     },
@@ -194,7 +194,7 @@ export default {
         const result = await this.axios.get(`/events/${this.editID}`)
         this.form = result.data
       } catch (e) {
-        this.hadError = 'Não foi possível carregar as informações.';
+        this.hadError = 'Não foi possível carregar as informações.'
       }
       this.isRequesting = false
     },
@@ -210,15 +210,15 @@ export default {
         const result = await this.axios.delete(`/events/${this.editID}`)
         this.form = result.data
       } catch (e) {
-        this.hadError = 'Não foi possível efetuar esta operação.';
+        this.hadError = 'Não foi possível efetuar esta operação.'
       }
       this.isRequesting = false
-      this.$store.state.tableDetailID = '';
+      this.$store.state.tableDetailID = ''
     },
     hideModal () {
       this.$bvModal.hide('bv-modal-example')
       // Set the value to empty
-      this.$store.state.tableDetailID = '';
+      this.$store.state.tableDetailID = ''
     },
     showRemoveModal () {
       // this.$store.state.tableDetailID = id
@@ -227,7 +227,7 @@ export default {
     },
     hideRemoveModal () {
       // Set the ID value on store Global variable for using with modal
-      this.$store.state.tableDetailID = '';
+      this.$store.state.tableDetailID = ''
       // Show modal for deatils
       this.$bvModal.hide('modal-remove')
     }

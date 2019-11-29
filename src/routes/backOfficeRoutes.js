@@ -30,39 +30,39 @@ import EditCompany from '@/views/BackOffice/Company/EditCompany'
 
 // Auth routes
 const Auth = [{
+  path: '/',
+  redirect: Login
+},
+{
+  path: '/admin',
+  component: AuthBaseView,
+  redirect: Login,
+  children: [{
     path: '/',
-    redirect: Login
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: 'Login'
+    }
   },
   {
-    path: '/admin',
-    component: AuthBaseView,
-    redirect: Login,
-    children: [{
-        path: '/',
-        name: 'Login',
-        component: Login,
-        meta: {
-          title: 'Login'
-        }
-      },
-      {
-        path: 'login',
-        name: 'Login',
-        component: Login,
-        meta: {
-          title: 'Login'
-        }
-      },
-      {
-        path: 'reset-password',
-        name: 'AdminResetPassword',
-        component: AdminResetPassword,
-        meta: {
-          title: 'Redefinir Password'
-        }
-      }
-    ]
+    path: 'login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: 'Login'
+    }
+  },
+  {
+    path: 'reset-password',
+    name: 'AdminResetPassword',
+    component: AdminResetPassword,
+    meta: {
+      title: 'Redefinir Password'
+    }
   }
+  ]
+}
 ]
 
 // Organizers routes
@@ -74,30 +74,30 @@ const Organizers = [{
     title: 'Organizadores'
   },
   children: [{
-      path: '/',
-      name: 'ListOrganizer',
-      component: ListOrganizer,
-      meta: {
-        title: 'Organizadores'
-      }
-    },
-    {
-      path: 'regist',
-      name: 'RegistOrganizer',
-      component: RegistOrganizer,
-      meta: {
-        title: 'Novo Organizador'
-      }
-    },
-    {
-      path: 'edit/:id',
-      name: 'EditOrganizer',
-      component: EditOrganizer,
-      meta: {
-        title: 'Editar Organizador'
-      },
-      props: true
+    path: '/',
+    name: 'ListOrganizer',
+    component: ListOrganizer,
+    meta: {
+      title: 'Organizadores'
     }
+  },
+  {
+    path: 'regist',
+    name: 'RegistOrganizer',
+    component: RegistOrganizer,
+    meta: {
+      title: 'Novo Organizador'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditOrganizer',
+    component: EditOrganizer,
+    meta: {
+      title: 'Editar Organizador'
+    },
+    props: true
+  }
   ]
 }]
 
@@ -110,30 +110,30 @@ const Sponsors = [{
     title: 'Patrocinadores'
   },
   children: [{
-      path: '/',
-      name: 'ListSponsor',
-      component: ListSponsor,
-      meta: {
-        title: 'Patrocinadores'
-      }
-    },
-    {
-      path: 'regist',
-      name: 'RegistSponsor',
-      component: RegistSponsor,
-      meta: {
-        title: 'Novo Patrocinador'
-      }
-    },
-    {
-      path: 'edit/:id',
-      name: 'EditSponsor',
-      component: EditSponsor,
-      meta: {
-        title: 'Editar Patrocinador'
-      },
-      props: true
+    path: '/',
+    name: 'ListSponsor',
+    component: ListSponsor,
+    meta: {
+      title: 'Patrocinadores'
     }
+  },
+  {
+    path: 'regist',
+    name: 'RegistSponsor',
+    component: RegistSponsor,
+    meta: {
+      title: 'Novo Patrocinador'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditSponsor',
+    component: EditSponsor,
+    meta: {
+      title: 'Editar Patrocinador'
+    },
+    props: true
+  }
   ]
 }]
 
@@ -146,30 +146,30 @@ const Comapnies = [{
     title: 'Listar Empresas'
   },
   children: [{
-      path: '/',
-      name: 'ListCompany',
-      component: ListCompany,
-      meta: {
-        title: 'Listar Empresas'
-      }
-    },
-    {
-      path: 'regist',
-      name: 'RegistCompany',
-      component: RegistCompany,
-      meta: {
-        title: 'Registar Empresa'
-      }
-    },
-    {
-      path: 'edit/:id',
-      name: 'EditCompany',
-      component: EditCompany,
-      meta: {
-        title: 'Editar Empresa'
-      },
-      props: true
+    path: '/',
+    name: 'ListCompany',
+    component: ListCompany,
+    meta: {
+      title: 'Listar Empresas'
     }
+  },
+  {
+    path: 'regist',
+    name: 'RegistCompany',
+    component: RegistCompany,
+    meta: {
+      title: 'Registar Empresa'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditCompany',
+    component: EditCompany,
+    meta: {
+      title: 'Editar Empresa'
+    },
+    props: true
+  }
   ]
 }]
 
@@ -183,50 +183,50 @@ const Admin = [{
     name: 'Dashboard'
   },
   children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: Dashboard,
+    path: 'dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: {
+      title: 'Dashboard'
+    }
+  },
+  {
+    path: '/events',
+    name: 'ListEvent',
+    component: View,
+    meta: {
+      title: 'Listar Eventos'
+    },
+    children: [{
+      path: '/',
+      name: 'ListEvent',
+      component: ListEvent,
       meta: {
-        title: 'Dashboard'
+        title: 'Listar Eventos'
       }
     },
     {
-      path: '/events',
-      name: 'ListEvent',
-      component: View,
+      path: 'regist',
+      name: 'RegistEvent',
+      component: RegistEvent,
       meta: {
-        title: 'Listar Eventos'
-      },
-      children: [{
-          path: '/',
-          name: 'ListEvent',
-          component: ListEvent,
-          meta: {
-            title: 'Listar Eventos'
-          }
-        },
-        {
-          path: 'regist',
-          name: 'RegistEvent',
-          component: RegistEvent,
-          meta: {
-            title: 'Registar Evento'
-          }
-        },
-        {
-          path: 'edit/:id',
-          name: 'EditEvent',
-          component: EditEvent,
-          meta: {
-            title: 'Editar Evento'
-          },
-          props: true
-        }
-      ]
+        title: 'Registar Evento'
+      }
     },
-    ...Organizers,
-    ...Sponsors,
-    ...Comapnies
+    {
+      path: 'edit/:id',
+      name: 'EditEvent',
+      component: EditEvent,
+      meta: {
+        title: 'Editar Evento'
+      },
+      props: true
+    }
+    ]
+  },
+  ...Organizers,
+  ...Sponsors,
+  ...Comapnies
   ]
 }]
 
