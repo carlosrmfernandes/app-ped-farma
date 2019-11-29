@@ -166,7 +166,7 @@
         <b-button
         variant="primary"
         size="lg"
-        class="float-right"
+        class="float-left"
         :disabled="isRequesting ? true : false"
         @click="ProcessForm">
          <span v-if="!isRequesting"> Registar</span>
@@ -200,6 +200,8 @@
 <script>
 import UploadPhoto from '@/components/Form/Photo'
 
+import moment from 'moment'
+
 export default {
   components: {
     UploadPhoto
@@ -219,7 +221,18 @@ export default {
       telephones: [{
         phone_number: ''
       }],
-      existCompany: false
+      existCompany: false,
+      // Use moment.js instead of the default
+      momentForamt: {
+        // Date to String
+        stringify: (date) => {
+          return date ? moment(date).format('LL') : ''
+        },
+        // String to Date
+        parse: (value) => {
+          return value ? moment(value, 'LL').toDate() : null
+        }
+      }
     }
   },
   methods: {
