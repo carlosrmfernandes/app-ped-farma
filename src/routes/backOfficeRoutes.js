@@ -28,41 +28,49 @@ import RegistCompany from '@/views/BackOffice/Company/RegistCompany'
 import ListCompany from '@/views/BackOffice/Company/ListCompany'
 import EditCompany from '@/views/BackOffice/Company/EditCompany'
 
+// Contracts
+import RegistContract from '@/views/BackOffice/Contracts/RegistContract'
+import ListContract from '@/views/BackOffice/Contracts/ListContract'
+import EditContract from '@/views/BackOffice/Contracts/EditContract'
+
+// Payments
+import ListPayment from '@/views/BackOffice/Payments/ListPayment'
+
 // Auth routes
 const Auth = [{
+  path: '/',
+  redirect: Login
+},
+{
+  path: '/admin',
+  component: AuthBaseView,
+  redirect: Login,
+  children: [{
     path: '/',
-    redirect: Login
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: 'Login'
+    }
   },
   {
-    path: '/admin',
-    component: AuthBaseView,
-    redirect: Login,
-    children: [{
-        path: '/',
-        name: 'Login',
-        component: Login,
-        meta: {
-          title: 'Login'
-        }
-      },
-      {
-        path: 'login',
-        name: 'Login',
-        component: Login,
-        meta: {
-          title: 'Login'
-        }
-      },
-      {
-        path: 'reset-password',
-        name: 'AdminResetPassword',
-        component: AdminResetPassword,
-        meta: {
-          title: 'Redefinir Password'
-        }
-      }
-    ]
+    path: 'login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: 'Login'
+    }
+  },
+  {
+    path: 'reset-password',
+    name: 'AdminResetPassword',
+    component: AdminResetPassword,
+    meta: {
+      title: 'Redefinir Password'
+    }
   }
+  ]
+}
 ]
 
 // Organizers routes
@@ -74,30 +82,30 @@ const Organizers = [{
     title: 'Organizadores'
   },
   children: [{
-      path: '/',
-      name: 'ListOrganizer',
-      component: ListOrganizer,
-      meta: {
-        title: 'Organizadores'
-      }
-    },
-    {
-      path: 'regist',
-      name: 'RegistOrganizer',
-      component: RegistOrganizer,
-      meta: {
-        title: 'Novo Organizador'
-      }
-    },
-    {
-      path: 'edit/:id',
-      name: 'EditOrganizer',
-      component: EditOrganizer,
-      meta: {
-        title: 'Editar Organizador'
-      },
-      props: true
+    path: '/',
+    name: 'ListOrganizer',
+    component: ListOrganizer,
+    meta: {
+      title: 'Organizadores'
     }
+  },
+  {
+    path: 'regist',
+    name: 'RegistOrganizer',
+    component: RegistOrganizer,
+    meta: {
+      title: 'Novo Organizador'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditOrganizer',
+    component: EditOrganizer,
+    meta: {
+      title: 'Editar Organizador'
+    },
+    props: true
+  }
   ]
 }]
 
@@ -110,35 +118,35 @@ const Sponsors = [{
     title: 'Patrocinadores'
   },
   children: [{
-      path: '/',
-      name: 'ListSponsor',
-      component: ListSponsor,
-      meta: {
-        title: 'Patrocinadores'
-      }
-    },
-    {
-      path: 'regist',
-      name: 'RegistSponsor',
-      component: RegistSponsor,
-      meta: {
-        title: 'Novo Patrocinador'
-      }
-    },
-    {
-      path: 'edit/:id',
-      name: 'EditSponsor',
-      component: EditSponsor,
-      meta: {
-        title: 'Editar Patrocinador'
-      },
-      props: true
+    path: '/',
+    name: 'ListSponsor',
+    component: ListSponsor,
+    meta: {
+      title: 'Patrocinadores'
     }
+  },
+  {
+    path: 'regist',
+    name: 'RegistSponsor',
+    component: RegistSponsor,
+    meta: {
+      title: 'Novo Patrocinador'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditSponsor',
+    component: EditSponsor,
+    meta: {
+      title: 'Editar Patrocinador'
+    },
+    props: true
+  }
   ]
 }]
 
-// Comapnies routes
-const Comapnies = [{
+// Companies routes
+const Companies = [{
   path: '/companies',
   name: 'ListCompany',
   component: View,
@@ -146,30 +154,120 @@ const Comapnies = [{
     title: 'Listar Empresas'
   },
   children: [{
-      path: '/',
-      name: 'ListCompany',
-      component: ListCompany,
-      meta: {
-        title: 'Listar Empresas'
-      }
-    },
-    {
-      path: 'regist',
-      name: 'RegistCompany',
-      component: RegistCompany,
-      meta: {
-        title: 'Registar Empresa'
-      }
-    },
-    {
-      path: 'edit/:id',
-      name: 'EditCompany',
-      component: EditCompany,
-      meta: {
-        title: 'Editar Empresa'
-      },
-      props: true
+    path: '/',
+    name: 'ListCompany',
+    component: ListCompany,
+    meta: {
+      title: 'Listar Empresas'
     }
+  },
+  {
+    path: 'regist',
+    name: 'RegistCompany',
+    component: RegistCompany,
+    meta: {
+      title: 'Registar Empresa'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditCompany',
+    component: EditCompany,
+    meta: {
+      title: 'Editar Empresa'
+    },
+    props: true
+  }
+  ]
+}]
+
+// Events routes
+const Events = [{
+  path: '/events',
+  name: 'ListEvent',
+  component: View,
+  meta: {
+    title: 'Listar Eventos'
+  },
+  children: [{
+    path: '/',
+    name: 'ListEvent',
+    component: ListEvent,
+    meta: {
+      title: 'Listar Eventos'
+    }
+  },
+  {
+    path: 'regist',
+    name: 'RegistEvent',
+    component: RegistEvent,
+    meta: {
+      title: 'Registar Evento'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditEvent',
+    component: EditEvent,
+    meta: {
+      title: 'Editar Evento'
+    },
+    props: true
+  }
+  ]
+}]
+
+// Contracts routes
+const Contracts = [{
+  path: '/contracts',
+  name: 'ListContract',
+  component: View,
+  meta: {
+    title: 'Listar Contratos'
+  },
+  children: [{
+    path: '/',
+    name: 'ListContract',
+    component: ListContract,
+    meta: {
+      title: 'Listar Contratos'
+    }
+  },
+  {
+    path: 'regist',
+    name: 'RegistContract',
+    component: RegistContract,
+    meta: {
+      title: 'Registar Empresa'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditContract',
+    component: EditContract,
+    meta: {
+      title: 'Editar Contrato'
+    },
+    props: true
+  }
+  ]
+}]
+
+const Payments = [{
+  path: '/payments',
+  name: 'ListPayment',
+  component: View,
+  meta: {
+    title: 'Listar Pagamentos'
+  },
+  children: [{
+    path: '/',
+    name: 'ListPayment',
+    component: ListPayment,
+    meta: {
+      title: 'Listar Pagamentos'
+    }
+  }
   ]
 }]
 
@@ -183,50 +281,19 @@ const Admin = [{
     name: 'Dashboard'
   },
   children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: Dashboard,
-      meta: {
-        title: 'Dashboard'
-      }
-    },
-    {
-      path: '/events',
-      name: 'ListEvent',
-      component: View,
-      meta: {
-        title: 'Listar Eventos'
-      },
-      children: [{
-          path: '/',
-          name: 'ListEvent',
-          component: ListEvent,
-          meta: {
-            title: 'Listar Eventos'
-          }
-        },
-        {
-          path: 'regist',
-          name: 'RegistEvent',
-          component: RegistEvent,
-          meta: {
-            title: 'Registar Evento'
-          }
-        },
-        {
-          path: 'edit/:id',
-          name: 'EditEvent',
-          component: EditEvent,
-          meta: {
-            title: 'Editar Evento'
-          },
-          props: true
-        }
-      ]
-    },
-    ...Organizers,
-    ...Sponsors,
-    ...Comapnies
+    path: 'dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: {
+      title: 'Dashboard'
+    }
+  },
+  ...Events,
+  ...Organizers,
+  ...Sponsors,
+  ...Companies,
+  ...Contracts,
+  ...Payments
   ]
 }]
 

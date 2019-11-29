@@ -41,6 +41,19 @@
         <span>Novo Patrocinador</span>
       </router-link>
     </Collapse>
+    <Collapse title="Contratos">
+      <router-link :to="{name: 'ListContract'}" tag="a">
+        <span>Listar</span>
+      </router-link>
+      <router-link :to="{name: 'RegistContract'}" tag="a">
+        <span>Novo Contrato</span>
+      </router-link>
+    </Collapse>
+    <Collapse title="Pagamentos">
+      <router-link :to="{name: 'ListPayment'}" tag="a">
+        <span>Listar</span>
+      </router-link>
+    </Collapse>
     <ul class="list-unstyled CTAs">
       <li @click="DoLogout" >
         <a href="#" class="article"><span>Sair</span> <i class="fa fa-power-off fa-lg" aria-hidden="true"></i></a>

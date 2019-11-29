@@ -21,6 +21,7 @@
     "vue-avatar-component": "^1.2.6",
     "vue-axios": "^2.1.5",
     "vue-router": "^3.0.3",
+    "vue2-datepicker": "^3.1.1",
     "vuex": "^3.1.2",
     "vuex-persistedstate": "^2.7.0"
   },

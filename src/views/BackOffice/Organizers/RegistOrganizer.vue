@@ -166,7 +166,7 @@
         <b-button
         variant="primary"
         size="lg"
-        class="float-right"
+        class="float-left"
         :disabled="isRequesting ? true : false"
         @click="ProcessForm">
          <span v-if="!isRequesting"> Registar</span>
