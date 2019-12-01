@@ -36,7 +36,7 @@ const router = new Router({
  * @param {string} localStorageObject
  * @param {object} redirectPath
  */
-function CanUserAccessThisRoute(
+function CanUserAccessThisRoute (
   to,
   next,
   path,
