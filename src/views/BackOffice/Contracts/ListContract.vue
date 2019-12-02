@@ -93,7 +93,7 @@ export default {
       this.pagination.pageable.pageNumber = page
     },
     removeMostCrontracts (ids) {
-      this.RemoveCrontract(ids)
+      this.RemoveContract(ids)
     },
     RemoveContract
   },

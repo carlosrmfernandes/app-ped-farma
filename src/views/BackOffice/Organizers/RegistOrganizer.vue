@@ -246,7 +246,7 @@ export default {
           const result = await this.axios.post('/organizers', this.form)
 
           if (result) {
-          // Redirect to the Organizer views
+            // Redirect to the Organizer views
             this.$router.push({ name: 'ListOrganizer' })
           }
         } else {
@@ -272,7 +272,7 @@ export default {
           })
 
           if (res) {
-          // Redirect to the Organizer views
+            // Redirect to the Organizer views
             this.$router.push({ name: 'ListOrganizer' })
           }
         }
