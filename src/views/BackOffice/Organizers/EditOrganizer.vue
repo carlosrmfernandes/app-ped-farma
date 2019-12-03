@@ -13,7 +13,7 @@
         variant="success"
         size="sm"
         class="float-right"
-        @click="UpdateOrganizer"
+        @click="ProcessForm"
         v-show="!isEditable"
       >
         <span v-if="!isRequesting">Salvar</span>

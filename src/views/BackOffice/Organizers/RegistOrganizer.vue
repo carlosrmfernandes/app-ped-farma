@@ -2,6 +2,9 @@
   <div class="panel">
     <div class="panel-header">
       <h1>Novo Organizador</h1>
+      <div class="alert alert-danger col-md-10" v-if="hadError" role="alert">
+        {{hadError}}
+      </div>
     </div>
     <div class="panel-body">
      <div class="row">
@@ -246,7 +249,7 @@ export default {
           const result = await this.axios.post('/organizers', this.form)
 
           if (result) {
-          // Redirect to the Organizer views
+            // Redirect to the Organizer views
             this.$router.push({ name: 'ListOrganizer' })
           }
         } else {
@@ -272,7 +275,7 @@ export default {
           })
 
           if (res) {
-          // Redirect to the Organizer views
+            // Redirect to the Organizer views
             this.$router.push({ name: 'ListOrganizer' })
           }
         }
@@ -323,6 +326,30 @@ export default {
     },
     noBelongs () {
       this.$bvModal.hide('modal-company-existence')
+    },
+    HandleErrors (err) {
+      const defaultMessage =
+        'Não foi possível realizar esta operação. Tente novamente'
+      if (err.response) {
+        const { errors } = err.response.data
+        errors.forEach(error => {
+          switch (error.code) {
+            case '103':
+              this.hadError = 'A empresa ja possui organizador'
+              break
+            case 'Email em uso':
+              this.hadError = 'O email já está em uso.'
+              break
+            case 'Username em uso':
+              this.hadError = 'O nome de utilizador já está em uso.'
+              break
+            default:
+              this.hadError = defaultMessage
+          }
+        })
+      } else {
+        this.hadError = defaultMessage
+      }
     }
   },
   mounted: function () {

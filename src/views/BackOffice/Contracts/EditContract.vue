@@ -134,11 +134,36 @@
         </div>
       </div>
     </div>
+    <!-- Remove Modal-->
+    <b-modal id="modal-remove" title="Organizador">
+      <p class="my-4">Tem certeza que deseja remover?</p>
+      <template v-slot:modal-footer>
+        <div class="w-100">
+          <b-button variant="primary" size="sm" class="float-right" @click="RemoveContract">
+            <span v-if="!isRequesting">Sim</span>
+            <div class="loading-dots" v-if="isRequesting">
+              <div class="loading-dots--dot"></div>
+              <div class="loading-dots--dot"></div>
+              <div class="loading-dots--dot"></div>
+            </div>
+          </b-button>
+          <b-button
+            variant="outline-danger"
+            size="sm"
+            class="float-right mr-2"
+            @click="hideRemoveModal"
+          >Não</b-button>
+        </div>
+      </template>
+    </b-modal>
     <div class="panel-footer">
       </div>
   </div>
 </template>
 <script>
+
+import { RemoveContract } from './helpers/functions.js'
+
 export default {
   props: {
     id: String,
@@ -194,7 +219,7 @@ export default {
       this.isRequesting = true
 
       try {
-        await this.axios.patch(`/v1/organizers/${this.form.organizer_id}/contracts/${this.id}`, this.form)
+        await this.axios.patch(`/v1/organizers/contracts/${this.id}`, this.form)
         // this.$router.push({ name: "ListAddresses" });
         this.hadSuccess = 'Informações actualizadas com sucesso.'
       } catch (e) {
@@ -218,7 +243,8 @@ export default {
     },
     editContract () {
       this.isEditable = false
-    }
+    },
+    RemoveContract
   },
   created () {
     this.GetContract()

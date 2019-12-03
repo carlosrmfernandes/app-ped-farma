@@ -48,7 +48,7 @@
       </div>
       <div class="row">
         <UploadPhoto
-          :defaultImage="form.logo"
+          :defaultImage="file"
           :OnChange="SelectImage"
           width="140px"
           height="185px"
@@ -158,8 +158,20 @@ export default {
     async UpdateCompany () {
       this.isRequesting = true
       try {
-        await this.axios.put(`/companies/${this.id}`, this.form)
-        // this.$router.push({ name: "ListAddresses" });
+        const result = await this.axios.put(`/companies/${this.id}`, this.form)
+        if (this.file) {
+          // Create a new form data object
+          const fData = new FormData()
+          fData.append('logo', this.file)
+          // Fire the PUT request
+          await this.axios({
+            url: `/companies/${result.data['id']}/company_logos`,
+            method: 'put',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: fData
+          })
+          this.file = ''
+        }
         this.hadSuccess = 'Informações actualizadas com sucesso.'
       } catch (e) {
         this.hadError = 'Não foi possível realizar esta operação.'

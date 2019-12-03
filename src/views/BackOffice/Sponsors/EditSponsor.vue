@@ -228,11 +228,11 @@
       </div>
     </div>
     <!-- Remove Modal-->
-    <b-modal id="modal-remove" title="Organizador">
+    <b-modal id="modal-remove" title="Patrocinador">
       <p class="my-4">Tem certeza que deseja remover?</p>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="primary" size="sm" class="float-right" @click="RemoveOrganizer">
+          <b-button variant="primary" size="sm" class="float-right" @click="RemoveSponsors">
             <span v-if="!isRequesting">Sim</span>
             <div class="loading-dots" v-if="isRequesting">
               <div class="loading-dots--dot"></div>
