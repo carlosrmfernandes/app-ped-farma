@@ -325,6 +325,10 @@ background-color: #52596F;
 color: #fff;
 }
 
+.table td{
+  max-width: 70px;
+  overflow: hidden;
+}
 .modal-backdrop {
   opacity: 0.5 !important;
 }
