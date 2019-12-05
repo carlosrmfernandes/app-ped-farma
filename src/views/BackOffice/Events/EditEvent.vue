@@ -190,15 +190,10 @@
                     required
                     id="company_product_id"
                     :class="{
-                    'form-control': true,
-                    'is-input-danger': errors.has(
-                      'products.company_product_id'
-                    )
+                    'form-control': true
                   }"
                     v-model="products.company_product_id"
                     name="products.company_product_id"
-                    v-validate="'required'"
-                    data-vv-as="Produto"
                   >
                     <option
                       v-for="product in company_products"
@@ -207,13 +202,6 @@
                     >{{ product.name }}</option
                     >
                   </select>
-                  <span
-                    v-show="errors.has('products.company_product_id')"
-                    class="help is-danger"
-                  >{{
-                    errors.first("products.company_product_id")
-                  }}</span
-                  >
                 </div>
               </div>
               <div class="col-md-3">
@@ -222,21 +210,13 @@
                   <input
                     type="number"
                     :class="{
-                    'form-control': true,
-                    'is-input-danger': errors.has('products.amount')
+                    'form-control': true
                   }"
                     placeholder="Ex.: 3500"
-                    v-validate="'required'"
-                    data-vv-as="Quantidade"
                     v-model="products.amount"
                     name="products.amount"
                     id="amount"
                   />
-                  <span
-                    v-show="errors.has('products.amount')"
-                    class="help is-danger"
-                  >{{ errors.first("products.amount") }}</span
-                  >
                 </div>
               </div>
               <div class="col-md-3">
@@ -245,21 +225,13 @@
                   <input
                     type="number"
                     :class="{
-                    'form-control': true,
-                    'is-input-danger': errors.has('products.price')
+                    'form-control': true
                   }"
                     placeholder="Ex.: 5000"
-                    v-validate="'required'"
-                    data-vv-as="Preço"
                     name="products.price"
                     v-model="products.price"
                     id="price"
                   />
-                  <span
-                    v-show="errors.has('products.price')"
-                    class="help is-danger"
-                  >{{ errors.first("products.price") }}</span
-                  >
                 </div>
               </div>
               <div v-show="index !== 0" class="col-md-3 mt-4 pt-2">
@@ -432,6 +404,10 @@ export default {
           this.tickets.amount = parseInt(this.tickets.amount, 10)
           this.tickets.price = parseInt(this.tickets.price, 10)
 
+          if (typeof this.products === 'undefined') {
+            this.products = {}
+          }
+
           // Fire the PUT request
           const res = await this.axios({
             url: `/party_events/${this.party_event_id}/step_2`,
@@ -502,7 +478,7 @@ export default {
         this.step =
           result.data.step != 3
             ? (result.data.step += 1)
-            : this.$router.push({ name: 'ListEvent' })
+            : this.$router.push({ name: 'ShowEvent', id: this.party_event_id })
         if (this.step == 2) {
           const step_two_result = await this.axios.get(
             `/party_events/${this.party_event_id}/step_2`
