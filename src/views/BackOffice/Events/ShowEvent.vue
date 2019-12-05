@@ -49,7 +49,7 @@
                   v-for="location in locations"
                   :value="location.id"
                   :key="location.id"
-                >{{ location.description }}</option
+                >{{ location.name }}</option
                 >
               </select>
               <span v-show="errors.has('step_one.location_id')" class="help is-danger">{{
@@ -268,7 +268,7 @@
                   v-for="location in locations"
                   :value="location.id"
                   :key="location.id"
-                >{{ location.description }}</option
+                >{{ location.name }}</option
                 >
               </select>
               <span
@@ -664,7 +664,7 @@ export default {
      */
     async getLocations () {
       try {
-        const result = await this.axios.get(`/locations`)
+        const result = await this.axios.get(`/locations?bringAll=true`)
         this.locations = result.data
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
