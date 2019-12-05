@@ -502,7 +502,7 @@ export default {
         this.step =
           result.data.step != 3
             ? (result.data.step += 1)
-            : this.$router.push({ name: 'ListEvent' })
+            : this.$router.push({ name: 'ShowEvent', id: this.party_event_id })
         if (this.step == 2) {
           const step_two_result = await this.axios.get(
             `/party_events/${this.party_event_id}/step_2`
