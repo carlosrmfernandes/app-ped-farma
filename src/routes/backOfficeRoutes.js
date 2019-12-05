@@ -29,6 +29,14 @@ import RegistCompany from '@/views/BackOffice/Company/RegistCompany'
 import ListCompany from '@/views/BackOffice/Company/ListCompany'
 import EditCompany from '@/views/BackOffice/Company/EditCompany'
 
+// Contracts
+import RegistContract from '@/views/BackOffice/Contracts/RegistContract'
+import ListContract from '@/views/BackOffice/Contracts/ListContract'
+import EditContract from '@/views/BackOffice/Contracts/EditContract'
+
+// Payments
+import ListPayment from '@/views/BackOffice/Payments/ListPayment'
+
 // Auth routes
 const Auth = [{
   path: '/',
@@ -138,8 +146,8 @@ const Sponsors = [{
   ]
 }]
 
-// Comapnies routes
-const Comapnies = [{
+// Companies routes
+const Companies = [{
   path: '/companies',
   name: 'ListCompany',
   component: View,
@@ -170,6 +178,96 @@ const Comapnies = [{
       title: 'Editar Empresa'
     },
     props: true
+  }
+  ]
+}]
+
+// Events routes
+const Events = [{
+  path: '/events',
+  name: 'ListEvent',
+  component: View,
+  meta: {
+    title: 'Listar Eventos'
+  },
+  children: [{
+    path: '/',
+    name: 'ListEvent',
+    component: ListEvent,
+    meta: {
+      title: 'Listar Eventos'
+    }
+  },
+  {
+    path: 'regist',
+    name: 'RegistEvent',
+    component: RegistEvent,
+    meta: {
+      title: 'Registar Evento'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditEvent',
+    component: EditEvent,
+    meta: {
+      title: 'Editar Evento'
+    },
+    props: true
+  }
+  ]
+}]
+
+// Contracts routes
+const Contracts = [{
+  path: '/contracts',
+  name: 'ListContract',
+  component: View,
+  meta: {
+    title: 'Listar Contratos'
+  },
+  children: [{
+    path: '/',
+    name: 'ListContract',
+    component: ListContract,
+    meta: {
+      title: 'Listar Contratos'
+    }
+  },
+  {
+    path: 'regist',
+    name: 'RegistContract',
+    component: RegistContract,
+    meta: {
+      title: 'Registar Empresa'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditContract',
+    component: EditContract,
+    meta: {
+      title: 'Editar Contrato'
+    },
+    props: true
+  }
+  ]
+}]
+
+const Payments = [{
+  path: '/payments',
+  name: 'ListPayment',
+  component: View,
+  meta: {
+    title: 'Listar Pagamentos'
+  },
+  children: [{
+    path: '/',
+    name: 'ListPayment',
+    component: ListPayment,
+    meta: {
+      title: 'Listar Pagamentos'
+    }
   }
   ]
 }]
@@ -223,20 +321,23 @@ const Admin = [{
       },
       props: true
     },
-      {
-        path: 'show/:id',
-        name: 'ShowEvent',
-        component: ShowEvent,
-        meta: {
-          title: 'Detalhes do Evento'
-        },
-        props: true
-      }
+    {
+      path: 'show/:id',
+      name: 'ShowEvent',
+      component: ShowEvent,
+      meta: {
+        title: 'Detalhes do Evento'
+      },
+      props: true
+    }
     ]
   },
+  ...Events,
   ...Organizers,
   ...Sponsors,
-  ...Comapnies
+  ...Companies,
+  ...Contracts,
+  ...Payments
   ]
 }]
 

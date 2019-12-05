@@ -6,14 +6,14 @@
           <div class="col-md-8 pl-0">
             <div class="form-group">
               <span class="deleteicon">
-                <input type="text" class="form-control" v-model="searchInput"
+                <input type="text" class="form-control" v-model="searchInput" v-show="showSearch"
                       @keyup.enter="Search" id="event-name" placeholder="Buscar.." />
                 <span v-if="searchInput" @click="clean">&times;</span>
               </span>
             </div>
           </div>
         </div>
-        <div class="gridOrList" v-if="needGrid" @click="tableGrid">
+        <div class="gridOrList" @click="tableGrid">
           <b-button
           variant="outline-danger"
           size="sm"
@@ -22,8 +22,8 @@
           @click="showRemoveModal"
           v-show="selected.length >= 1"
           >Apagar</b-button>
-          <span><i class="fas fa-th fa-lg" v-if="gridOrList"></i></span>
-          <span><i class="fa fa-bars fa-lg" v-if="!gridOrList"></i></span>
+          <span><i class="fas fa-th fa-lg" v-if="needGrid && gridOrList"></i></span>
+          <span><i class="fa fa-bars fa-lg" v-if="needGrid && !gridOrList"></i></span>
         </div>
       </div>
       <div >
@@ -164,6 +164,10 @@ export default {
       type: Function
     },
     canRemove: {
+      type: Boolean,
+      default: true
+    },
+    showSearch: {
       type: Boolean,
       default: true
     }
@@ -321,6 +325,10 @@ background-color: #52596F;
 color: #fff;
 }
 
+.table td{
+  max-width: 70px;
+  overflow: hidden;
+}
 .modal-backdrop {
   opacity: 0.5 !important;
 }
