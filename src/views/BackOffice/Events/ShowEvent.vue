@@ -765,6 +765,10 @@ export default {
           this.collection_tickets.amount = parseInt(this.collection_tickets.amount, 10)
           this.collection_tickets.price = parseInt(this.collection_tickets.price, 10)
 
+          if (typeof this.products === 'undefined') {
+            this.products = ''
+          }
+
           // Fire the PUT request
           const res = await this.axios({
             url: `/party_events/${this.party_event_id}/step_2`,
@@ -842,8 +846,6 @@ export default {
     this.getSponsors()
   },
   mounted () {
-    // this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })
-    // this.collection_products.push({ amount: '', price: '', company_product_id: '' })
     this.getEventData(this.step)
   }
 }

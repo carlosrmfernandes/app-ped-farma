@@ -404,6 +404,10 @@ export default {
           this.tickets.amount = parseInt(this.tickets.amount, 10)
           this.tickets.price = parseInt(this.tickets.price, 10)
 
+          if (typeof this.products === 'undefined') {
+            this.products = {}
+          }
+
           // Fire the PUT request
           const res = await this.axios({
             url: `/party_events/${this.party_event_id}/step_2`,
