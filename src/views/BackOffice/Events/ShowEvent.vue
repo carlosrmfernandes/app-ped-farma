@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Novo Evento</h1>
+      <h1>Editar Evento</h1>
       <!-- step one section -->
       <section v-if="step === 1">
         <h2>
@@ -16,17 +16,17 @@
                 type="text"
                 :class="{
                   'form-control': true,
-                  'is-input-danger': errors.has('title')
+                  'is-input-danger': errors.has('step_one.title')
                 }"
                 id="title"
-                v-model="title"
-                name="title"
+                v-model="step_one.title"
+                name="step_one.title"
                 placeholder="Nome do evento"
                 v-validate="'required'"
                 data-vv-as="Nome"
               />
-              <span v-show="errors.has('title')" class="help is-danger">{{
-                errors.first("title")
+              <span v-show="errors.has('step_one.title')" class="help is-danger">{{
+                errors.first("step_one.title")
               }}</span>
             </div>
           </div>
@@ -35,13 +35,13 @@
               <label for="location">Localização</label>
               <select
                 required
-                id="location"
+                id="step_one.location_id"
                 :class="{
                   'form-control': true,
-                  'is-input-danger': errors.has('location_id')
+                  'is-input-danger': errors.has('step_one.location_id')
                 }"
-                v-model="location_id"
-                name="location_id"
+                v-model="step_one.location_id"
+                name="step_one.location_id"
                 v-validate="'required'"
                 data-vv-as="Localização"
               >
@@ -49,11 +49,11 @@
                   v-for="location in locations"
                   :value="location.id"
                   :key="location.id"
-                  >{{ location.name }}</option
+                >{{ location.name }}</option
                 >
               </select>
-              <span v-show="errors.has('location_id')" class="help is-danger">{{
-                errors.first("location_id")
+              <span v-show="errors.has('step_one.location_id')" class="help is-danger">{{
+                errors.first("step_one.location_id")
               }}</span>
             </div>
           </div>
@@ -62,12 +62,12 @@
               <label for="classification">Classificação</label>
               <select
                 required
-                v-model="classification"
+                v-model="step_one.classification"
                 :class="{
                   'form-control': true,
-                  'is-input-danger': errors.has('classification')
+                  'is-input-danger': errors.has('step_one.classification')
                 }"
-                name="classification"
+                name="step_one.classification"
                 v-validate="'required'"
                 data-vv-as="Classificação"
               >
@@ -81,30 +81,30 @@
                 <option id="classification">NC17</option>
               </select>
               <span
-                v-show="errors.has('classification')"
+                v-show="errors.has('step_one.classification')"
                 class="help is-danger"
-                >{{ errors.first("classification") }}</span
+              >{{ errors.first("step_one.classification") }}</span
               >
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="startsAt"">Data do Evento</label>
+              <label for="step_one.starts_at"">Data do Evento</label>
               <input
                 required
                 type="date"
                 :class="{
                   'form-control': true,
-                  'is-input-danger': errors.has('starts_at')
+                  'is-input-danger': errors.has('step_one.starts_at')
                 }"
-                id="startsAt"
-                v-model="starts_at"
-                name="starts_at"
+                id="step_one.starts_at"
+                v-model="step_one.starts_at"
+                name="step_one.starts_at"
                 v-validate="'required'"
                 data-vv-as="Data do Evento"
               />
-              <span v-show="errors.has('starts_at')" class="help is-danger">{{
-                errors.first("starts_at")
+              <span v-show="errors.has('step_one.starts_at')" class="help is-danger">{{
+                errors.first("step_one.starts_at")
               }}</span>
             </div>
           </div>
@@ -115,45 +115,24 @@
                 type="text"
                 class="form-control"
                 id="videoId"
-                v-model="video_id"
+                v-model="step_one.video_id"
                 placeholder="Ex.: A_YQzKo5Ows"
-                name="video_id"
+                name="step_one.video_id"
+                v-validate="'required'"
+                data-vv-as="ID do Vídeo Promocional"
               />
+              <span v-show="errors.has('step_one.video_id')" class="help is-danger">{{
+                errors.first("step_one.video_id")
+              }}</span>
               <small class="form-text text-muted"
-                >Exemplo: https://www.youtube.com/watch?v=<b
-                  >A_YQzKo5Ows</b
-                ></small
+              >Exemplo: https://www.youtube.com/watch?v=<b
+              >A_YQzKo5Ows</b
+              ></small
               >
             </div>
           </div>
           <div class="col-md-3">
-            <div class="form-group">
-              <label for="organizer">Organizador</label>
-              <select
-                required
-                id="organizer"
-                :class="{
-                  'form-control': true,
-                  'is-input-danger': errors.has('organizer_id')
-                }"
-                v-model="organizer_id"
-                name="organizer_id"
-                v-validate="'required'"
-                data-vv-as="Organizador"
-              >
-                <option
-                  v-for="organizer in organizers"
-                  :value="organizer.id"
-                  :key="organizer.name"
-                  >{{ organizer.name }}</option
-                >
-              </select>
-              <span
-                v-show="errors.has('organizer_id')"
-                class="help is-danger"
-                >{{ errors.first("organizer_id") }}</span
-              >
-            </div>
+
           </div>
           <div class="col-md-3">
             <div class="form-group">
@@ -162,20 +141,20 @@
                 <textarea
                   :class="{
                     'form-control': true,
-                    'is-input-danger': errors.has('description')
+                    'is-input-danger': errors.has('step_one.description')
                   }"
                   id="description"
-                  v-model="description"
+                  v-model="step_one.description"
                   rows="4"
                   placeholder="Descrição do evento"
-                  name="description"
+                  name="step_one.description"
                   v-validate="'required'"
                   data-vv-as="Detalhes do evento"
                 ></textarea>
                 <span
-                  v-show="errors.has('description')"
+                  v-show="errors.has('step_one.description')"
                   class="help is-danger"
-                  >{{ errors.first("description") }}</span
+                >{{ errors.first("step_one.description") }}</span
                 >
               </div>
             </div>
@@ -187,30 +166,30 @@
               Backdrop
               <UploadPhoto
                 :OnChange="SelectBackdrop"
-                v-model="backdrop"
+                v-model="step_one.backdrop"
                 width="140px"
                 height="185px"
-                name="backdrop"
+                name="step_one.backdrop"
                 v-validate="'required'"
                 data-vv-as="Backdrop"
               />
-              <span v-show="errors.has('backdrop')" class="help is-danger">{{
-                errors.first("backdrop")
+              <span v-show="errors.has('step_one.backdrop')" class="help is-danger">{{
+                errors.first("step_one.backdrop")
               }}</span>
             </div>
             <div class="col-md-4">
               Poster
               <UploadPhoto
                 :OnChange="SelectPoster"
-                v-model="poster"
+                v-model="step_one.poster"
                 width="140px"
                 height="185px"
-                name="poster"
+                name="step_one.poster"
                 v-validate="'required'"
                 data-vv-as="Poster"
               />
-              <span v-show="errors.has('poster')" class="help is-danger">{{
-                errors.first("poster")
+              <span v-show="errors.has('step_one.poster')" class="help is-danger">{{
+                errors.first("step_one.poster")
               }}</span>
             </div>
           </div>
@@ -240,48 +219,48 @@
         <div class="row mt-5">
           <div class="col-md-3">
             <div class="form-group">
-              <label for="event_session_starts_at">Inicío da Sessão</label>
+              <label for="step_two.starts_at">Inicío da Sessão</label>
               <input
                 type="datetime-local"
                 :class="{
                   'form-control': true,
-                  'is-input-danger': errors.has('event_session.starts_at')
+                  'is-input-danger': errors.has('step_two.starts_at')
                 }"
-                name="event_session.starts_at"
-                v-model="event_session.starts_at"
-                id="event_session_starts_at"
+                name="step_two.starts_at"
+                v-model="step_two.starts_at"
+                id="step_two.starts_at"
               />
               <small class="form-text text-muted">Data e Hora</small>
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="event_session_ends_at">Fim da Sessão</label>
+              <label for="step_two.ends_at">Fim da Sessão</label>
               <input
                 type="datetime-local"
                 :class="{
                   'form-control': true,
-                  'is-input-danger': errors.has('event_session.ends_at')
+                  'is-input-danger': errors.has('step_two.ends_at')
                 }"
-                name="event_session.ends_at"
-                v-model="event_session.ends_at"
-                id="event_session_ends_at"
+                name="step_two.ends_at"
+                v-model="step_two.ends_at"
+                id="step_two.ends_at"
               />
               <small class="form-text text-muted">Data e Hora</small>
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="location_id">Localização</label>
+              <label for="step_two.location_id">Localização</label>
               <select
                 required
-                id="location_id"
+                id="step_two.location_id"
                 :class="{
                   'form-control': true,
-                  'is-input-danger': errors.has('event_session.location_id')
+                  'is-input-danger': errors.has('step_two.location_id')
                 }"
-                v-model="event_session.location_id"
-                name="event_session.location_id"
+                v-model="step_two.location_id"
+                name="step_two.location_id"
                 v-validate="'required'"
                 data-vv-as="Localização"
               >
@@ -289,36 +268,36 @@
                   v-for="location in locations"
                   :value="location.id"
                   :key="location.id"
-                  >{{ location.name }}</option
+                >{{ location.name }}</option
                 >
               </select>
               <span
-                v-show="errors.has('event_session.location_id')"
+                v-show="errors.has('step_two.location_id')"
                 class="help is-danger"
-                >{{ errors.first("event_session.location_id") }}</span
+              >{{ errors.first("step_two.location_id") }}</span
               >
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="session_price">Preço</label>
+              <label for="step_two.price">Preço</label>
               <input
                 type="number"
                 :class="{
                   'form-control': true,
-                  'is-input-danger': errors.has('event_session.price')
+                  'is-input-danger': errors.has('step_two.price')
                 }"
                 placeholder="Ex.: 5000"
                 v-validate="'required'"
                 data-vv-as="Preço"
-                name="event_session.price"
-                v-model="event_session.price"
-                id="session_price"
+                name="step_two.price"
+                v-model="step_two.price"
+                id="step_two.price"
               />
               <span
-                v-show="errors.has('event_session.price')"
+                v-show="errors.has('step_two.price')"
                 class="help is-danger"
-                >{{ errors.first("event_session.price") }}</span
+              >{{ errors.first("step_two.price") }}</span
               >
             </div>
           </div>
@@ -328,7 +307,7 @@
           <div class="row"  v-for="(tickets, index) in collection_tickets">
             <div class="col-md-3">
               <div class="form-group">
-                <label for="ticket_amount">Quantidade</label>
+                <label for="tickets.amount">Quantidade</label>
                 <input
                   type="number"
                   :class="{
@@ -340,12 +319,12 @@
                   data-vv-as="Quantidade"
                   v-model="tickets.amount"
                   name="tickets.amount"
-                  id="ticket_amount"
+                  id="tickets.amount"
                 />
                 <span
                   v-show="errors.has('tickets.amount')"
                   class="help is-danger"
-                  >{{ errors.first("tickets.amount") }}</span
+                >{{ errors.first("tickets.amount") }}</span
                 >
               </div>
             </div>
@@ -368,7 +347,7 @@
                 <span
                   v-show="errors.has('tickets.price')"
                   class="help is-danger"
-                  >{{ errors.first("tickets.price") }}</span
+                >{{ errors.first("tickets.price") }}</span
                 >
               </div>
             </div>
@@ -401,7 +380,7 @@
                 <span
                   v-show="errors.has('tickets.ticket_type')"
                   class="help is-danger"
-                  >{{ errors.first("tickets.ticket_type") }}</span
+                >{{ errors.first("tickets.ticket_type") }}</span
                 >
               </div>
             </div>
@@ -417,12 +396,15 @@
           <div class="row" v-for="(products, index) in collection_products">
             <div class="col-md-3">
               <div class="form-group">
-                <label for="products.company_product_id">Produto</label>
+                <label for="company_product_id">Produto</label>
                 <select
                   required
-                  id="products.company_product_id"
+                  id="company_product_id"
                   :class="{
-                    'form-control': true
+                    'form-control': true,
+                    'is-input-danger': errors.has(
+                      'products.company_product_id'
+                    )
                   }"
                   v-model="products.company_product_id"
                   name="products.company_product_id"
@@ -431,7 +413,7 @@
                     v-for="product in company_products"
                     :value="product.id"
                     :key="product.id"
-                    >{{ product.name }}</option
+                  >{{ product.name }}</option
                   >
                 </select>
               </div>
@@ -442,7 +424,8 @@
                 <input
                   type="number"
                   :class="{
-                    'form-control': true
+                    'form-control': true,
+                    'is-input-danger': errors.has('products.amount')
                   }"
                   placeholder="Ex.: 3500"
                   v-model="products.amount"
@@ -457,7 +440,8 @@
                 <input
                   type="number"
                   :class="{
-                    'form-control': true
+                    'form-control': true,
+                    'is-input-danger': errors.has('products.price')
                   }"
                   placeholder="Ex.: 5000"
                   name="products.price"
@@ -506,10 +490,10 @@
                 id="sponsors_id"
                 :class="{
                   'form-control': true,
-                  'is-input-danger': errors.has('sponsors_id')
+                  'is-input-danger': errors.has('step_three.sponsors_id')
                 }"
-                v-model="sponsors_id"
-                name="sponsors_id"
+                v-model="step_three.sponsors_id"
+                name="step_three.sponsors_id"
                 v-validate="'required'"
                 data-vv-as="Patrocinador"
               >
@@ -517,11 +501,11 @@
                   v-for="sponsor in sponsors"
                   :value="sponsor.id"
                   :key="sponsor.id"
-                  >{{ sponsor.description }}</option
+                >{{ sponsor.description }}</option
                 >
               </select>
-              <span v-show="errors.has('sponsors_id')" class="help is-danger">{{
-                errors.first("sponsors_id")
+              <span v-show="errors.has('step_three.sponsors_id')" class="help is-danger">{{
+                errors.first("step_three.sponsors_id")
               }}</span>
             </div>
           </div>
@@ -532,17 +516,17 @@
                 type="text"
                 :class="{
                   'form-control': true,
-                  'is-input-danger': errors.has('tags')
+                  'is-input-danger': errors.has('step_three.tags')
                 }"
                 v-validate="'required'"
                 data-vv-as="Tags"
-                v-model="tags"
-                name="tags"
+                v-model="step_three.tags"
+                name="step_three.tags"
                 id="tags"
               />
               <small class="form-text text-muted">Ex.: festa, evento</small>
-              <span v-show="errors.has('tags')" class="help is-danger">{{
-                errors.first("tags")
+              <span v-show="errors.has('step_three.ags')" class="help is-danger">{{
+                errors.first("step_three.tags")
               }}</span>
             </div>
           </div>
@@ -570,57 +554,87 @@
     <div class="panel-body"></div>
   </div>
 </template>
-
 <script>
 
 import UploadPhoto from '@/components/Form/Photo'
 
 export default {
+  props: {
+    id: {
+      type: String
+    }
+  },
   components: {
     UploadPhoto
   },
   data: function () {
     return {
+      party_event_id: this.id,
+      party_event_data: {},
       step: 0,
-      stepCount: 3,
-      locations: '',
       organizers: '',
-      organizer_id: '',
+      locations: '',
       classifications: '',
-      poster: '',
-      backdrop: '',
-      classification: '',
-      title: '',
-      tags: '',
-      description: '',
-      starts_at: '',
-      video_id: '',
-      location_id: '',
-      party_event_id: '',
-      collection_products: [],
-      products: {},
-      startsAt: '',
-      company_product_id: '',
-      event_session: {},
-      company_products: '',
-      tickets: {},
-      collection_tickets: [],
-      sponsors: {},
-      sponsors_id: '',
       isRequesting: false,
       hadSuccess: false,
-      hadError: ''
+      hadError: '',
+      step_one: {
+        backdrop: '',
+        poster: '',
+        description: '',
+        location_id: '',
+        organizer_id: '',
+        title: '',
+        starts_at: '',
+        classification: '',
+        video_id: ''
+      },
+      step_two: {
+        starts_at: '',
+        ends_at: '',
+        location_id: '',
+        price: ''
+      },
+      step_three: {
+        sponsors_id: '',
+        tags: []
+      },
+      party_event_status: '',
+      collection_tickets: [],
+      collection_products: [],
+      tickets: {},
+      products: {},
+      sponsors: ''
     }
   },
   methods: {
     /*
-     * getLOcations: This method will fire a GET request and then
-     * assign the response data into the state property: form
+     *  ProcessForm: This method will validate the form using vee-validate
+     *  component and then call the action method defined for this view
+     *  if everything passes the validation.
      */
-    async getLocations () {
+    async ProcessForm (step) {
+      this.hadError = ''
+
+      const result = await this.$validator.validateAll()
+      console.log(result)
+      return result ? this.updateParty(step) : result
+    },
+    SelectPoster (file) {
+      this.step_one.poster = file
+    },
+    SelectBackdrop (file) {
+      this.step_one.backdrop = file
+    },
+    /*
+     *  getSponsors: This method will fire a GET request and then
+     * assign the response data into the state property: form.
+     */
+    async getSponsors () {
       try {
-        const result = await this.axios.get(`/locations?bringAll=true`)
-        this.locations = result.data
+        const result = await this.axios.get(`/sponsors`)
+        const res = result.data
+        this.sponsors = res.data
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -640,7 +654,7 @@ export default {
     },
     async getClassifications () {
       try {
-        // this.axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.TOKEN}`;
+      // this.axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.TOKEN}`;
         const result = await this.axios.get(`/party_events/classifications`)
         this.classifications = result
       } catch (e) {
@@ -648,73 +662,89 @@ export default {
       }
     },
     /*
-     *  getSponsors: This method will fire a GET request and then
-     * assign the response data into the state property: form.
+     * getLOcations: This method will fire a GET request and then
+     * assign the response data into the state property: form
      */
-    async getSponsors () {
+    async getLocations () {
       try {
-        const result = await this.axios.get(`/sponsors`)
-        const res = result.data
-        this.sponsors = res.data
+        const result = await this.axios.get(`/locations?bringAll=true`)
+        this.locations = result.data
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
     },
     /*
-     *  getProducts: This method will fire a GET request and then
-     * assign the response data into the state property: form.
+     * getEventStep: This method will fire a GET request and then
+     * assign the response data into the state property: form
      */
-    async getProducts () {
+    async getEventData (step) {
       try {
-        const result = await this.axios.get(`/company_products?sorters=NAME`)
-        const res = result.data
-        this.company_products = res.data
+        switch (step) {
+          case 1:
+            const result = await this.axios.get(
+              `/party_events/${this.party_event_id}/step_1`
+            )
+            this.step_one.title = result.data.title
+            this.step_one.description = result.data.description
+            this.step_one.location_id = result.data.location.id
+            this.step_one.organizer_id = result.data.organizer.id
+            this.step_one.starts_at = result.data.starts_at
+            this.step_one.ends_at = result.data.ends_at
+            this.step_one.classification = result.data.classification
+            this.step_one.video_id = result.data.video_id
+            break
+          case 2:
+            const resultTwo = await this.axios.get(
+              `/party_events/${this.party_event_id}/step_2`
+            )
+            this.step_two.starts_at = resultTwo.data.sessions[0].starts_at
+            this.step_two.ends_at = resultTwo.data.sessions[0].ends_at
+            this.step_two.location_id = resultTwo.data.sessions[0].location_id
+            this.step_two.price = resultTwo.data.sessions[0].price
+            this.collection_tickets = resultTwo.data.sessions[0].tickets
+            this.collection_products = resultTwo.data.sessions[0].products
+            console.log(resultTwo.data.sessions[0].products.length)
+            break
+          case 3:
+            const resultThree = await this.axios.get(
+              `/party_events/${this.party_event_id}/step_3`
+            )
+            this.step_three.sponsors_id = resultThree.data.sponsors[0]
+            this.step_three.tags = resultThree.data.tags
+            console.log(resultThree.data.tags)
+            break
+          default:
+            console.log('Sorry, we are out of ' + step + '.')
+        }
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
     },
-    /*
-     *  ProcessForm: This method will validate the form using vee-validate
-     *  component and then call the action method defined for this view
-     *  if everything passes the validation.
-     */
-    async ProcessForm (step) {
-      this.hadError = ''
-      const result = await this.$validator.validateAll()
-      return result ? this.postPartyEvent(step) : result
-    },
-    /*
-     *  postPartyEvent: This method will create a post request step by step to regist a
-     *  new party event and then redirect to the ListEvent component.
-     */
-    async postPartyEvent (step) {
+    async updateParty (step) {
       if (step === 1) {
         this.isRequesting = true
         try {
           const fData = new FormData()
 
-          fData.append('poster', this.poster)
-          fData.append('backdrop', this.backdrop)
-          fData.append('classification', this.classification)
-          fData.append('location_id', this.location_id)
-          fData.append('organizer_id', this.organizer_id)
-          fData.append('video_id', this.video_id)
-          fData.append('description', this.description)
-          fData.append('starts_at', this.starts_at)
-          fData.append('title', this.title)
+          fData.append('poster', this.step_one.poster)
+          fData.append('backdrop', this.step_one.backdrop)
+          fData.append('classification', this.step_one.classification)
+          fData.append('location_id', this.step_one.location_id)
+          fData.append('organizer_id', this.step_one.organizer_id)
+          fData.append('video_id', this.step_one.video_id)
+          fData.append('description', this.step_one.description)
+          fData.append('starts_at', this.step_one.starts_at)
+          fData.append('title', this.step_one.title)
 
           // Fire the PUT request
           const res = await this.axios({
-            url: `/party_events/step_1`,
-            method: 'post',
+            url: `/party_events/${this.party_event_id}/step_1`,
+            method: 'put',
             headers: { 'Content-Type': 'multipart/form-data' },
             data: fData
           })
 
           if (res) {
-            // Get this party_event_id
-            this.party_event_id = res.data.id
-            console.log('Party event ID: ', this.party_event_id)
             // Next step
             this.step++
           }
@@ -727,20 +757,21 @@ export default {
       } else if (step === 2) {
         this.isRequesting = true
         try {
-          this.event_session.price = parseInt(this.event_session.price, 10)
+          this.step_two.price = parseInt(this.step_two.price, 10)
 
-          this.products.amount = parseInt(
-            this.products.amount,
+          this.collection_products.amount = parseInt(
+            this.collection_products.amount,
             10
           )
-          this.products.price = parseInt(this.products.price, 10)
+          this.collection_products.price = parseInt(this.collection_products.price, 10)
 
-          this.tickets.amount = parseInt(this.tickets.amount, 10)
-          this.tickets.price = parseInt(this.tickets.price, 10)
+          this.collection_tickets.amount = parseInt(this.collection_tickets.amount, 10)
+          this.collection_tickets.price = parseInt(this.collection_tickets.price, 10)
 
           if (typeof this.products === 'undefined') {
             this.products = ''
           }
+
           // Fire the PUT request
           const res = await this.axios({
             url: `/party_events/${this.party_event_id}/step_2`,
@@ -749,10 +780,10 @@ export default {
             data: {
               sessions: [
                 {
-                  ends_at: this.event_session.ends_at,
-                  location_id: this.event_session.location_id,
-                  price: this.event_session.price,
-                  starts_at: this.event_session.starts_at,
+                  ends_at: this.step_two.ends_at,
+                  location_id: this.step_two.location_id,
+                  price: this.step_two.price,
+                  starts_at: this.step_two.starts_at,
                   products: this.collection_products,
                   tickets: this.collection_tickets
                 }
@@ -772,7 +803,7 @@ export default {
         this.isRequesting = false
       } else if (step === 3) {
         this.isRequesting = true
-        this.tags = this.tags.split(', ')
+        this.step_three.tags = this.step_three.tags.split(', ')
 
         try {
           // Fire the PUT request
@@ -781,8 +812,8 @@ export default {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             data: {
-              sponsors: [this.sponsors_id],
-              tags: this.tags
+              sponsors: [this.step_three.sponsors_id],
+              tags: this.step_three.tags
             }
           })
 
@@ -797,15 +828,6 @@ export default {
         }
         this.isRequesting = false
       }
-    },
-    SelectPoster (file) {
-      this.poster = file
-    },
-    SelectBackdrop (file) {
-      this.backdrop = file
-    },
-    prev: function () {
-      this.step--
     },
     addTicket: function () {
       this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })
@@ -823,14 +845,14 @@ export default {
   created () {
     this.step++
     this.getLocations()
-    this.getSponsors()
     this.getOrganizers()
-    this.getProducts()
+    this.getSponsors()
   },
   mounted () {
-    this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })
+    this.getEventData(this.step)
   }
 }
 </script>
+<style>
 
-<style></style>
+</style>
