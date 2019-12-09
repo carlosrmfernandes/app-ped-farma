@@ -18,4 +18,26 @@ export default Vue => {
 
     return labels[role]
   })
+
+  /**
+   * proposalStatus: This filter will format the proposal status
+   *
+   * @param {string} status
+   */
+  Vue.filter('locationsTypes', status => {
+    switch (status) {
+      case 'UNDEFINED':
+        return 'Indefinido'
+      case 'PARK':
+        return 'Parque'
+      case 'MUSEUM':
+        return 'Museus'
+      case 'MOVIE_THEATER':
+        return 'Cinema'
+      case 'MALL':
+        return 'Shopping'
+      default:
+        return 'N/A'
+    }
+  })
 }

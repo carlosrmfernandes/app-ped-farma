@@ -1,5 +1,5 @@
 <template>
-  <div class="accordion" v-bind:class="{ disabled: !active}">
+  <div class="accordion" v-bind:class="{ disabled: !active, childSidebar: moreClass}">
       <div class="accordion-header" v-bind:class="{ atual: active}" @click="openClose()">
         <span class="accordion-title">{{ title }}</span>
       </div>
@@ -20,6 +20,10 @@ export default {
     icon: {
       type: String,
       required: false
+    },
+    moreClass: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -35,7 +39,7 @@ export default {
       if (this.active) {
         this.maxHeight = '0px'
       } else {
-        this.maxHeight = containerHeight + 100 + 'px'
+        this.maxHeight = containerHeight + 200 + 'px'
       }
       this.active = !this.active
     }
@@ -54,6 +58,13 @@ export default {
   background-color: #0b132e;
   cursor: pointer;
 }
+
+.accordion.childSidebar {
+
+  background-color: #0b132e;
+  cursor: pointer;
+}
+
 .accordion .accordion-header {
   box-sizing: border-box;
   padding: 10px;
@@ -68,6 +79,11 @@ export default {
 }
 
 .accordion .accordion-header.atual {
+   color: #2e3553;
+   background-color: #fff;
+}
+
+.accordion .accordion-header.childSidebar {
    color: #2e3553;
    background-color: #fff;
 }
@@ -102,6 +118,10 @@ export default {
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
+}
+
+.accordion.childSidebar .accordion-title {
+  left: 18%;
 }
 .accordion .accordion-body {
   text-align: start;
@@ -139,10 +159,22 @@ export default {
   margin-top: 30px;
 }
 
+.accordion.childSidebar .accordion-body .accordion-content a span {
+  margin-left: 35px;
+  margin-top: 30px;
+}
+
 .accordion.disabled {
   background-color: #343A4E;
   height: 40px;
 }
+
+.accordion.disabled.childSidebar {
+
+  background-color: #0b132e;
+  cursor: pointer;
+}
+
 .accordion.disabled .accordion-header {
   border-bottom: none;
   height: 40px;

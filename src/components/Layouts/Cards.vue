@@ -69,6 +69,10 @@ export default {
           data[k]['img'] = `${this.root}/company_logos/${element.company_logo}`
         } else if (this.resource === 'sponsor') {
           data[k]['img'] = `${this.root}/company_logos/${element.company_logo}`
+        } else if (this.resource === 'location') {
+          data[k]['img'] = `${this.root}/location_images/${element.image_path}`
+        } else if (this.resource === 'product') {
+          data[k]['img'] = `${this.root}/company_product_images/${element.image_path}`
         }
 
         k++

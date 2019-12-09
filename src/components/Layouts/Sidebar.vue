@@ -8,52 +8,46 @@
     <!-- <ul class="list-unstyled components">
       <p>Admin</p>
     </ul> -->
-    <Collapse icon="nextbss-bar-chart" title="Dashboard"></Collapse>
+    <router-link :to="{name: 'Dashboard'}" tag="a">
+      <Collapse icon="nextbss-bar-chart" title="Dashboard"></Collapse>
+    </router-link>
     <Collapse title="Eventos">
       <router-link :to="{name: 'ListEvent'}" tag="a">
         <span>Listar</span>
       </router-link>
-      <router-link :to="{name: 'RegistEvent'}" tag="a">
-        <span>Novo Evento</span>
-      </router-link>
     </Collapse>
-    <Collapse title="Empresas">
-      <router-link :to="{name: 'ListCompany'}" tag="a">
-        <span>Listar</span>
-      </router-link>
-      <router-link :to="{name: 'RegistCompany'}" tag="a">
-        <span>Nova Empresa</span>
-      </router-link>
-    </Collapse>
-    <Collapse title="Organizadores">
+    <router-link :to="{name: 'ListCompany'}" tag="a">
+      <Collapse title="Empresas"></Collapse>
+    </router-link>
+    <Collapse title="Organizadores" >
       <router-link :to="{name: 'ListOrganizer'}" tag="a">
-        <span>Listar</span>
+        <span>Listar </span>
       </router-link>
-      <router-link :to="{name: 'RegistOrganizer'}" tag="a">
-        <span>Novo Organizador</span>
-      </router-link>
+      <Collapse title="Operadores" :moreClass="true">
+          <router-link :to="{name: 'ListSupplier'}" tag="a">
+            <span>Listar</span>
+          </router-link>
+      </Collapse>
     </Collapse>
-    <Collapse title="Patrocinadores">
-      <router-link :to="{name: 'ListSponsor'}" tag="a">
-        <span>Listar</span>
-      </router-link>
-      <router-link :to="{name: 'RegistSponsor'}" tag="a">
-        <span>Novo Patrocinador</span>
-      </router-link>
-    </Collapse>
-    <Collapse title="Contratos">
-      <router-link :to="{name: 'ListContract'}" tag="a">
-        <span>Listar</span>
-      </router-link>
-      <router-link :to="{name: 'RegistContract'}" tag="a">
-        <span>Novo Contrato</span>
-      </router-link>
-    </Collapse>
+    <router-link :to="{name: 'ListSponsor'}" tag="a">
+      <Collapse title="Patrocinadores">
+          <span>Listar</span>
+      </Collapse>
+    </router-link>
+    <router-link :to="{name: 'ListContract'}" tag="a">
+      <Collapse title="Contratos"></Collapse>
+    </router-link>
     <!-- <Collapse title="Pagamentos">
       <router-link :to="{name: 'ListPayment'}" tag="a">
         <span>Listar</span>
       </router-link>
     </Collapse> -->
+    <router-link :to="{name: 'ListLocation'}" tag="a">
+      <Collapse title="Localizações"></Collapse>
+    </router-link>
+    <router-link :to="{name: 'ListProduct'}" tag="a">
+      <Collapse title="Produtos"></Collapse>
+    </router-link>
     <ul class="list-unstyled CTAs">
       <li @click="DoLogout" >
         <a href="#" class="article"><span>Sair</span> <i class="fa fa-power-off fa-lg" aria-hidden="true"></i></a>

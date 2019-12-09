@@ -1,26 +1,26 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Organizadores</h1>
+      <h1>Operadores</h1>
     </div>
     <div class="panel-body">
       <div>
         <Table
           :cols="cols"
-          :data="organizers"
-          title="Organizador"
-          :searchMethod="GetOrganizers"
+          :data="suppliers"
+          title="Operadores"
+          :searchMethod="GetSuppliers"
           :pagination="pagination"
-          :paginationMethod="GetOrganizers"
-          :sortMethod="GetOrganizers"
+          :paginationMethod="GetSuppliers"
+          :sortMethod="GetSuppliers"
           :needGrid="true"
           :changePage="changePage"
-          resource="organizer"
-          editRoute="EditOrganizer"
+          resource="supplier"
+          editRoute="EditSupplier"
           :pageCount="pageCount"
-          :removeResource="removeMostOrganizers"
-          registRoute="RegistOrganizer"
-          buttonRegistName = "Novo Organizador"
+          :removeResource="removeMostSuppliers"
+          registRoute="RegistSupplier"
+          buttonRegistName = "Novo Operador"
         />
       </div>
       <div class="panel-footer"></div>
@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import { RemoveOrganizer } from './helpers/functions.js'
+import { RemoveSupplier } from './helpers/functions.js'
 
 import Table from '@/components/Layouts/Table'
 export default {
@@ -40,36 +40,30 @@ export default {
       form: {},
       cols: [
         { name: 'name', label: 'Nome' },
-        { name: 'email', label: 'Email' },
-        { name: 'facebook', label: 'Facebook' },
-        { name: 'instagram', label: 'Instagram' },
-        { name: 'twitter', label: 'Twitter' },
-        { name: 'phone_number', label: 'Telefone' }
+        { name: 'username', label: 'Nome de Usuario' }
       ],
       isRequesting: false,
-      organizers: [],
+      suppliers: [],
       pagination: {
-        perPage: 12,
+        perPage: 10,
         pageable: { pageNumber: 1 }
       },
       ids: [],
       hadError: '',
-      hadSuccess: '',
-      editID: '',
       pageCount: 0
     }
   },
   methods: {
     async GetPosts () {
       // eslint-disable-next-line no-unused-expressions
-      this.organizers
+      this.suppliers
     },
     /*
      *  GetCompanies: This method will fire a GET request
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-    async GetOrganizers (type, sort = '', search = '') {
+    async GetSuppliers (type, sort = '', search = '') {
       this.isRequesting = true
 
       if (type === 'next') {
@@ -88,13 +82,12 @@ export default {
       query += search ? `&search=${search}` : ''
 
       try {
-        const result = await this.axios.get(`/organizers?${query}`)
+        const result = await this.axios.get(`/suppliers?${query}`)
         const res = result.data
-        this.organizers = res.data
+        this.suppliers = res.data
 
         this.pageCount = res.pages_count
         // Set Pagination
-        // delete res.data.content
       } catch (e) {
         this.hadError =
           'Não foi possível carregar as encomendas. Actualize a página.'
@@ -104,14 +97,14 @@ export default {
     changePage (page) {
       this.pagination.pageable.pageNumber = page
     },
-    removeMostOrganizers (ids) {
-      this.RemoveOrganizer(ids)
+    removeMostSuppliers (ids) {
+      this.RemoveSupplier(ids)
     },
-    RemoveOrganizer
+    RemoveSupplier
   },
   created () {
     // Get customer orders
-    this.GetOrganizers()
+    this.GetSuppliers()
   }
 }
 </script>

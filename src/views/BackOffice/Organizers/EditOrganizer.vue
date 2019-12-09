@@ -38,62 +38,16 @@
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="event-name">Facebook</label>
-            <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.facebook')}"
-             name="form.facebook"
-             v-model="form.facebook"
-             id="Organizer-Facebook"
-             placeholder="URL do Facebook"
-             :disabled="isEditable"
-             data-vv-as="Facebook" />
-             <span v-show="errors.has('form.facebook')" class="help is-danger">{{ errors.first('form.facebook') }}</span>
+        <div class="row">
+          <div class="organizer-photo">
+
+          </div>
+          <div class="organizer-photo">
+
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="event-name">Instagram</label>
-            <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.instagram')}"
-             name="form.instagram"
-             v-model="form.instagram"
-             id="Organizer-Instagram"
-             placeholder="URL do Instagram"
-             :disabled="isEditable"
-             data-vv-as="Instagram" />
-             <span v-show="errors.has('form.instagram')" class="help is-danger">{{ errors.first('form.instagram') }}</span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="event-name">Twitter</label>
-            <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.twitter')}"
-             name="form.twitter"
-             v-model="form.twitter"
-             id="Organizer-Twitter"
-             placeholder="URL do Twitter"
-             :disabled="isEditable"
-             data-vv-as="Twitter" />
-             <span v-show="errors.has('form.twitter')" class="help is-danger">{{ errors.first('form.twitter') }}</span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="organizer-description">Descricao</label>
-            <textarea type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.description')}"
-             name="form.description"
-             v-model="form.description"
-             id="Organizer-Description"
-             placeholder="Descricao do Organizador"
-             :disabled="isEditable"
-             data-vv-as="Descricao"
-             rows="4" />
-             <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
-          </div>
+        <div class="row">
+
         </div>
       </div>
       <div class="row" v-for="(address, j) in addresses" :key="j">

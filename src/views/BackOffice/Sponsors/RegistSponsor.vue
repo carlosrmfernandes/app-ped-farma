@@ -70,7 +70,7 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="organizer-province">Provincia</label>
+            <label for="sponsor-province">Provincia</label>
             <input type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.province')}"
              name="form.province"
@@ -84,7 +84,7 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="organizer-municipality">Municipio</label>
+            <label for="sponsor-municipality">Municipio</label>
             <input type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.municipality')}"
              name="form.municipality"
@@ -98,7 +98,7 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="organizer-address">Bairro</label>
+            <label for="sponsor-address">Bairro</label>
             <input type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.address')}"
              name="form.address"
@@ -112,14 +112,14 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="organizer-description">Descricao</label>
+            <label for="sponsor-description">Descrição</label>
             <textarea type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.description')}"
              name="form.description"
              v-model="form.description"
              id="Sponsor-Description"
-             placeholder="Descricao do Organizador"
-             data-vv-as="Descricao"
+             placeholder="Descrição do Patrocinador"
+             data-vv-as="Descrição"
              rows="4" />
              <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
           </div>
@@ -132,7 +132,7 @@
               <div class="col-md-12">
                 <input type="text"
                 :class="{'form-control': true, 'is-input-danger': errors.has('form.email')}"
-                id="Organizer-email"
+                id="sponsor-email"
                 name="form.email"
                 placeholder="Email de Contacto"
                 v-model="form.email"/>

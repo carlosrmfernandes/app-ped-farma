@@ -14,6 +14,16 @@
           </div>
         </div>
         <div class="gridOrList" @click="tableGrid">
+          <span><i class="fas fa-th fa-lg" v-if="needGrid && gridOrList"></i></span>
+          <span><i class="fa fa-bars fa-lg" v-if="needGrid && !gridOrList"></i></span>
+          <b-button
+          variant="outline-primary"
+          size="sm"
+          class="float-right"
+          v-on:click.stop
+          @click="registResource"
+          v-show="showNewResourceButton"
+          >{{ buttonRegistName }}</b-button>
           <b-button
           variant="outline-danger"
           size="sm"
@@ -22,8 +32,6 @@
           @click="showRemoveModal"
           v-show="selected.length >= 1"
           >Apagar</b-button>
-          <span><i class="fas fa-th fa-lg" v-if="needGrid && gridOrList"></i></span>
-          <span><i class="fa fa-bars fa-lg" v-if="needGrid && !gridOrList"></i></span>
         </div>
       </div>
       <div >
@@ -93,7 +101,7 @@
       </div>
     </div>
     <!-- Remove Modal-->
-    <b-modal id="modal-remove" title="Organizador">
+    <b-modal id="modal-remove" :title="title">
       <p class="my-4">Tem certeza que deseja remover?</p>
       <template v-slot:modal-footer>
         <div class="w-100">
@@ -170,6 +178,16 @@ export default {
     showSearch: {
       type: Boolean,
       default: true
+    },
+    showNewResourceButton: {
+      type: Boolean,
+      default: true
+    },
+    buttonRegistName: {
+      type: String
+    },
+    registRoute: {
+      type: String
     }
   },
   data () {
@@ -263,6 +281,9 @@ export default {
     },
     remove () {
       this.removeResource(this.selected)
+    },
+    registResource () {
+      this.$router.push({ name: this.registRoute })
     }
   },
   computed: {
@@ -426,6 +447,7 @@ span.deleteicon span {
 
 .float-right{
   margin-left: 10px;
+  margin-right: 10px;
   margin-top: -5px;
 }
 </style>

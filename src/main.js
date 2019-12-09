@@ -12,6 +12,11 @@ import { BootstrapVue } from 'bootstrap-vue'
 import VeeValidate, { Validator } from 'vee-validate'
 import pt from 'vee-validate/dist/locale/pt_PT'
 
+import filters from './filters'
+
+// Google Libraries
+import * as VueGoogleMaps from 'vue2-google-maps'
+
 // Set libraries
 moment.locale('pt_PT')
 Vue.use(VeeValidate)
@@ -26,12 +31,21 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
 }
 
+// Google Maps Authentications
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyDo0o_N65ss5lDebO2GXfa-AzSWp8owV9Q',
+    libraries: 'places' // necessary for places input
+  }
+})
+
 // Components
 Vue.use(PortalVue)
 Vue.use(BootstrapVue)
 
 // Other Configurations
 Vue.config.productionTip = true
+filters(Vue)
 
 new Vue({
   router,

@@ -24,9 +24,9 @@ import ListEvent from '@/views/BackOffice/Events/ListEvent'
 import EditEvent from '@/views/BackOffice/Events/EditEvent'
 
 // Companies
-import RegistCompany from '@/views/BackOffice/Company/RegistCompany'
-import ListCompany from '@/views/BackOffice/Company/ListCompany'
-import EditCompany from '@/views/BackOffice/Company/EditCompany'
+import RegistCompany from '@/views/BackOffice/Companies/RegistCompany'
+import ListCompany from '@/views/BackOffice/Companies/ListCompany'
+import EditCompany from '@/views/BackOffice/Companies/EditCompany'
 
 // Contracts
 import RegistContract from '@/views/BackOffice/Contracts/RegistContract'
@@ -35,6 +35,21 @@ import EditContract from '@/views/BackOffice/Contracts/EditContract'
 
 // Payments
 import ListPayment from '@/views/BackOffice/Payments/ListPayment'
+
+// Locations
+import RegistLocation from '@/views/BackOffice/Locations/RegistLocation'
+import ListLocation from '@/views/BackOffice/Locations/ListLocation'
+import EditLocation from '@/views/BackOffice/Locations/EditLocation'
+
+// Products
+import RegistProduct from '@/views/BackOffice/Products/RegistProduct'
+import ListProduct from '@/views/BackOffice/Products/ListProduct'
+import EditProduct from '@/views/BackOffice/Products/EditProduct'
+
+// Suppliers
+import RegistSupplier from '@/views/BackOffice/Suppliers/RegistSupplier'
+import ListSupplier from '@/views/BackOffice/Suppliers/ListSupplier'
+import EditSupplier from '@/views/BackOffice/Suppliers/EditSupplier'
 
 // Auth routes
 const Auth = [{
@@ -271,6 +286,114 @@ const Payments = [{
   ]
 }]
 
+// Locations routes
+const Locations = [{
+  path: '/locations',
+  name: 'ListLocation',
+  component: View,
+  meta: {
+    title: 'Listar Localização'
+  },
+  children: [{
+    path: '/',
+    name: 'ListLocation',
+    component: ListLocation,
+    meta: {
+      title: 'Listar Localização'
+    }
+  },
+  {
+    path: 'regist',
+    name: 'RegistLocation',
+    component: RegistLocation,
+    meta: {
+      title: 'Registar Localização'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditLocation',
+    component: EditLocation,
+    meta: {
+      title: 'Editar Localização'
+    },
+    props: true
+  }
+  ]
+}]
+
+// Products routes
+const Products = [{
+  path: '/products',
+  name: 'ListProduct',
+  component: View,
+  meta: {
+    title: 'Listar Produtos'
+  },
+  children: [{
+    path: '/',
+    name: 'ListProduct',
+    component: ListProduct,
+    meta: {
+      title: 'Listar Produtos'
+    }
+  },
+  {
+    path: 'regist',
+    name: 'RegistProduct',
+    component: RegistProduct,
+    meta: {
+      title: 'Registar Produtos'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditProduct',
+    component: EditProduct,
+    meta: {
+      title: 'Editar Produtos'
+    },
+    props: true
+  }
+  ]
+}]
+
+// Suppliers routes
+const Suppliers = [{
+  path: '/supplier',
+  name: 'ListSupplier',
+  component: View,
+  meta: {
+    title: 'Listar Operadores'
+  },
+  children: [{
+    path: '/',
+    name: 'ListSupplier',
+    component: ListSupplier,
+    meta: {
+      title: 'Listar Operadores'
+    }
+  },
+  {
+    path: 'regist',
+    name: 'RegistSupplier',
+    component: RegistSupplier,
+    meta: {
+      title: 'Registar Operador'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditSupplier',
+    component: EditSupplier,
+    meta: {
+      title: 'Editar Operador'
+    },
+    props: true
+  }
+  ]
+}]
+
 // Admin routes
 const Admin = [{
   path: '/admin/all',
@@ -293,7 +416,10 @@ const Admin = [{
   ...Sponsors,
   ...Companies,
   ...Contracts,
-  ...Payments
+  ...Payments,
+  ...Locations,
+  ...Products,
+  ...Suppliers
   ]
 }]
 
