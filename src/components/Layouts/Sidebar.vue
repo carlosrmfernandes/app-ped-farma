@@ -11,11 +11,9 @@
     <router-link :to="{name: 'Dashboard'}" tag="a">
       <Collapse icon="nextbss-bar-chart" title="Dashboard"></Collapse>
     </router-link>
-    <Collapse title="Eventos">
-      <router-link :to="{name: 'ListEvent'}" tag="a">
-        <span>Listar</span>
-      </router-link>
-    </Collapse>
+    <router-link :to="{name: 'ListEvent'}" tag="a">
+      <Collapse title="Eventos"></Collapse>
+    </router-link>
     <router-link :to="{name: 'ListCompany'}" tag="a">
       <Collapse title="Empresas"></Collapse>
     </router-link>
