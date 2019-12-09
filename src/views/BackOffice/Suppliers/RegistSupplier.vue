@@ -1,0 +1,132 @@
+<template>
+  <div class="panel">
+    <div class="panel-header">
+      <h1>Registar Operador</h1>
+      <div class="alert alert-danger col-md-10" v-if="hadError" role="alert">
+        {{hadError}}
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3" >
+          <div class="form-group">
+            <label for="supplier-name">Nome do Operador</label>
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.name')}"
+             name="form.name"
+             v-model="form.name"
+             id="Supplier-name"
+             placeholder="Ex: Winderson Santos"
+             v-validate="'required'"
+             data-vv-as="Nome do Produto" />
+             <span v-show="errors.has('form.name')" class="help is-danger">{{ errors.first('form.name') }}</span>
+          </div>
+        </div>
+        <div class="col-md-3" >
+          <div class="form-group">
+            <label for="supplier-username">Nome de Usuario</label>
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.username')}"
+             name="form.username"
+             v-model="form.username"
+             id="Supplier-username"
+             placeholder="Ex: winderson_santos"
+             v-validate="'required'"
+             data-vv-as="Nome de Usuario" />
+             <span v-show="errors.has('form.username')" class="help is-danger">{{ errors.first('form.username') }}</span>
+          </div>
+        </div>
+        <div class="col-md-3" >
+          <div class="form-group">
+            <label for="supplier-password">Senha</label>
+            <input type="password"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.password')}"
+             name="form.password"
+             v-model="form.password"
+             id="Supplier-password"
+             placeholder="*************"
+             v-validate="'required'"
+             data-vv-as="Senha" />
+             <span v-show="errors.has('form.password')" class="help is-danger">{{ errors.first('form.password') }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1" >
+          <div class="form-group">
+            <b-button variant="primary"
+            size="lg"
+            class="float-left mt-6"
+            :disabled="isRequesting ? true : false"
+            @click="ProcessForm">
+            <span v-if="!isRequesting"> Registar</span>
+              <div class="loading-dots" v-if="isRequesting">
+                <div class="loading-dots--dot"></div>
+                <div class="loading-dots--dot"></div>
+                <div class="loading-dots--dot"></div>
+              </div>
+            </b-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+
+export default {
+  data () {
+    return {
+      form: {},
+      hadError: '',
+      isRequesting: false
+    }
+  },
+  methods: {
+    /*
+     *  ProcessForm: This method will validate the form using vee-validate
+     *  component and then call the action method defined for this view
+     *  if everything passes the validation.
+     */
+    async ProcessForm () {
+      this.hadError = ''
+      const result = await this.$validator.validateAll()
+      return result ? this.RegistSupplier() : result
+    },
+    /*
+     *  RegistOrganizer: This method will create a post request to regist a
+     *  new organizer and then redirect to the ListOrganizer component.
+     */
+    async RegistSupplier () {
+      this.isRequesting = true
+
+      try {
+        // eslint-disable-next-line no-const-assign
+        const result = await this.axios.post('/suppliers', this.form)
+
+        if (result) {
+          // Redirect to the Organizer views
+          this.$router.push({ name: 'ListSupplier' })
+        }
+      } catch (e) {
+        this.hadError =
+          'Não foi possível realizar esta operação. Tente novamente'
+      }
+      this.isRequesting = false
+    }
+
+  }
+}
+</script>
+<style scoped>
+
+.form-address {
+    display: flex;
+    flex-direction: column;
+}
+
+.mt-6{
+  margin-top: 2.2rem !important;
+}
+
+</style>

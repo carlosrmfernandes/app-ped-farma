@@ -115,14 +115,14 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="organizer-description">Descricao</label>
+            <label for="organizer-description">Descrição</label>
             <textarea type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.description')}"
              name="form.description"
              v-model="form.description"
              id="Organizer-Description"
-             placeholder="Descricao do Organizador"
-             data-vv-as="Descricao"
+             placeholder="Descrição do Organizador"
+             data-vv-as="Descrição"
              rows="4" />
              <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
           </div>

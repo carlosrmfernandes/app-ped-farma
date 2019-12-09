@@ -11,6 +11,7 @@
         class="upload-photo__input"
         type="file"
         @change="PreviewFile"
+        :disabled="disabled"
         accept=".jpg, .png, .gif"
         :style="{ height: height, width: width }"
       />
@@ -66,6 +67,10 @@ export default {
     title: {
       type: String,
       default: 'Carregar Imagem'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -135,14 +140,15 @@ upload-photo__container
 .upload-photo__button
   width 100%
   height 100%
+  display flex
+  justify-content center
+  align-items center
 
 .button__container
   width 30px
   height 30px
   border-radius 50%
   background-color #ABB3C9
-  margin-left 40%
-  margin-top 55%
 
 .button__container i
   color #242939

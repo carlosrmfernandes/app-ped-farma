@@ -20,6 +20,8 @@
           resource="event"
           :pageCount="pageCount"
           :canRemove="false"
+          registRoute="RegistEvent"
+          buttonRegistName="Novo Evento"
         />
       </div>
       <div class="panel-footer"></div>
@@ -117,7 +119,7 @@ export default {
       cols: [
         { name: 'title', label: 'Titulo' },
         { name: 'organizer', label: 'Organizer' },
-        { name: 'status', label: 'Status' }, 
+        { name: 'status', label: 'Status' },
         { name: 'classification', label: 'Classificação' },
         { name: 'type', label: 'Tipo' },
         { name: 'starts_at', label: 'Data' },

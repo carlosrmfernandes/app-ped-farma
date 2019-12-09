@@ -21,6 +21,8 @@
         :pageCount="pageCount"
         :showSearch="false"
         :removeResource="removeMostCrontracts"
+        registRoute="RegistContract"
+        buttonRegistName = "Novo Contrato"
         />
       </div>
       <div class="panel-footer">

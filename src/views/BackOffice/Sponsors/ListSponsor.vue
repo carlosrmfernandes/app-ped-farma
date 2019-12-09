@@ -19,6 +19,8 @@
         editRoute="EditSponsor"
         :pageCount="pageCount"
         :removeResource="removeMostSponsors"
+        registRoute="RegistSponsor"
+        buttonRegistName = "Novo Patrocinador"
         />
       </div>
       <div class="panel-footer">

@@ -136,7 +136,6 @@ async function getTelephone () {
 }
 
 async function add (index, type) {
-  alert()
   if (type === 'email') {
     this.emails.push({ name: '' })
   } else if (type === 'phone') {

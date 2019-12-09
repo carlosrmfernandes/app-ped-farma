@@ -1,32 +1,35 @@
 <template>
- <div class="panel">
+  <div class="panel">
     <div class="panel-header">
-      <h1>Empresas</h1>
+      <h1>Produtos</h1>
     </div>
     <div class="panel-body">
       <div>
         <Table
-        :cols="cols"
-        :data="companies"
-        title="Empresas"
-        :searchMethod="GetCompanies"
-        :detailMethod="GetCompanies"
-        :pagination="pagination"
-        :paginationMethod="GetCompanies"
-        :sortMethod="GetCompanies"
-        :changePage="changePage"
-        :needGrid="true"
-        resource="company"
-        editRoute="EditCompany"
-        :pageCount="pageCount"
+          :cols="cols"
+          :data="products"
+          title="Produtos"
+          :searchMethod="GetProducts"
+          :pagination="pagination"
+          :paginationMethod="GetProducts"
+          :sortMethod="GetProducts"
+          :needGrid="true"
+          :changePage="changePage"
+          resource="product"
+          editRoute="EditProduct"
+          :pageCount="pageCount"
+          :removeResource="removeMostProducts"
+          registRoute="RegistProduct"
+          buttonRegistName = "Novo Produto"
         />
       </div>
-      <div class="panel-footer">
-      </div>
+      <div class="panel-footer"></div>
     </div>
   </div>
 </template>
 <script>
+import { RemoveProduct } from './helpers/functions.js'
+
 import Table from '@/components/Layouts/Table'
 export default {
   components: {
@@ -34,32 +37,34 @@ export default {
   },
   data () {
     return {
+      form: {},
       cols: [
         { name: 'name', label: 'Nome' }
       ],
       isRequesting: false,
+      products: [],
       pagination: {
-        perPage: 10,
+        perPage: 12,
         pageable: { pageNumber: 1 }
       },
-      companies: [],
+      ids: [],
       hadError: '',
+      hadSuccess: '',
       editID: '',
       pageCount: 0
-
     }
   },
   methods: {
     async GetPosts () {
       // eslint-disable-next-line no-unused-expressions
-      this.companies
+      this.products
     },
     /*
      *  GetCompanies: This method will fire a GET request
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-    async GetCompanies (type, sort = '', search = '') {
+    async GetProducts (type, sort = '', search = '') {
       this.isRequesting = true
 
       if (type === 'next') {
@@ -78,11 +83,13 @@ export default {
       query += search ? `&search=${search}` : ''
 
       try {
-        const result = await this.axios.get(`/companies/pages?${query}`)
+        const result = await this.axios.get(`/company_products?${query}`)
         const res = result.data
-        this.companies = res.data
-
+        this.products = res.data
+        // console.log(result)
         this.pageCount = res.pages_count
+        // Set Pagination
+        // delete res.data.content
       } catch (e) {
         this.hadError =
           'Não foi possível carregar as encomendas. Actualize a página.'
@@ -91,11 +98,15 @@ export default {
     },
     changePage (page) {
       this.pagination.pageable.pageNumber = page
-    }
+    },
+    removeMostProducts (ids) {
+      this.RemoveProduct(ids)
+    },
+    RemoveProduct
   },
   created () {
     // Get customer orders
-    this.GetCompanies()
+    this.GetProducts()
   }
 }
 </script>
@@ -119,10 +130,10 @@ export default {
   margin-top: 40px;
   height: 40px;
 }
-label{
-    float: left !important;
+label {
+  float: left !important;
 }
-.modal-content{
-    margin-top: 15% !important;
+.modal-content {
+  margin-top: 15% !important;
 }
 </style>
