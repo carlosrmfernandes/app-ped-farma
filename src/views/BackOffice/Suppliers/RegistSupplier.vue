@@ -8,6 +8,19 @@
     </div>
     <div class="panel-body">
       <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="event-name">Organizadores</label>
+            <select class="custom-select" v-model="organizer_id">
+              <option disabled value="">Escolhe...</option>
+              <option
+                :value="organizer.id"
+                v-for="(organizer, index) of organizers"
+                :key="index"
+              >{{organizer.name}}</option>
+            </select>
+          </div>
+        </div>
         <div class="col-md-3" >
           <div class="form-group">
             <label for="supplier-name">Nome do Operador</label>
@@ -30,7 +43,7 @@
              name="form.username"
              v-model="form.username"
              id="Supplier-username"
-             placeholder="Ex: winderson_santos"
+             placeholder="Ex: 000001"
              v-validate="'required'"
              data-vv-as="Nome de Usuario" />
              <span v-show="errors.has('form.username')" class="help is-danger">{{ errors.first('form.username') }}</span>
@@ -79,7 +92,9 @@ export default {
     return {
       form: {},
       hadError: '',
-      isRequesting: false
+      isRequesting: false,
+      organizer_id: '',
+      organizers: []
     }
   },
   methods: {
@@ -99,10 +114,10 @@ export default {
      */
     async RegistSupplier () {
       this.isRequesting = true
-
+      this.form.role = 'ORGANIZER_AGENT'
       try {
         // eslint-disable-next-line no-const-assign
-        const result = await this.axios.post('/suppliers', this.form)
+        const result = await this.axios.post(`organizers/${this.organizer_id}/suppliers`, this.form)
 
         if (result) {
           // Redirect to the Organizer views
@@ -113,8 +128,20 @@ export default {
           'Não foi possível realizar esta operação. Tente novamente'
       }
       this.isRequesting = false
+    },
+    async getOrganizers () {
+      try {
+        const result = await this.axios.get(`/organizers`)
+        const res = result.data
+        this.organizers = res.data
+      } catch (e) {
+        this.hadError =
+            'Não foi possível carregar as encomendas. Actualize a página.'
+      }
     }
-
+  },
+  created () {
+    this.getOrganizers()
   }
 }
 </script>

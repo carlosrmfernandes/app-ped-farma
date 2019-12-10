@@ -21,9 +21,7 @@
       <Collapse title="Organizadores" ></Collapse>
     </router-link>
     <router-link :to="{name: 'ListSponsor'}" tag="a">
-      <Collapse title="Patrocinadores">
-          <span>Listar</span>
-      </Collapse>
+      <Collapse title="Patrocinadores"></Collapse>
     </router-link>
     <router-link :to="{name: 'ListContract'}" tag="a">
       <Collapse title="Contratos"></Collapse>
