@@ -1,187 +1,59 @@
 <template>
   <div class="panel">
-    <div class="panel-header">
+    <!-- <div class="panel-header">
       <h1>Editar Organizador</h1>
-      <b-button
-        variant="outline-primary"
-        size="sm"
-        class="float-right"
-        @click="editOrganizer"
-        v-show="isEditable"
-      >Editar</b-button>
-      <b-button
-        variant="success"
-        size="sm"
-        class="float-right"
-        @click="ProcessForm"
-        v-show="!isEditable"
-      >
-        <span v-if="!isRequesting">Salvar</span>
-        <div class="loading-dots" v-if="isRequesting">
-          <div class="loading-dots--dot"></div>
-          <div class="loading-dots--dot"></div>
-          <div class="loading-dots--dot"></div>
-        </div>
-      </b-button>
-      <b-button
-        variant="outline-danger"
-        size="sm"
-        class="float-right mr-2"
-        @click="showRemoveModal"
-      >Remover</b-button>
-      <div class="alert alert-success col-md-10" v-if="hadSuccess" role="alert">
-        {{hadSuccess}}
-      </div>
-      <div class="alert alert-danger col-md-10" v-if="hadError" role="alert">
-        {{hadError}}
-      </div>
-    </div>
+    </div> -->
     <div class="panel-body">
-      <div class="row">
-        <div class="row">
-          <div class="organizer-photo">
-
-          </div>
-          <div class="organizer-photo">
-
-          </div>
-        </div>
-        <div class="row">
-
-        </div>
-      </div>
-      <div class="row" v-for="(address, j) in addresses" :key="j">
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="organizer-province">Provincia</label>
-              <input type="text"
-              :class="{'form-control': true, 'is-input-danger': errors.has('address.province')}"
-              name="address.province"
-              v-model="address.province"
-              id="Organizer-Province"
-              placeholder="Provincia"
-              v-validate="'required'"
-              :disabled="isEditable"
-              data-vv-as="Provincia" />
-              <span v-show="errors.has('address.province')" class="help is-danger">{{ errors.first('address.province') }}</span>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="organizer-municipality">Municipio</label>
-              <input type="text"
-              :class="{'form-control': true, 'is-input-danger': errors.has('address.municipality')}"
-              name="address.municipality"
-              v-model="address.municipality"
-              id="Organizer-Municipality"
-              placeholder="Municipio"
-              v-validate="'required'"
-              :disabled="isEditable"
-              data-vv-as="Municipio" />
-              <span v-show="errors.has('address.municipality')" class="help is-danger">{{ errors.first('address.municipality') }}</span>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="organizer-address">Bairro</label>
-              <input type="text"
-              :class="{'form-control': true, 'is-input-danger': errors.has('address.address')}"
-              name="address.address"
-              v-model="address.address"
-              id="Organizer-Address"
-              placeholder="Bairro"
-              v-validate="'required'"
-              :disabled="isEditable"
-              data-vv-as="bairro" />
-              <span v-show="errors.has('address.address')" class="help is-danger">{{ errors.first('address.address') }}</span>
-            </div>
-          </div>
-          <div class="col-md-1 btns">
-              <span class="addOrRemove">
-                  <i class="fa fa-minus-circle" @click="removeAddress(j)" v-show="(j  || ( !j && addresses.length > 1)) && (j != addresses.length-1) "></i>
-                  <i class="fa fa-plus-circle" @click="addNewAddress(j)" v-show="j == addresses.length-1"></i>
-                  <b-button variant="success" size="sm" class="float-right" @click="addAddress" v-show="j == addresses.length-1">
-                    <span v-if="!isRequestingAddress">Salvar</span>
-                    <div class="loading-dots" v-if="isRequestingAddress">
-                      <div class="loading-dots--dot"></div>
-                      <div class="loading-dots--dot"></div>
-                      <div class="loading-dots--dot"></div>
-                    </div>
-                </b-button>
-              </span>
-          </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3" >
-            <label for="">Email</label>
-            <div class="form-group" >
-              <div class="col-md-12" v-for="(email,k) in emails" :key="k">
-                <input type="text"
-                :class="{'form-control': true, 'is-input-danger': errors.has('email.email')}"
-                id="Organizer-email"
-                name="email.email"
-                placeholder="Email(s) de Contacto"
-                v-model="email.email"
-                :disabled="isEditable"
-                v-validate="'required|email'"
-                data-vv-as="Email(s)"/>
-                <span class="addOrRemove">
-                    <i class="fa fa-minus-circle" @click="remove(k,'email')" v-show="(k  || ( !k && emails.length > 1)) && (k != emails.length-1) "></i>
-                    <i class="fa fa-plus-circle" @click="add(k,'email')" v-show="k == emails.length-1"></i>
-                </span>
-            </div>
-              <p><span v-show="errors.has('email.email')" class="help is-danger">{{ errors.first('email.email') }}</span></p>
-              <b-button
-                variant="success"
-                size="sm"
-                class="float-left"
-                @click="addEmail"
-              >
-                <span v-if="!isRequestingEmail">Salvar</span>
-                <div class="loading-dots" v-if="isRequestingEmail">
-                  <div class="loading-dots--dot"></div>
-                  <div class="loading-dots--dot"></div>
-                  <div class="loading-dots--dot"></div>
+      <div class="row body-above">
+        <div class="body-above-start">
+            <div class="organizer-photo-name">
+              <div class="organizer-photo">
+                <img :src="'https://box.nextbss.co.ao/api/company_logos/' + form.company_logo" style="max-width: 100%">
+              </div>
+              <div class="organizer-text">
+                <div class="organizer-name-box">
+                  <h3>{{ form.name }}</h3>
                 </div>
-              </b-button>
-          </div>
-        </div>
-        <div class="col-md-3" >
-            <label for="">Telefone</label>
-            <div class="form-group" >
-              <div class="col-md-12" v-for="(telephone,k) in telephones" :key="k">
-                <input type="text"
-                :class="{'form-control': true, 'is-input-danger': errors.has('telephone.phone_number')}"
-                id="Organizer-Telephone"
-                name="telephone.phone_number"
-                placeholder="Telefone(s) de Contacto"
-                v-model="telephone.phone_number"
-                :disabled="isEditable"
-                v-validate="'required'"
-                data-vv-as="Telefone(s)" />
-                <span class="addOrRemove">
-                    <i class="fa fa-minus-circle" @click="remove(k,'phone')" v-show="(k  || ( !k && telephones.length > 1)) && (k != telephones.length-1) "></i>
-                    <i class="fa fa-plus-circle" @click="add(k,'phone')" v-show="k == telephones.length-1"></i>
-                </span>
-            </div>
-              <span v-show="errors.has('telephone.phone_number')" class="help is-danger">{{ errors.first('telephone.phone_number') }}</span>
-              <b-button
-                  variant="success"
-                  size="sm"
-                  class="float-left"
-                  @click="addTelephone"
-              >
-                <span v-if="!isRequestingTel">Salvar</span>
-                <div class="loading-dots" v-if="isRequestingTel">
-                  <div class="loading-dots--dot"></div>
-                  <div class="loading-dots--dot"></div>
-                  <div class="loading-dots--dot"></div>
+                <div class="organizer-description">
+                  <p>{{ form.description }}</p>
                 </div>
-              </b-button>
-          </div>
+              </div>
+            </div>
+            <div class="organizer-stars">
+
+            </div>
         </div>
-      </div>
-      <div class="panel-footer">
+        <div class="body-above-end">
+            <div class="organizer-social-networks">
+                <div class="organizer-social-networks-box">
+                  <div class="twitter_color" :style="{ opacity: styleOpacity }">
+                    <img src="../../../assets/images/social-networks/twitter.png" style="max-width: 100%">
+                  </div>
+                  <div class="facebook_color" :style="{ opacity: styleOpacity }">
+                    <img src="../../../assets/images/social-networks/facebook.png" style="max-width: 100%">
+                  </div>
+                  <div class="instagram_color" :style="{ opacity: styleOpacity }">
+                    <img src="../../../assets/images/social-networks/instagram.png" style="max-width: 100%">
+                  </div>
+                </div>
+            </div>
+            <div class="organizer-stats">
+                <div class="organizer-stats-box">
+                  <div class="organizer-stats-box-left">
+                    <h4>13</h4>
+                    <h6>Eventos Ativos</h6>
+                  </div>
+                  <div class="organizer-stats-box-center">
+                    <h4>20</h4>
+                    <h6>Eventos Passados</h6>
+                  </div>
+                  <div class="organizer-stats-box-right">
+                    <h4>30</h4>
+                    <h6>Operadores</h6>
+                  </div>
+                </div>
+            </div>
+        </div>
       </div>
     </div>
     <!-- Remove Modal-->
@@ -243,7 +115,8 @@ export default {
         province: '',
         municipality: '',
         address: ''
-      }]
+      }],
+      styleOpacity: '0.5'
     }
   },
   methods: {
@@ -331,6 +204,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 .panel {
   /* border: 1px solid red; */
   padding: 20px;
@@ -343,8 +217,190 @@ export default {
 }
 .panel-body {
   /* border: 1px solid red; */
-  margin-top: 40px;
+  margin-top: 60px;
 }
+
+.panel-body .body-above {
+  width: 100%;
+  border: 1px solid #C3C7D9;
+  border-radius: 4px;
+  margin-left: 0px;
+  display: flex;
+  flex-direction: column;
+}
+.panel-body .body-center {
+  width: 100%;
+  // border: 1px solid #000;
+  border-radius: 4px;
+  margin-left: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.body-above-start{
+  // border: 1px solid red;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.body-above-end{
+  // border: 1px solid green;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: stretch;
+  align-items: stretch;
+}
+
+.organizer-photo-name{
+  // border: 1px solid black;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+
+.organizer-photo{
+  width: 180px;
+  height: 200px;
+  border: 1px solid #C3C7D9;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+}
+
+.organizer-text{
+  // border: 1px solid black;
+  padding: 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.organizer-name-box{
+  // border: 1px solid black;
+  padding: 5px;
+  display: flex;
+}
+
+.organizer-description{
+  // border: 1px solid black;
+  height: 100%;
+  padding: 5px;
+  padding-left: 35px;
+  display: flex;
+  width: 500px;
+}
+
+.organizer-description p{
+  word-break: break-all;
+}
+
+.organizer-name-box h3{
+  margin-left: 30px;
+}
+
+.organizer-stars{
+  // border: 1px solid black;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  // flex-grow: 1;
+  width: 715px;
+}
+
+.organizer-social-networks{
+  // border: 1px solid black;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  flex-grow: 1;
+}
+
+.organizer-social-networks-box{
+  // border: 1px solid #C3C7D9;
+  border-radius: 4px;
+  width: 70%;
+  height: 70px;
+}
+
+$twitter_color: #55acee;
+$facebook_color: #3b5998;
+$instagram_color: #3f729b;
+
+.twitter_color { background: $twitter_color; }
+.facebook_color { background: $facebook_color; }
+.instagram_color { background: $instagram_color; }
+
+$size: 60px;
+
+.organizer-social-networks-box div {
+  height: $size;
+  width: $size;
+  border-radius: 50%;
+  margin: 5px;
+  float: left;
+  display: flex;
+  justify-content: flex-start
+}
+
+.organizer-stats{
+  // border: 1px solid black;
+  flex-grow: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.organizer-stats-box{
+  border: 1px solid #C3C7D9;
+  border-radius: 4px;
+  width: 70%;
+  height: 130px;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.organizer-stats-box-left{
+  flex-grow: 1;
+  // border: 1px solid #C3C7D9;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.organizer-stats-box-center{
+  flex-grow: 1;
+  // border: 1px solid #C3C7D9;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.organizer-stats-box-right{
+  flex-grow: 1;
+  // border: 1px solid #C3C7D9;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .panel-footer {
   /* border: 1px solid red; */
   margin-top: 40px;
