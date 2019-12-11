@@ -17,20 +17,11 @@
     <router-link :to="{name: 'ListCompany'}" tag="a">
       <Collapse title="Empresas"></Collapse>
     </router-link>
-    <Collapse title="Organizadores" >
-      <router-link :to="{name: 'ListOrganizer'}" tag="a">
-        <span>Listar </span>
-      </router-link>
-      <Collapse title="Operadores" :moreClass="true">
-          <router-link :to="{name: 'ListSupplier'}" tag="a">
-            <span>Listar</span>
-          </router-link>
-      </Collapse>
-    </Collapse>
+    <router-link :to="{name: 'ListOrganizer'}" tag="a">
+      <Collapse title="Organizadores" ></Collapse>
+    </router-link>
     <router-link :to="{name: 'ListSponsor'}" tag="a">
-      <Collapse title="Patrocinadores">
-          <span>Listar</span>
-      </Collapse>
+      <Collapse title="Patrocinadores"></Collapse>
     </router-link>
     <router-link :to="{name: 'ListContract'}" tag="a">
       <Collapse title="Contratos"></Collapse>
@@ -45,6 +36,9 @@
     </router-link>
     <router-link :to="{name: 'ListProduct'}" tag="a">
       <Collapse title="Produtos"></Collapse>
+    </router-link>
+    <router-link :to="{name: 'ListSupplier'}" tag="a">
+      <Collapse title="Operadores" ></Collapse>
     </router-link>
     <ul class="list-unstyled CTAs">
       <li @click="DoLogout" >
