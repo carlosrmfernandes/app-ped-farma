@@ -55,6 +55,32 @@
             </div>
         </div>
       </div>
+       <div class="row body-center">
+          <div class="body-center-box">
+            <div class="body-center-box-head">
+
+            </div>
+            <div class="body-center-box-body">
+
+            </div>
+          </div>
+          <div class="body-center-box">
+            <div class="body-center-box-head">
+
+            </div>
+            <div class="body-center-box-body">
+
+            </div>
+          </div>
+          <div class="body-center-box">
+            <div class="body-center-box-head">
+
+            </div>
+            <div class="body-center-box-body">
+
+            </div>
+          </div>
+       </div>
     </div>
     <!-- Remove Modal-->
     <b-modal id="modal-remove" title="Organizador">
@@ -217,20 +243,14 @@ export default {
 }
 .panel-body {
   /* border: 1px solid red; */
-  margin-top: 60px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .panel-body .body-above {
   width: 100%;
   border: 1px solid #C3C7D9;
-  border-radius: 4px;
-  margin-left: 0px;
-  display: flex;
-  flex-direction: column;
-}
-.panel-body .body-center {
-  width: 100%;
-  // border: 1px solid #000;
   border-radius: 4px;
   margin-left: 0px;
   display: flex;
@@ -374,7 +394,8 @@ $size: 60px;
 .organizer-stats-box-left{
   flex-grow: 1;
   // border: 1px solid #C3C7D9;
-  border-radius: 4px;
+  // border-radius: 4px;
+  border-bottom: 1px solid #308acf;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -384,7 +405,8 @@ $size: 60px;
 .organizer-stats-box-center{
   flex-grow: 1;
   // border: 1px solid #C3C7D9;
-  border-radius: 4px;
+  // border-radius: 4px;
+  border-bottom: 1px solid rgba(243, 56, 56, 0.911);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -394,11 +416,50 @@ $size: 60px;
 .organizer-stats-box-right{
   flex-grow: 1;
   // border: 1px solid #C3C7D9;
+  // border-radius: 4px;
+  border-bottom: 1px solid rgb(96, 219, 71);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* End of Body Above Styles*/
+
+/* Start Body Center Styles*/
+.panel-body .body-center {
+  width: 100%;
+  // border: 1px solid #000;
+  // border-radius: 4px;
+  margin-left: 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 50px;
+}
+
+.body-center-box {
+  height: 400px;
+  width: 500px;
+  border: 1px solid #C3C7D9;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.body-center-box-head{
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid #C3C7D9;
+}
+
+.body-center-box-body{
+  width: 100%;
+  height: 100%;
+  // border: 1px solid #C3C7D9;
 }
 
 .panel-footer {
