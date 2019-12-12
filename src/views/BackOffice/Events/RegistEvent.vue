@@ -500,8 +500,9 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label for="sponsors_id">Patrocinador</label>
+              <label for="sponsors_id">Patrocinador(es)</label>
               <select
+                multiple
                 required
                 id="sponsors_id"
                 :class="{
@@ -606,7 +607,7 @@ export default {
       tickets: {},
       collection_tickets: [],
       sponsors: {},
-      sponsors_id: '',
+      sponsors_id: [],
       isRequesting: false,
       hadSuccess: false,
       hadError: ''
@@ -781,7 +782,7 @@ export default {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             data: {
-              sponsors: [this.sponsors_id],
+              sponsors: this.sponsors_id,
               tags: this.tags
             }
           })

@@ -32,7 +32,7 @@
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="location">Localização</label>
+              <label for="step_one.location_id">Localização</label>
               <select
                 required
                 id="step_one.location_id"
@@ -118,12 +118,7 @@
                 v-model="step_one.video_id"
                 placeholder="Ex.: A_YQzKo5Ows"
                 name="step_one.video_id"
-                v-validate="'required'"
-                data-vv-as="ID do Vídeo Promocional"
               />
-              <span v-show="errors.has('step_one.video_id')" class="help is-danger">{{
-                errors.first("step_one.video_id")
-              }}</span>
               <small class="form-text text-muted"
               >Exemplo: https://www.youtube.com/watch?v=<b
               >A_YQzKo5Ows</b
@@ -486,6 +481,7 @@
             <div class="form-group">
               <label for="sponsors_id">Patrocinador</label>
               <select
+                multiple
                 required
                 id="sponsors_id"
                 :class="{
@@ -604,7 +600,7 @@ export default {
       collection_products: [],
       tickets: {},
       products: {},
-      sponsors: ''
+      sponsors: []
     }
   },
   methods: {
@@ -812,7 +808,7 @@ export default {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             data: {
-              sponsors: [this.step_three.sponsors_id],
+              sponsors: this.step_three.sponsors_id,
               tags: this.step_three.tags
             }
           })
