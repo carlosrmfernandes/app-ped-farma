@@ -26,14 +26,17 @@
         <div class="body-above-end">
             <div class="organizer-social-networks">
                 <div class="organizer-social-networks-box">
-                  <div class="twitter_color" :style="{ opacity: styleOpacity }">
+                  <div class="twitter_color" :style="{ opacity: form.twitter ? '1' : styleOpacity }">
                     <img src="../../../assets/images/social-networks/twitter.png" style="max-width: 100%">
                   </div>
-                  <div class="facebook_color" :style="{ opacity: styleOpacity }">
+                  <div class="facebook_color" :style="{ opacity: form.facebook ? '1' :  styleOpacity }">
                     <img src="../../../assets/images/social-networks/facebook.png" style="max-width: 100%">
                   </div>
-                  <div class="instagram_color" :style="{ opacity: styleOpacity }">
+                  <div class="instagram_color" :style="{ opacity: form.instagram ? '1' : styleOpacity }">
                     <img src="../../../assets/images/social-networks/instagram.png" style="max-width: 100%">
+                  </div>
+                  <div class="edit-btn">
+                    <span @click="showUpdateOrganizerModal">Editar</span>
                   </div>
                 </div>
             </div>
@@ -58,49 +61,326 @@
        <div class="row body-center">
           <div class="body-center-box">
             <div class="body-center-box-head">
-
+              <div class="head-box-left-side">
+                <span>Emails</span>
+              </div>
+              <div class="head-box-right-side">
+                <b-button
+                variant="success"
+                size="sm"
+                class="float-left"
+                @click="addEmail"
+              >
+                <span v-if="!isRequestingEmail">Salvar</span>
+                <div class="loading-dots" v-if="isRequestingEmail">
+                  <div class="loading-dots--dot"></div>
+                  <div class="loading-dots--dot"></div>
+                  <div class="loading-dots--dot"></div>
+                </div>
+              </b-button>
+              </div>
             </div>
             <div class="body-center-box-body">
-
+              <div  >
+                  <div class="form-group" >
+                    <div class="col-md-12" v-for="(email,k) in emails" :key="k">
+                      <input type="text"
+                      :class="{'form-control': true, 'is-input-danger': errors.has('email.email')}"
+                      id="Organizer-email"
+                      name="email.email"
+                      placeholder="example@examples.com"
+                      v-model="email.email"
+                      v-validate="'required|email'"
+                      data-vv-as="Email(s)"/>
+                      <span class="addOrRemove">
+                          <i class="fa fa-minus-circle" @click="remove(k,'email')" v-show="(k  || ( !k && emails.length > 1)) && (k != emails.length-1) "></i>
+                          <i class="fa fa-plus-circle" @click="add(k,'email')" v-show="k == emails.length-1"></i>
+                      </span>
+                  </div>
+                  <p><span v-show="errors.has('email.email')" class="help is-danger">{{ errors.first('email.email') }}</span></p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="body-center-box">
             <div class="body-center-box-head">
-
+              <div class="head-box-left-side">
+                <span>Telefones</span>
+              </div>
+              <div class="head-box-right-side">
+                <b-button
+                    variant="success"
+                    size="sm"
+                    class="float-left"
+                    @click="addTelephone"
+                  >
+                  <span v-if="!isRequestingTel">Salvar</span>
+                  <div class="loading-dots" v-if="isRequestingTel">
+                    <div class="loading-dots--dot"></div>
+                    <div class="loading-dots--dot"></div>
+                    <div class="loading-dots--dot"></div>
+                  </div>
+                </b-button>
+              </div>
             </div>
             <div class="body-center-box-body">
-
+              <div>
+                <div class="form-group" >
+                  <div class="col-md-12" v-for="(telephone,k) in telephones" :key="k">
+                    <input type="text"
+                    :class="{'form-control': true, 'is-input-danger': errors.has('telephone.phone_number')}"
+                    id="Organizer-Telephone"
+                    name="telephone.phone_number"
+                    placeholder="+244 999000444"
+                    v-model="telephone.phone_number"
+                    v-validate="'required'"
+                    data-vv-as="Telefone(s)" />
+                    <span class="addOrRemove">
+                        <i class="fa fa-minus-circle" @click="remove(k,'phone')" v-show="(k  || ( !k && telephones.length > 1)) && (k != telephones.length-1) "></i>
+                        <i class="fa fa-plus-circle" @click="add(k,'phone')" v-show="k == telephones.length-1"></i>
+                    </span>
+                  </div>
+                  <span v-show="errors.has('telephone.phone_number')" class="help is-danger">{{ errors.first('telephone.phone_number') }}</span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="body-center-box">
             <div class="body-center-box-head">
-
+            <div class="head-box-left-side">
+                <span>Endereços</span>
+              </div>
+              <div class="head-box-right-side">
+                <b-button variant="success" size="sm" class="float-right" @click="addAddress" >
+                  <span v-if="!isRequestingAddress">Salvar</span>
+                  <div class="loading-dots" v-if="isRequestingAddress">
+                    <div class="loading-dots--dot"></div>
+                    <div class="loading-dots--dot"></div>
+                    <div class="loading-dots--dot"></div>
+                  </div>
+                </b-button>
+              </div>
             </div>
             <div class="body-center-box-body">
-
+              <div class="row" v-for="(address, j) in addresses" :key="j">
+                <input type="text"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('address.province'), 'form-input-address' : true}"
+                  name="address.province"
+                  v-model="address.province"
+                  id="Organizer-Province"
+                  placeholder="Provincia"
+                  v-validate="'required'"
+                  data-vv-as="Provincia"
+                 />
+                <span v-show="errors.has('address.province')" class="help is-danger">{{ errors.first('address.province') }}</span>
+                <input type="text"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('address.municipality'), 'form-input-address' : true}"
+                  name="address.municipality"
+                  v-model="address.municipality"
+                  id="Organizer-Municipality"
+                  placeholder="Municipio"
+                  v-validate="'required'"
+                  data-vv-as="Municipio"
+                />
+                <span v-show="errors.has('address.municipality')" class="help is-danger">{{ errors.first('address.municipality') }}</span>
+                <input type="text"
+                  :class="{'form-control': true, 'is-input-danger': errors.has('address.address'), 'form-input-address' : true}"
+                  name="address.address"
+                  v-model="address.address"
+                  id="Organizer-Address"
+                  placeholder="Bairro"
+                  v-validate="'required'"
+                  data-vv-as="bairro"
+                />
+                <span v-show="errors.has('address.address')" class="help is-danger">{{ errors.first('address.address') }}</span>
+                <div>
+                  <span class="addOrRemove">
+                    <i class="fa fa-minus-circle" @click="removeAddress(j)" v-show="(j  || ( !j && addresses.length > 1)) && (j != addresses.length-1) "></i>
+                    <i class="fa fa-plus-circle" @click="addNewAddress(j)" v-show="j == addresses.length-1"></i>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
        </div>
+       <div class="body-bottom">
+         <div class="body-bottom-left">
+           <div class="body-center-box-head">
+              <div class="head-box-left-side">
+                <span>Operadores</span>
+              </div>
+              <div class="head-box-right-side">
+                <b-button
+                    variant="primary"
+                    size="sm"
+                    class="float-left"
+                    @click="showAddSupplierModal"
+                  >
+                  <span v-if="!isRequestingTel">Add</span>
+                  <div class="loading-dots" v-if="isRequestingTel">
+                    <div class="loading-dots--dot"></div>
+                    <div class="loading-dots--dot"></div>
+                    <div class="loading-dots--dot"></div>
+                  </div>
+                </b-button>
+              </div>
+            </div>
+            <div class="body-center-box-body">
+              <MiniTable
+                :cols="colsSuppliers"
+                :data="OrganizerSuppliers"
+                :pagination="pagination"
+                :paginationMethod="GetOrganizerSuppliers"
+                :sortMethod="GetOrganizerSuppliers"
+                :changePage="changePage"
+                resource="supplier"
+                editRoute="EditSupplier"
+                title="Operadores"
+                :canRemove="false"
+              />
+            </div>
+         </div>
+         <div class="body-bottom-right">
+            <div class="body-center-box-head">
+              <div class="head-box-left-side">
+                <span>Eventos</span>
+              </div>
+              <div class="head-box-right-side">
+                <b-button
+                    variant="primary"
+                    size="sm"
+                    class="float-left"
+                    @click="addTelephone"
+                    :disabled="true"
+                  >
+                  <span v-if="!isRequestingTel">Add</span>
+                  <div class="loading-dots" v-if="isRequestingTel">
+                    <div class="loading-dots--dot"></div>
+                    <div class="loading-dots--dot"></div>
+                    <div class="loading-dots--dot"></div>
+                  </div>
+                </b-button>
+              </div>
+            </div>
+            <div class="body-center-box-body">
+              <MiniTable
+                :cols="colsEvents"
+                :data="OrganizerEvents"
+                :pagination="pagination"
+                :paginationMethod="getOrganizersEvents"
+                :sortMethod="getOrganizersEvents"
+                :changePage="changePage"
+                resource="supplier"
+                editRoute="EditSupplier"
+                title="Eventos"
+                :canRemove="false"
+              />
+            </div>
+         </div>
+       </div>
     </div>
-    <!-- Remove Modal-->
-    <b-modal id="modal-remove" title="Organizador">
-      <p class="my-4">Tem certeza que deseja remover?</p>
+    <!-- Add Supplier Modal-->
+    <b-modal id="modal-add-supplier" title="Novo Operador" size='lg'>
+      <div class="row">
+        <div class="col-md-6" >
+          <div class="form-group">
+            <label for="supplier-name">Nome do Operador</label>
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('supplier.name')}"
+             name="form.name"
+             v-model="supplier.name"
+             id="Supplier-name"
+             placeholder="Ex: Winderson Santos"
+             v-validate="'required'"
+             data-vv-as="Nome do Operador" />
+             <span v-show="errors.has('supplier.name')" class="help is-danger">{{ errors.first('supplier.name') }}</span>
+          </div>
+        </div>
+        <div class="col-md-3" >
+          <div class="form-group">
+            <label for="supplier-password">Senha</label>
+            <input type="password"
+             :class="{'form-control': true, 'is-input-danger': errors.has('supplier.password')}"
+             name="supplier.password"
+             v-model="supplier.password"
+             id="Supplier-password"
+             placeholder="*************"
+             v-validate="'required|numeric|min:6|max:6'"
+             data-vv-as="Senha" />
+             <span v-show="errors.has('supplier.password')" class="help is-danger">{{ errors.first('supplier.password') }}</span>
+          </div>
+        </div>
+      </div>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="primary" size="sm" class="float-right" @click="RemoveOrganizer">
-            <span v-if="!isRequesting">Sim</span>
-            <div class="loading-dots" v-if="isRequesting">
-              <div class="loading-dots--dot"></div>
-              <div class="loading-dots--dot"></div>
-              <div class="loading-dots--dot"></div>
-            </div>
+          <b-button variant="success" size="sm" class="float-right" @click="RegistOrganizerSupplier">
+            <span>Registar</span>
           </b-button>
-          <b-button
-            variant="outline-danger"
-            size="sm"
-            class="float-right mr-2"
-            @click="hideRemoveModal"
-          >Não</b-button>
+        </div>
+      </template>
+    </b-modal>
+    <!-- Update Organizer Modal-->
+    <b-modal id="modal-update-organizer" title="Editar Organizador" size='xl'>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="event-name">Facebook</label>
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.facebook')}"
+             name="form.facebook"
+             v-model="form.facebook"
+             id="Organizer-Facebook"
+             placeholder="URL do Facebook"
+             data-vv-as="Facebook" />
+             <span v-show="errors.has('form.facebook')" class="help is-danger">{{ errors.first('form.facebook') }}</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="event-name">Instagram</label>
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.instagram')}"
+             name="form.instagram"
+             v-model="form.instagram"
+             id="Organizer-Instagram"
+             placeholder="URL do Instagram"
+             data-vv-as="Instagram" />
+             <span v-show="errors.has('form.instagram')" class="help is-danger">{{ errors.first('form.instagram') }}</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="event-name">Twitter</label>
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.twitter')}"
+             name="form.twitter"
+             v-model="form.twitter"
+             id="Organizer-Twitter"
+             placeholder="URL do Twitter"
+             data-vv-as="Twitter" />
+             <span v-show="errors.has('form.twitter')" class="help is-danger">{{ errors.first('form.twitter') }}</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="organizer-description">Descricao</label>
+            <textarea type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.description')}"
+             name="form.description"
+             v-model="form.description"
+             id="Organizer-Description"
+             placeholder="Descricao do Organizador"
+             data-vv-as="Descricao"
+             rows="4" />
+             <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
+          </div>
+        </div>
+      </div>
+      <template v-slot:modal-footer>
+        <div class="w-100">
+          <b-button variant="success" size="sm" class="float-right" @click="ProcessForm">
+            <span>Atualizar</span>
+          </b-button>
         </div>
       </template>
     </b-modal>
@@ -108,8 +388,16 @@
 </template>
 <script>
 import { RemoveOrganizer, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress } from './helpers/functions.js'
+import { RemoveSupplier, GetSuppliers, changePage, removeMostSuppliers } from '../Suppliers/helpers/functions.js'
+import { GetOrganizerSuppliers, RegistOrganizerSupplier } from './helpers/suppliers.js'
+import { getOrganizersEvents } from './helpers/events.js'
+
+import MiniTable from '@/components/Layouts/MiniTable'
 
 export default {
+  components: {
+    MiniTable
+  },
   props: {
     id: {
       type: String
@@ -122,6 +410,7 @@ export default {
   data () {
     return {
       form: {},
+      supplier: {},
       companies: [],
       isRequesting: false,
       isRequestingEmail: false,
@@ -131,18 +420,27 @@ export default {
       hadError: '',
       hadSuccess: '',
       file: '',
-      emails: [{
-        email: ''
-      }],
-      telephones: [{
-        phone_number: ''
-      }],
-      addresses: [{
-        province: '',
-        municipality: '',
-        address: ''
-      }],
-      styleOpacity: '0.5'
+      emails: [],
+      telephones: [],
+      addresses: [],
+      styleOpacity: '0.5',
+      colsSuppliers: [
+        { name: 'name', label: 'Nome' },
+        { name: 'username', label: 'Nome de Usuario' }
+      ],
+      colsEvents: [
+        { name: 'title', label: 'Titulo' },
+        { name: 'status', label: 'Status' },
+        { name: 'type', label: 'Tipo' },
+        { name: 'starts_at', label: 'Data' },
+        { name: 'created_at', label: 'Criado Em' }
+      ],
+      OrganizerSuppliers: [],
+      OrganizerEvents: [],
+      pagination: {
+        perPage: 10,
+        pageable: { pageNumber: 1 }
+      }
     }
   },
   methods: {
@@ -180,8 +478,9 @@ export default {
         this.file = ''
 
         if (result) {
-          this.hadError = ''
-          this.hadSuccess = 'Informações actualizadas com sucesso.'
+          // Hide Modal and get GetOrganizerSuppliers
+          this.hideUpdateOrganizerModal()
+          this.GetOrganizer()
         }
       } catch (e) {
         this.hadSuccess = ''
@@ -206,6 +505,22 @@ export default {
       // Show modal for deatils
       this.$bvModal.hide('modal-remove')
     },
+    showAddSupplierModal () {
+      // Show modal for deatils
+      this.$bvModal.show('modal-add-supplier')
+    },
+    hideAddSupplierModal () {
+      // Show modal for deatils
+      this.$bvModal.hide('modal-add-supplier')
+    },
+    showUpdateOrganizerModal () {
+      // Show modal for deatils
+      this.$bvModal.show('modal-update-organizer')
+    },
+    hideUpdateOrganizerModal () {
+      // Show modal for deatils
+      this.$bvModal.hide('modal-update-organizer')
+    },
     add,
     remove,
     getEmail,
@@ -219,13 +534,25 @@ export default {
     RemoveOrganizer,
     rebuildArrayTel,
     rebuildArrayEmails,
-    rebuildArrayAddress
+    rebuildArrayAddress,
+    /* Suppliers Methods */
+    changePage,
+    GetSuppliers,
+    RemoveSupplier,
+    removeMostSuppliers,
+    GetOrganizerSuppliers,
+    RegistOrganizerSupplier,
+    /* Events Methods */
+    getOrganizersEvents
+
   },
   created () {
     this.GetOrganizer()
     this.getEmail()
     this.getTelephone()
     this.getAddress()
+    this.GetOrganizerSuppliers()
+    this.getOrganizersEvents()
   }
 }
 </script>
@@ -248,6 +575,7 @@ export default {
   flex-direction: column;
 }
 
+/* Start Body Above Styles*/
 .panel-body .body-above {
   width: 100%;
   border: 1px solid #C3C7D9;
@@ -288,11 +616,12 @@ export default {
 
 .organizer-photo{
   width: 180px;
-  height: 200px;
+  height: 100%;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
   display: flex;
   justify-content: center;
+  padding: 2px;
 }
 
 .organizer-text{
@@ -363,6 +692,17 @@ $instagram_color: #3f729b;
 
 $size: 60px;
 
+.edit-btn{
+  display: flex;
+  align-items: flex-end;
+  padding-left: 10px;
+}
+
+.edit-btn span{
+  font-weight: 500;
+  cursor: pointer;
+}
+
 .organizer-social-networks-box div {
   height: $size;
   width: $size;
@@ -395,7 +735,7 @@ $size: 60px;
   flex-grow: 1;
   // border: 1px solid #C3C7D9;
   // border-radius: 4px;
-  border-bottom: 1px solid #308acf;
+  // border-bottom: 1px solid #308acf;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -406,7 +746,7 @@ $size: 60px;
   flex-grow: 1;
   // border: 1px solid #C3C7D9;
   // border-radius: 4px;
-  border-bottom: 1px solid rgba(243, 56, 56, 0.911);
+  // border-bottom: 1px solid rgba(243, 56, 56, 0.911);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -417,7 +757,7 @@ $size: 60px;
   flex-grow: 1;
   // border: 1px solid #C3C7D9;
   // border-radius: 4px;
-  border-bottom: 1px solid rgb(96, 219, 71);
+  // border-bottom: 1px solid rgb(96, 219, 71);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -440,7 +780,19 @@ $size: 60px;
 
 .body-center-box {
   height: 400px;
-  width: 500px;
+  width: 350px;
+  border: 1px solid #C3C7D9;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.body-center .body-center-box:last-child{
+  height: 400px;
+  width: 1000px;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
   display: flex;
@@ -452,35 +804,115 @@ $size: 60px;
 
 .body-center-box-head{
   width: 100%;
-  height: 100px;
+  height: 70px;
   border-bottom: 1px solid #C3C7D9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.head-box-left-side{
+  display: flex;
+  width: 50%;
+  height: 70px;
+  // border: 1px solid red;
+  padding-left: 10px;
+  align-items: center
+}
+.head-box-right-side{
+  display: flex;
+  width: 50%;
+  // border: 1px solid blue;
+  justify-content: flex-end;
+  padding-right: 10px;
 }
 
 .body-center-box-body{
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 10px;
+  padding-top: 30px;
   // border: 1px solid #C3C7D9;
 }
 
-.panel-footer {
-  /* border: 1px solid red; */
-  margin-top: 40px;
-  height: 40px;
+.body-center .body-center-box:last-child .body-center-box-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
+
+/*End Body Center Styles*/
+
+/*Start of Body Bottom Styles*/
+
+.body-bottom{
+  width: 100%;
+  // border: 1px solid #000;
+  border-radius: 4px;
+  margin-left: 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 50px;
+}
+
+.body-bottom-left{
+  height: 400px;
+  width: 48%;
+  border: 1px solid #C3C7D9;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.body-bottom-right{
+  height: 400px;
+  width: 48%;
+  border: 1px solid #C3C7D9;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/*End Body Bottom Styles*/
 .add-input{
   display: flex;
 }
+
+.form-input-address{
+  width: 280px;
+  margin: 20px;
+  margin-top: 0;
+}
+
 .form-group .addOrRemove{
   padding: 5px;
   padding-top: 8px;
   padding-right: 0;
 }
+
+.body-center .body-center-box:last-child .body-center-box-body span i{
+  margin-top: 12px;
+  margin-right: 15px;
+}
+
 .float-right{
   margin-left: 10px;
 }
 .btns{
   display: flex;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 @media (min-width: 768px){
