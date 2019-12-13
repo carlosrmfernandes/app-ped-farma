@@ -502,7 +502,7 @@ export default {
     },
     async getDecks () {
       try {
-        const result = await this.axios.get(`/decks`)
+        const result = await this.axios.get(`/decks?currentOnly=false&sorters=CREATED_AT`)
         const res = result.data
         this.collection_decks = res.data
       } catch (e) {
