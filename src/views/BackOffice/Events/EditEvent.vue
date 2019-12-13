@@ -299,6 +299,34 @@
             </div>
             <div class="col-md-4">
               <div class="form-group">
+                <label for="decks">Decks</label>
+                <select
+                  multiple
+                  required
+                  id="decks"
+                  :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('decks')
+                }"
+                  v-model="decks"
+                  name="decks"
+                  v-validate="'required'"
+                  data-vv-as="Patrocinador"
+                >
+                  <option
+                    v-for="deck in collection_decks"
+                    :value="deck.id"
+                    :key="deck.id"
+                  >{{ deck.name }}</option
+                  >
+                </select>
+                <span v-show="errors.has('decks')" class="help is-danger">{{
+                errors.first("decks")
+              }}</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
                 <label for="tags">Tags</label>
                 <input
                   type="text"
@@ -380,6 +408,8 @@ export default {
       collection_products: [],
       tickets: {},
       sponsors: {},
+      decks: [],
+      collection_decks: [],
       sponsors_id: [],
       isRequesting: false,
       hadSuccess: false,
@@ -444,6 +474,7 @@ export default {
               method: 'put',
               headers: { 'Content-Type': 'application/json' },
               data: {
+                decks: this.decks,
                 sponsors: this.sponsors_id,
                 tags: this.tags
               }
@@ -468,6 +499,15 @@ export default {
         console.log(e)
       }
       this.isRequesting = false
+    },
+    async getDecks () {
+      try {
+        const result = await this.axios.get(`/decks`)
+        const res = result.data
+        this.collection_decks = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
     },
     /*
      * getEventStep: This method will fire a GET request and then
@@ -592,6 +632,7 @@ export default {
     this.getOrganizers()
     this.getProducts()
     this.getEventStep()
+    this.getDecks()
   },
   mounted () {
     this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })
