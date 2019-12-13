@@ -33,8 +33,8 @@ async function addEmail () {
     result = await this.axios.put(`/organizers/${this.id}/organizer_emails`, allEmails)
 
     if (result) {
-      this.hadError = ''
-      this.hadSuccess = 'Emails inseridos com sucesso.'
+      this.emails = []
+      this.getEmail()
     }
   } catch (e) {
     this.hadSuccess = ''
@@ -54,8 +54,8 @@ async function addTelephone () {
     result = this.axios.put(`/organizers/${this.id}/organizer_phone_numbers`, allTelephones)
 
     if (result) {
-      this.hadError = ''
-      this.hadSuccess = 'Telefones inseridos com sucesso.'
+      this.phone_numbers = []
+      this.getTelephone()
     }
   } catch (e) {
     this.hadSuccess = ''
@@ -76,8 +76,8 @@ async function addAddress () {
     result = this.axios.put(`/organizers/${this.id}/organizer_addresses`, allAddresses)
 
     if (result) {
-      this.hadError = ''
-      this.hadSuccess = 'Telefones inseridos com sucesso.'
+      this.addresses = []
+      this.getAddress()
     }
   } catch (e) {
     this.hadSuccess = ''
