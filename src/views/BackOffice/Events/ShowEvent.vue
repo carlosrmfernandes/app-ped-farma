@@ -32,7 +32,7 @@
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="location">Localização</label>
+              <label for="step_one.location_id">Localização</label>
               <select
                 required
                 id="step_one.location_id"
@@ -118,12 +118,7 @@
                 v-model="step_one.video_id"
                 placeholder="Ex.: A_YQzKo5Ows"
                 name="step_one.video_id"
-                v-validate="'required'"
-                data-vv-as="ID do Vídeo Promocional"
               />
-              <span v-show="errors.has('step_one.video_id')" class="help is-danger">{{
-                errors.first("step_one.video_id")
-              }}</span>
               <small class="form-text text-muted"
               >Exemplo: https://www.youtube.com/watch?v=<b
               >A_YQzKo5Ows</b
@@ -484,10 +479,11 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label for="sponsors_id">Patrocinador</label>
+              <label for="step_three.sponsors_id">Patrocinador</label>
               <select
+                multiple
                 required
-                id="sponsors_id"
+                id="step_three.sponsors_id"
                 :class="{
                   'form-control': true,
                   'is-input-danger': errors.has('step_three.sponsors_id')
@@ -506,6 +502,34 @@
               </select>
               <span v-show="errors.has('step_three.sponsors_id')" class="help is-danger">{{
                 errors.first("step_three.sponsors_id")
+              }}</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="step_three.decks">Decks</label>
+              <select
+                multiple
+                required
+                id="step_three.decks"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('step_three.decks')
+                }"
+                v-model="step_three.decks"
+                name="step_three.decks"
+                v-validate="'required'"
+                data-vv-as="Deck(s)"
+              >
+                <option
+                  v-for="deck in collection_decks"
+                  :value="deck.id"
+                  :key="deck.id"
+                >{{ deck.name }}</option
+                >
+              </select>
+              <span v-show="errors.has('step_three.decks')" class="help is-danger">{{
+                errors.first("step_three.decks")
               }}</span>
             </div>
           </div>
@@ -596,18 +620,29 @@ export default {
         price: ''
       },
       step_three: {
-        sponsors_id: '',
-        tags: []
+        sponsors_id: [],
+        tags: [],
+        decks: []
       },
       party_event_status: '',
       collection_tickets: [],
       collection_products: [],
+      collection_decks: [],
       tickets: {},
       products: {},
-      sponsors: ''
+      sponsors: []
     }
   },
   methods: {
+    async getDecks () {
+      try {
+        const result = await this.axios.get(`/decks?currentOnly=false&sorters=CREATED_AT`)
+        const res = result.data
+        this.collection_decks = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
     /*
      *  ProcessForm: This method will validate the form using vee-validate
      *  component and then call the action method defined for this view
@@ -691,7 +726,7 @@ export default {
             this.step_one.starts_at = result.data.starts_at
             this.step_one.ends_at = result.data.ends_at
             this.step_one.classification = result.data.classification
-            this.step_one.video_id = result.data.video_id
+            this.step_one.video_id = result.data.video_id === 'null' ? '' : result.data.video_id
             break
           case 2:
             const resultTwo = await this.axios.get(
@@ -709,9 +744,16 @@ export default {
             const resultThree = await this.axios.get(
               `/party_events/${this.party_event_id}/step_3`
             )
-            this.step_three.sponsors_id = resultThree.data.sponsors[0]
+
             this.step_three.tags = resultThree.data.tags
-            console.log(resultThree.data.tags)
+
+            for (let i = 0; i < resultThree.data.sponsors.length; i++) {
+              this.step_three.sponsors_id[i] = resultThree.data.sponsors[i].id
+            }
+
+            for (let i = 0; i < resultThree.data.decks.length; i++) {
+              this.step_three.decks[i] = resultThree.data.decks[i].id
+            }
             break
           default:
             console.log('Sorry, we are out of ' + step + '.')
@@ -812,7 +854,8 @@ export default {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             data: {
-              sponsors: [this.step_three.sponsors_id],
+              decks: this.step_three.decks,
+              sponsors: this.step_three.sponsors_id,
               tags: this.step_three.tags
             }
           })
@@ -847,6 +890,7 @@ export default {
     this.getLocations()
     this.getOrganizers()
     this.getSponsors()
+    this.getDecks()
   },
   mounted () {
     this.getEventData(this.step)
