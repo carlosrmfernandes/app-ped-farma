@@ -61,28 +61,52 @@
              name="form.username"
              v-model="form.username"
              id="Supplier-username"
-             placeholder="Ex: winderson_santos"
+             placeholder="Ex: 000001"
              :disabled="isEditable"
              v-validate="'required'"
              data-vv-as="Nome de Usuario" />
              <span v-show="errors.has('form.username')" class="help is-danger">{{ errors.first('form.username') }}</span>
           </div>
         </div>
-        <!-- <div class="col-md-3" >
+      </div>
+      <div class="row">
+        <div class="col-md-3" >
           <div class="form-group">
-            <label for="supplier-password">Senha</label>
-            <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.password')}"
-             name="form.password"
-             v-model="form.password"
+            <label for="supplier-password">Nova Senha</label>
+            <input type="password"
+             :class="{'form-control': true, 'is-input-danger': errors.has('password')}"
+             name="password"
+             v-model="password"
              id="Supplier-password"
-             :disabled="isEditable"
              placeholder="*************"
              v-validate="'required'"
-             data-vv-as="Senha" />
-             <span v-show="errors.has('form.password')" class="help is-danger">{{ errors.first('form.password') }}</span>
+             data-vv-as="Senha"
+             ref="password"/>
+             <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
           </div>
-        </div> -->
+        </div>
+        <div class="col-md-3" >
+          <div class="form-group">
+            <label for="supplier-password">Repetir Senha</label>
+            <input type="password"
+             :class="{'form-control': true, 'is-input-danger': errors.has('confirmed_password')}"
+             name="confirmed_password"
+             v-model="confirmed_password"
+             id="Supplier-password"
+             placeholder="*************"
+             v-validate="'required|confirmed:password'"
+             data-vv-as="Confirmação de Senha" />
+             <span v-show="errors.has('confirmed_password')" class="help is-danger">{{ errors.first('confirmed_password') }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <b-button
+          variant="outline-primary"
+          size="sm"
+          class="float-right ml-3"
+          @click="ProcessPasswordForm"
+        >Alterar Senha</b-button>
       </div>
     </div>
   </div>
@@ -99,6 +123,8 @@ export default {
   data () {
     return {
       form: {},
+      password: '',
+      confirmed_password: '',
       hadSuccess: '',
       hadError: '',
       isRequesting: false,
@@ -115,6 +141,16 @@ export default {
       this.hadError = ''
       const result = await this.$validator.validateAll()
       return result ? this.UpdateSupplier() : result
+    },
+    /*
+     *  ProcessForm: This method will validate the form using vee-validate
+     *  component and then call the action method defined for this view
+     *  if everything passes the validation.
+     */
+    async ProcessPasswordForm () {
+      this.hadError = ''
+      const result = await this.$validator.validateAll()
+      return result ? this.UpdateSupplierPassword() : result
     },
     /**
      * GetSupplier: This method will fire a GET request and then
@@ -138,7 +174,7 @@ export default {
 
       try {
         // eslint-disable-next-line no-const-assign
-        await this.axios.patch(`/suppliers/${this.id}`)
+        await this.axios.patch(`/suppliers/${this.id}`, this.form)
 
         this.hadSuccess = 'Informações actualizadas com sucesso.'
       } catch (e) {
@@ -146,6 +182,27 @@ export default {
           'Não foi possível realizar esta operação. Tente novamente'
       }
       this.isRequesting = false
+    },
+    /**
+     * UpdateSupplier: This method will send form to serve, for update
+     */
+    async UpdateSupplierPassword () {
+      this.isRequesting = true
+
+      try {
+        // eslint-disable-next-line no-const-assign
+        await this.axios.patch(`suppliers/${this.id}/reset_password`, this.password)
+
+        this.hadSuccess = 'Informações actualizadas com sucesso.'
+      } catch (e) {
+        this.hadError =
+          'Não foi possível realizar esta operação. Tente novamente'
+      }
+      this.isRequesting = false
+    },
+    showRemoveModal () {
+      // Show modal for deatils
+      this.$bvModal.show('modal-remove')
     },
     editSupplier () {
       this.isEditable = false
