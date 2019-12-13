@@ -33,8 +33,8 @@ async function addEmail () {
     result = await this.axios.put(`/organizers/${this.id}/organizer_emails`, allEmails)
 
     if (result) {
-      this.hadError = ''
-      this.hadSuccess = 'Emails inseridos com sucesso.'
+      this.emails = []
+      this.getEmail()
     }
   } catch (e) {
     this.hadSuccess = ''
@@ -54,8 +54,8 @@ async function addTelephone () {
     result = this.axios.put(`/organizers/${this.id}/organizer_phone_numbers`, allTelephones)
 
     if (result) {
-      this.hadError = ''
-      this.hadSuccess = 'Telefones inseridos com sucesso.'
+      this.phone_numbers = []
+      this.getTelephone()
     }
   } catch (e) {
     this.hadSuccess = ''
@@ -76,8 +76,8 @@ async function addAddress () {
     result = this.axios.put(`/organizers/${this.id}/organizer_addresses`, allAddresses)
 
     if (result) {
-      this.hadError = ''
-      this.hadSuccess = 'Telefones inseridos com sucesso.'
+      this.addresses = []
+      this.getAddress()
     }
   } catch (e) {
     this.hadSuccess = ''
@@ -211,7 +211,41 @@ function rebuildArrayAddress (datas) {
   return addresses
 }
 
+async function getTotalActiveEvents () {
+  try {
+    const result = await this.axios.get(`/organizers/${this.id}/events/active_count`)
+    const res = result.data
+    this.totalActiveEvents = res.amount
+  } catch (e) {
+    this.hadError =
+      'Não foi possível carregar as encomendas. Actualize a página.'
+  }
+}
+
+async function getTotalPastEvents () {
+  try {
+    const result = await this.axios.get(`/organizers/${this.id}/events/past_count`)
+    const res = result.data
+    this.totalPastEvents = res.amount
+  } catch (e) {
+    this.hadError =
+      'Não foi possível carregar as encomendas. Actualize a página.'
+  }
+}
+
+async function getTotalSuppliers () {
+  try {
+    const result = await this.axios.get(`/organizers/${this.id}/suppliers/count`)
+    const res = result.data
+    this.totalSuppliers = res.amount
+  } catch (e) {
+    this.hadError =
+      'Não foi possível carregar as encomendas. Actualize a página.'
+  }
+}
+
 export { RemoveOrganizer, add, remove, removeAddress,
   addNewAddress, addEmail, addTelephone,
   addAddress, getAddress, getEmail, getTelephone,
-  rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress }
+  rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress,
+  getTotalActiveEvents, getTotalPastEvents, getTotalSuppliers }

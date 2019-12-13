@@ -18,7 +18,7 @@
             </select>
           </div>
         </div>
-        <div class="col-md-3" v-if="!existCompany">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Nome</label>
             <input type="text"
@@ -124,9 +124,7 @@
              <span v-show="errors.has('form.description')" class="help is-danger">{{ errors.first('form.description') }}</span>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3">
+                <div class="col-md-3">
           <label for="">Email</label>
           <div class="form-group" >
               <div class="col-md-12">

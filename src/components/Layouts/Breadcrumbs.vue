@@ -67,12 +67,12 @@ export default {
   height: 5%;
   top: 0;
   right: 0;
-  background-color: #fff;
+  background-color: #F0F0F0;
   z-index: 1;
 }
 
 .breadcrumb{
- background-color #ffffff
+ background-color #F0F0F0
 }
 
 .breadcrumb h2{

@@ -1,22 +1,22 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Editar Patrocinador</h1>
+      <h1>Editar Organizador</h1>
       <b-button
         variant="outline-primary"
         size="sm"
         class="float-right"
-        @click="editSponsor"
+        @click="editOrganizer"
         v-show="isEditable"
       >Editar</b-button>
       <b-button
         variant="success"
         size="sm"
         class="float-right"
-        @click="UpdateSponsor"
+        @click="ProcessForm"
         v-show="!isEditable"
       >
-        <span v-if="!isRequesting">salvar</span>
+        <span v-if="!isRequesting">Salvar</span>
         <div class="loading-dots" v-if="isRequesting">
           <div class="loading-dots--dot"></div>
           <div class="loading-dots--dot"></div>
@@ -37,22 +37,7 @@
       </div>
     </div>
     <div class="panel-body">
-       <div class="row">
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="event-name">Nome</label>
-            <input type="text"
-             :class="{'form-control': true, 'is-input-danger': errors.has('form.name')}"
-             name="form.name"
-             v-model="form.name"
-             id="Sponsor-name"
-            :disabled="isEditable"
-             placeholder="Nome do Patrocinador"
-             v-validate="'required'"
-             data-vv-as="Nome do Patrocinador" />
-             <span v-show="errors.has('form.name')" class="help is-danger">{{ errors.first('form.name') }}</span>
-          </div>
-        </div>
+      <div class="row">
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Facebook</label>
@@ -60,10 +45,11 @@
              :class="{'form-control': true, 'is-input-danger': errors.has('form.facebook')}"
              name="form.facebook"
              v-model="form.facebook"
-             id="Sponsor-Facebook"
+             id="Organizer-Facebook"
              placeholder="URL do Facebook"
              :disabled="isEditable"
              data-vv-as="Facebook" />
+             <span v-show="errors.has('form.facebook')" class="help is-danger">{{ errors.first('form.facebook') }}</span>
           </div>
         </div>
         <div class="col-md-3">
@@ -73,14 +59,13 @@
              :class="{'form-control': true, 'is-input-danger': errors.has('form.instagram')}"
              name="form.instagram"
              v-model="form.instagram"
-             id="Sponsor-Instagram"
+             id="Organizer-Instagram"
              placeholder="URL do Instagram"
              :disabled="isEditable"
              data-vv-as="Instagram" />
+             <span v-show="errors.has('form.instagram')" class="help is-danger">{{ errors.first('form.instagram') }}</span>
           </div>
         </div>
-      </div>
-      <div class="row">
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Twitter</label>
@@ -88,20 +73,21 @@
              :class="{'form-control': true, 'is-input-danger': errors.has('form.twitter')}"
              name="form.twitter"
              v-model="form.twitter"
-             id="Sponsor-Twitter"
+             id="Organizer-Twitter"
              placeholder="URL do Twitter"
              :disabled="isEditable"
              data-vv-as="Twitter" />
+             <span v-show="errors.has('form.twitter')" class="help is-danger">{{ errors.first('form.twitter') }}</span>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <div class="form-group">
-            <label for="sponsor-description">Descricao</label>
+            <label for="organizer-description">Descricao</label>
             <textarea type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.description')}"
              name="form.description"
              v-model="form.description"
-             id="Sponsor-Description"
+             id="Organizer-Description"
              placeholder="Descricao do Organizador"
              :disabled="isEditable"
              data-vv-as="Descricao"
@@ -178,19 +164,19 @@
               <div class="col-md-12" v-for="(email,k) in emails" :key="k">
                 <input type="text"
                 :class="{'form-control': true, 'is-input-danger': errors.has('email.email')}"
-                id="Sponsor-email"
+                id="Organizer-email"
                 name="email.email"
                 placeholder="Email(s) de Contacto"
                 v-model="email.email"
-                v-validate="'required'"
                 :disabled="isEditable"
-                data-vv-as="Email(s)" />
+                v-validate="'required|email'"
+                data-vv-as="Email(s)"/>
                 <span class="addOrRemove">
                     <i class="fa fa-minus-circle" @click="remove(k,'email')" v-show="(k  || ( !k && emails.length > 1)) && (k != emails.length-1) "></i>
                     <i class="fa fa-plus-circle" @click="add(k,'email')" v-show="k == emails.length-1"></i>
                 </span>
             </div>
-            <span v-show="errors.has('email.email')" class="help is-danger">{{ errors.first('email.email') }}</span>
+              <p><span v-show="errors.has('email.email')" class="help is-danger">{{ errors.first('email.email') }}</span></p>
               <b-button
                 variant="success"
                 size="sm"
@@ -212,25 +198,25 @@
               <div class="col-md-12" v-for="(telephone,k) in telephones" :key="k">
                 <input type="text"
                 :class="{'form-control': true, 'is-input-danger': errors.has('telephone.phone_number')}"
-                id="Sponsor-Telephone"
+                id="Organizer-Telephone"
                 name="telephone.phone_number"
                 placeholder="Telefone(s) de Contacto"
                 v-model="telephone.phone_number"
-                v-validate="'required'"
                 :disabled="isEditable"
+                v-validate="'required'"
                 data-vv-as="Telefone(s)" />
                 <span class="addOrRemove">
                     <i class="fa fa-minus-circle" @click="remove(k,'phone')" v-show="(k  || ( !k && telephones.length > 1)) && (k != telephones.length-1) "></i>
                     <i class="fa fa-plus-circle" @click="add(k,'phone')" v-show="k == telephones.length-1"></i>
                 </span>
             </div>
-                <span v-show="errors.has('telephone.phone_number')" class="help is-danger">{{ errors.first('telephone.phone_number') }}</span>
-                <b-button
+              <span v-show="errors.has('telephone.phone_number')" class="help is-danger">{{ errors.first('telephone.phone_number') }}</span>
+              <b-button
                   variant="success"
                   size="sm"
                   class="float-left"
                   @click="addTelephone"
-                >
+              >
                 <span v-if="!isRequestingTel">Salvar</span>
                 <div class="loading-dots" v-if="isRequestingTel">
                   <div class="loading-dots--dot"></div>
@@ -245,11 +231,11 @@
       </div>
     </div>
     <!-- Remove Modal-->
-    <b-modal id="modal-remove" title="Patrocinador">
+    <b-modal id="modal-remove" title="Organizador">
       <p class="my-4">Tem certeza que deseja remover?</p>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="primary" size="sm" class="float-right" @click="RemoveSponsors">
+          <b-button variant="primary" size="sm" class="float-right" @click="RemoveOrganizer">
             <span v-if="!isRequesting">Sim</span>
             <div class="loading-dots" v-if="isRequesting">
               <div class="loading-dots--dot"></div>
@@ -269,11 +255,9 @@
   </div>
 </template>
 <script>
-import { RemoveSponsors, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress } from './helpers/functions.js'
+import { RemoveOrganizer, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress } from './helpers/functions.js'
 
 export default {
-  components: {
-  },
   props: {
     id: {
       type: String
@@ -317,16 +301,16 @@ export default {
     async ProcessForm () {
       this.hadError = ''
       const result = await this.$validator.validateAll()
-      return result ? this.UpdateSponsor() : result
+      return result ? this.UpdateOrganizer() : result
     },
     /**
-     * GetCompany: This method will fire a GET request and then
+     * GetOrganizer: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
-    async GetSponsor () {
+    async GetOrganizer () {
       this.isRequesting = true
       try {
-        const result = await this.axios.get(`/sponsors/${this.id}`)
+        const result = await this.axios.get(`/organizers/${this.id}`)
         this.form = result.data
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
@@ -334,12 +318,13 @@ export default {
       this.isRequesting = false
     },
     /**
-     * UpdateCompany: This method will send form to serve, for update
+     * UpdateOraganizer: This method will send form to serve, for update
      */
-    async UpdateSponsor () {
+    async UpdateOrganizer () {
       this.isRequesting = true
       try {
-        const result = await this.axios.patch(`/sponsors/${this.id}`, this.form)
+        const result = await this.axios.patch(`/organizers/${this.id}`, this.form)
+        this.file = ''
 
         if (result) {
           this.hadError = ''
@@ -352,12 +337,12 @@ export default {
       this.isRequesting = false
       setTimeout(() => {
         this.hadSuccess = ''
-      }, 5000)
+      }, 500)
     },
     SelectImage (file) {
       this.file = file
     },
-    editSponsor () {
+    editOrganizer () {
       this.isEditable = false
     },
     showRemoveModal () {
@@ -378,13 +363,13 @@ export default {
     addTelephone,
     addNewAddress,
     removeAddress,
-    RemoveSponsors,
+    RemoveOrganizer,
     rebuildArrayTel,
     rebuildArrayEmails,
     rebuildArrayAddress
   },
   created () {
-    this.GetSponsor()
+    this.GetOrganizer()
     this.getEmail()
     this.getTelephone()
     this.getAddress()
@@ -411,7 +396,6 @@ export default {
   margin-top: 40px;
   height: 40px;
 }
-
 .add-input{
   display: flex;
 }
