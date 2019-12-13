@@ -37,9 +37,9 @@
     <router-link :to="{name: 'ListProduct'}" tag="a">
       <Collapse title="Produtos"></Collapse>
     </router-link>
-    <router-link :to="{name: 'ListSupplier'}" tag="a">
+    <!-- <router-link :to="{name: 'ListSupplier'}" tag="a">
       <Collapse title="Operadores" ></Collapse>
-    </router-link>
+    </router-link> -->
     <ul class="list-unstyled CTAs">
       <li @click="DoLogout" >
         <a href="#" class="article"><span>Sair</span> <i class="fa fa-power-off fa-lg" aria-hidden="true"></i></a>

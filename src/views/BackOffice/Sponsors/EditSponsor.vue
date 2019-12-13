@@ -40,6 +40,21 @@
        <div class="row">
         <div class="col-md-3">
           <div class="form-group">
+            <label for="event-name">Nome</label>
+            <input type="text"
+             :class="{'form-control': true, 'is-input-danger': errors.has('form.name')}"
+             name="form.name"
+             v-model="form.name"
+             id="Sponsor-name"
+            :disabled="isEditable"
+             placeholder="Nome do Patrocinador"
+             v-validate="'required'"
+             data-vv-as="Nome do Patrocinador" />
+             <span v-show="errors.has('form.name')" class="help is-danger">{{ errors.first('form.name') }}</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
             <label for="event-name">Facebook</label>
             <input type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.facebook')}"
@@ -64,6 +79,8 @@
              data-vv-as="Instagram" />
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-md-3">
           <div class="form-group">
             <label for="event-name">Twitter</label>
@@ -77,7 +94,7 @@
              data-vv-as="Twitter" />
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
           <div class="form-group">
             <label for="sponsor-description">Descricao</label>
             <textarea type="text"

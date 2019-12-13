@@ -211,7 +211,41 @@ function rebuildArrayAddress (datas) {
   return addresses
 }
 
+async function getTotalActiveEvents () {
+  try {
+    const result = await this.axios.get(`/organizers/${this.id}/events/active_count`)
+    const res = result.data
+    this.totalActiveEvents = res.amount
+  } catch (e) {
+    this.hadError =
+      'Não foi possível carregar as encomendas. Actualize a página.'
+  }
+}
+
+async function getTotalPastEvents () {
+  try {
+    const result = await this.axios.get(`/organizers/${this.id}/events/past_count`)
+    const res = result.data
+    this.totalPastEvents = res.amount
+  } catch (e) {
+    this.hadError =
+      'Não foi possível carregar as encomendas. Actualize a página.'
+  }
+}
+
+async function getTotalSuppliers () {
+  try {
+    const result = await this.axios.get(`/organizers/${this.id}/suppliers/count`)
+    const res = result.data
+    this.totalSuppliers = res.amount
+  } catch (e) {
+    this.hadError =
+      'Não foi possível carregar as encomendas. Actualize a página.'
+  }
+}
+
 export { RemoveOrganizer, add, remove, removeAddress,
   addNewAddress, addEmail, addTelephone,
   addAddress, getAddress, getEmail, getTelephone,
-  rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress }
+  rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress,
+  getTotalActiveEvents, getTotalPastEvents, getTotalSuppliers }

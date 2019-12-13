@@ -3,7 +3,7 @@
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-async function GetOrganizerSuppliers () {
+async function getOrganizerSuppliers () {
   this.isRequesting = true
 
   try {
@@ -43,4 +43,4 @@ async function RegistOrganizerSupplier () {
   this.isRequesting = false
 }
 
-export { GetOrganizerSuppliers, RegistOrganizerSupplier }
+export { getOrganizerSuppliers, RegistOrganizerSupplier }

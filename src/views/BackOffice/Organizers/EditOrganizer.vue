@@ -20,7 +20,7 @@
               </div>
             </div>
             <div class="organizer-stars">
-
+                <!-- Star Code-->
             </div>
         </div>
         <div class="body-above-end">
@@ -43,15 +43,15 @@
             <div class="organizer-stats">
                 <div class="organizer-stats-box">
                   <div class="organizer-stats-box-left">
-                    <h4>13</h4>
+                    <h4> {{ totalActiveEvents }}</h4>
                     <h6>Eventos Ativos</h6>
                   </div>
                   <div class="organizer-stats-box-center">
-                    <h4>20</h4>
+                    <h4>{{ totalPastEvents }}</h4>
                     <h6>Eventos Passados</h6>
                   </div>
                   <div class="organizer-stats-box-right">
-                    <h4>30</h4>
+                    <h4>{{ totalSuppliers }}</h4>
                     <h6>Operadores</h6>
                   </div>
                 </div>
@@ -83,7 +83,7 @@
             <div class="body-center-box-body">
               <div  >
                   <div class="form-group" >
-                    <div class="col-md-12" v-for="(email,k) in emails" :key="k">
+                    <div class="col-md-12 input-borders" v-for="(email,k) in emails" :key="k">
                       <input type="text"
                       :class="{'form-control': true, 'is-input-danger': errors.has('email.email')}"
                       id="Organizer-email"
@@ -97,7 +97,6 @@
                           <i class="fa fa-plus-circle" @click="add(k,'email')" v-show="k == emails.length-1"></i>
                       </span>
                   </div>
-                  <p><span v-show="errors.has('email.email')" class="help is-danger">{{ errors.first('email.email') }}</span></p>
                 </div>
               </div>
             </div>
@@ -126,7 +125,7 @@
             <div class="body-center-box-body">
               <div>
                 <div class="form-group" >
-                  <div class="col-md-12" v-for="(telephone,k) in telephones" :key="k">
+                  <div class="col-md-12 input-borders" v-for="(telephone,k) in telephones" :key="k">
                     <input type="text"
                     :class="{'form-control': true, 'is-input-danger': errors.has('telephone.phone_number')}"
                     id="Organizer-Telephone"
@@ -140,7 +139,6 @@
                         <i class="fa fa-plus-circle" @click="add(k,'phone')" v-show="k == telephones.length-1"></i>
                     </span>
                   </div>
-                  <span v-show="errors.has('telephone.phone_number')" class="help is-danger">{{ errors.first('telephone.phone_number') }}</span>
                 </div>
               </div>
             </div>
@@ -162,7 +160,7 @@
               </div>
             </div>
             <div class="body-center-box-body">
-              <div class="row" v-for="(address, j) in addresses" :key="j">
+              <div class="row input-borders" v-for="(address, j) in addresses" :key="j">
                 <input type="text"
                   :class="{'form-control': true, 'is-input-danger': errors.has('address.province'), 'form-input-address' : true}"
                   name="address.province"
@@ -230,8 +228,8 @@
                 :cols="colsSuppliers"
                 :data="OrganizerSuppliers"
                 :pagination="pagination"
-                :paginationMethod="GetOrganizerSuppliers"
-                :sortMethod="GetOrganizerSuppliers"
+                :paginationMethod="getOrganizerSuppliers"
+                :sortMethod="getOrganizerSuppliers"
                 :changePage="changePage"
                 resource="supplier"
                 editRoute="EditSupplier"
@@ -322,7 +320,7 @@
     <!-- Update Organizer Modal-->
     <b-modal id="modal-update-organizer" title="Editar Organizador" size='xl'>
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
           <div class="form-group">
             <label for="event-name">Facebook</label>
             <input type="text"
@@ -335,7 +333,7 @@
              <span v-show="errors.has('form.facebook')" class="help is-danger">{{ errors.first('form.facebook') }}</span>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <div class="form-group">
             <label for="event-name">Instagram</label>
             <input type="text"
@@ -348,7 +346,7 @@
              <span v-show="errors.has('form.instagram')" class="help is-danger">{{ errors.first('form.instagram') }}</span>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <div class="form-group">
             <label for="event-name">Twitter</label>
             <input type="text"
@@ -361,9 +359,9 @@
              <span v-show="errors.has('form.twitter')" class="help is-danger">{{ errors.first('form.twitter') }}</span>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-group">
-            <label for="organizer-description">Descricao</label>
+            <label for="organizer-description">Descrição</label>
             <textarea type="text"
              :class="{'form-control': true, 'is-input-danger': errors.has('form.description')}"
              name="form.description"
@@ -387,9 +385,9 @@
   </div>
 </template>
 <script>
-import { RemoveOrganizer, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress } from './helpers/functions.js'
+import { RemoveOrganizer, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress, getTotalActiveEvents, getTotalPastEvents, getTotalSuppliers } from './helpers/functions.js'
 import { RemoveSupplier, GetSuppliers, changePage, removeMostSuppliers } from '../Suppliers/helpers/functions.js'
-import { GetOrganizerSuppliers, RegistOrganizerSupplier } from './helpers/suppliers.js'
+import { getOrganizerSuppliers, RegistOrganizerSupplier } from './helpers/suppliers.js'
 import { getOrganizersEvents } from './helpers/events.js'
 
 import MiniTable from '@/components/Layouts/MiniTable'
@@ -440,7 +438,10 @@ export default {
       pagination: {
         perPage: 10,
         pageable: { pageNumber: 1 }
-      }
+      },
+      totalActiveEvents: 0,
+      totalPastEvents: 0,
+      totalSuppliers: 0
     }
   },
   methods: {
@@ -533,14 +534,17 @@ export default {
     removeAddress,
     RemoveOrganizer,
     rebuildArrayTel,
+    getTotalSuppliers,
+    getTotalPastEvents,
     rebuildArrayEmails,
     rebuildArrayAddress,
+    getTotalActiveEvents,
     /* Suppliers Methods */
     changePage,
     GetSuppliers,
     RemoveSupplier,
     removeMostSuppliers,
-    GetOrganizerSuppliers,
+    getOrganizerSuppliers,
     RegistOrganizerSupplier,
     /* Events Methods */
     getOrganizersEvents
@@ -551,8 +555,11 @@ export default {
     this.getEmail()
     this.getTelephone()
     this.getAddress()
-    this.GetOrganizerSuppliers()
+    this.getOrganizerSuppliers()
     this.getOrganizersEvents()
+    this.getTotalActiveEvents()
+    this.getTotalPastEvents()
+    this.getTotalSuppliers()
   }
 }
 </script>
@@ -570,7 +577,7 @@ export default {
 }
 .panel-body {
   /* border: 1px solid red; */
-  margin-top: 30px;
+  margin-top: -10px;
   display: flex;
   flex-direction: column;
 }
@@ -583,6 +590,7 @@ export default {
   margin-left: 0px;
   display: flex;
   flex-direction: column;
+  // background-color: #fff;
 }
 
 .body-above-start{
@@ -592,6 +600,7 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  background-color: #fff;
 }
 
 .body-above-end{
@@ -603,6 +612,7 @@ export default {
   justify-content: center;
   align-content: stretch;
   align-items: stretch;
+  background-color: #fff;
 }
 
 .organizer-photo-name{
@@ -680,6 +690,8 @@ export default {
   border-radius: 4px;
   width: 70%;
   height: 70px;
+  display: flex;
+  align-items: flex-end;
 }
 
 $twitter_color: #55acee;
@@ -690,7 +702,7 @@ $instagram_color: #3f729b;
 .facebook_color { background: $facebook_color; }
 .instagram_color { background: $instagram_color; }
 
-$size: 60px;
+$size: 35px;
 
 .edit-btn{
   display: flex;
@@ -776,6 +788,7 @@ $size: 60px;
   flex-wrap: wrap;
   justify-content: space-between;
   padding-top: 10px;
+  // background-color: #fff;
 }
 
 .body-center-box {
@@ -788,7 +801,8 @@ $size: 60px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-right: 5px;
+  margin-right: 10px;
+  background-color: #fff;
 }
 
 .body-center .body-center-box:last-child{
@@ -803,6 +817,7 @@ $size: 60px;
   align-items: center;
   flex-direction: column;
   margin-right: 0px;
+  background-color: #fff;
 }
 
 .body-center-box-head{
@@ -819,7 +834,7 @@ $size: 60px;
   width: 50%;
   height: 70px;
   // border: 1px solid red;
-  padding-left: 10px;
+  padding-left: 5px;
   align-items: center
 }
 .head-box-right-side{
@@ -827,17 +842,27 @@ $size: 60px;
   width: 50%;
   // border: 1px solid blue;
   justify-content: flex-end;
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
+.col-md-12.input-borders{
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #C3C7D9;
+}
+
+.row.input-borders{
+  padding-top: 8px;
+  border-bottom: 1px solid #C3C7D9;
+}
 .body-center-box-body{
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   overflow-y: auto;
-  padding: 10px;
-  padding-top: 30px;
+  padding: 5px;
+  padding-top: 10px;
   // border: 1px solid #C3C7D9;
 }
 
@@ -861,12 +886,13 @@ $size: 60px;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding-top: 50px;
+  padding-top: 10px;
+  // background-color: #fff;
 }
 
 .body-bottom-left{
   height: 400px;
-  width: 40.3%;
+  width: 40.5%;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
   display: flex;
@@ -874,7 +900,8 @@ $size: 60px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-right: 5px;
+  margin-right: 10px;
+  background-color: #fff;
 }
 
 .body-bottom-right{
@@ -888,6 +915,7 @@ $size: 60px;
   align-items: center;
   flex-direction: column;
   flex-grow: 1;
+  background-color: #fff;
 }
 
 /*End Body Bottom Styles*/
