@@ -171,7 +171,7 @@
         size="lg"
         class="float-left"
         :disabled="isRequesting ? true : false"
-        @click="ProcessForm">
+        @click="processForm">
          <span v-if="!isRequesting"> Registar</span>
           <div class="loading-dots" v-if="isRequesting">
             <div class="loading-dots--dot"></div>
@@ -227,20 +227,20 @@ export default {
   },
   methods: {
     /*
-     *  ProcessForm: This method will validate the form using vee-validate
+     *  processForm: This method will validate the form using vee-validate
      *  component and then call the action method defined for this view
      *  if everything passes the validation.
      */
-    async ProcessForm () {
+    async processForm () {
       this.hadError = ''
       const result = await this.$validator.validateAll()
-      return result ? this.RegistOrganizer() : result
+      return result ? this.registOrganizer() : result
     },
     /*
-     *  RegistOrganizer: This method will create a post request to regist a
+     *  registOrganizer: This method will create a post request to regist a
      *  new organizer and then redirect to the ListOrganizer component.
      */
-    async RegistOrganizer () {
+    async registOrganizer () {
       this.isRequesting = true
 
       try {
