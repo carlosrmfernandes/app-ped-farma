@@ -26,15 +26,21 @@
         <div class="body-above-end">
             <div class="organizer-social-networks">
                 <div class="organizer-social-networks-box">
-                  <div class="twitter_color" :style="{ opacity: form.twitter ? '1' : styleOpacity }">
-                    <img src="../../../assets/images/social-networks/twitter.png" style="max-width: 100%">
-                  </div>
-                  <div class="facebook_color" :style="{ opacity: form.facebook ? '1' :  styleOpacity }">
-                    <img src="../../../assets/images/social-networks/facebook.png" style="max-width: 100%">
-                  </div>
-                  <div class="instagram_color" :style="{ opacity: form.instagram ? '1' : styleOpacity }">
-                    <img src="../../../assets/images/social-networks/instagram.png" style="max-width: 100%">
-                  </div>
+                  <a :href="form.twitter ? form.twitter : ''" >
+                    <div class="twitter_color" :style="{ opacity: form.twitter ? '1' : styleOpacity }">
+                      <img src="../../../assets/images/social-networks/twitter.png" style="max-width: 100%">
+                    </div>
+                  </a>
+                  <a :href="form.facebook ? form.facebook : ''" >
+                    <div class="facebook_color" :style="{ opacity: form.facebook ? '1' :  styleOpacity }">
+                      <img src="../../../assets/images/social-networks/facebook.png" style="max-width: 100%">
+                    </div>
+                  </a>
+                  <a :href="form.instagram ? form.instagram : ''" >
+                    <div class="instagram_color" :style="{ opacity: form.instagram ? '1' : styleOpacity }">
+                      <img src="../../../assets/images/social-networks/instagram.png" style="max-width: 100%">
+                    </div>
+                  </a>
                   <div class="edit-btn">
                     <span @click="showUpdateOrganizerModal">Editar</span>
                   </div>
@@ -81,7 +87,7 @@
               </div>
             </div>
             <div class="body-center-box-body">
-              <div  >
+              <div class="body-center-box-body-inputs">
                   <div class="form-group" >
                     <div class="col-md-12 input-borders" v-for="(email,k) in emails" :key="k">
                       <input type="text"
@@ -123,7 +129,7 @@
               </div>
             </div>
             <div class="body-center-box-body">
-              <div>
+              <div class="body-center-box-body-inputs">
                 <div class="form-group" >
                   <div class="col-md-12 input-borders" v-for="(telephone,k) in telephones" :key="k">
                     <input type="text"
@@ -845,15 +851,25 @@ $size: 35px;
   padding-right: 5px;
 }
 
+.body-center-box-body-inputs{
+  width: 100%;
+}
+
 .col-md-12.input-borders{
+  width: 100%;
   padding-top: 8px;
   padding-bottom: 8px;
   border-bottom: 1px solid #C3C7D9;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .row.input-borders{
+  width: 100%;
   padding-top: 8px;
   border-bottom: 1px solid #C3C7D9;
+  display: flex;
+  flex-wrap: nowrap;
 }
 .body-center-box-body{
   width: 100%;
@@ -924,9 +940,11 @@ $size: 35px;
 }
 
 .form-input-address{
-  width: 280px;
+  // width: 250px;
+  width: 29%;
   margin: 20px;
   margin-top: 0;
+  margin-right: 5px;
 }
 
 .form-group .addOrRemove{
