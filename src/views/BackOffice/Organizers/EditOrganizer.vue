@@ -92,11 +92,10 @@
                     <div class="col-md-12 input-borders" v-for="(email,k) in emails" :key="k">
                       <input type="text"
                       :class="{'form-control': true, 'is-input-danger': errors.has('email.email')}"
-                      id="Organizer-email"
                       name="email.email"
                       placeholder="example@examples.com"
                       v-model="email.email"
-                      v-validate="'required|email'"
+                      v-validate="'email'"
                       data-vv-as="Email(s)"/>
                       <span class="addOrRemove">
                           <i class="fa fa-minus-circle" @click="remove(k,'email')" v-show="(k  || ( !k && emails.length > 1)) && (k != emails.length-1) "></i>
@@ -134,11 +133,9 @@
                   <div class="col-md-12 input-borders" v-for="(telephone,k) in telephones" :key="k">
                     <input type="text"
                     :class="{'form-control': true, 'is-input-danger': errors.has('telephone.phone_number')}"
-                    id="Organizer-Telephone"
                     name="telephone.phone_number"
                     placeholder="+244 999000444"
                     v-model="telephone.phone_number"
-                    v-validate="'required'"
                     data-vv-as="Telefone(s)" />
                     <span class="addOrRemove">
                         <i class="fa fa-minus-circle" @click="remove(k,'phone')" v-show="(k  || ( !k && telephones.length > 1)) && (k != telephones.length-1) "></i>
@@ -317,7 +314,7 @@
       </div>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="success" size="sm" class="float-right" @click="RegistOrganizerSupplier">
+          <b-button variant="success" size="sm" class="float-right" @click="registOrganizerSupplier">
             <span>Registar</span>
           </b-button>
         </div>
@@ -382,7 +379,7 @@
       </div>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="success" size="sm" class="float-right" @click="ProcessForm">
+          <b-button variant="success" size="sm" class="float-right" @click="processForm">
             <span>Atualizar</span>
           </b-button>
         </div>
@@ -391,9 +388,9 @@
   </div>
 </template>
 <script>
-import { RemoveOrganizer, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress, getTotalActiveEvents, getTotalPastEvents, getTotalSuppliers } from './helpers/functions.js'
+import { removeOrganizer, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress, getTotalActiveEvents, getTotalPastEvents, getTotalSuppliers } from './helpers/functions.js'
 import { RemoveSupplier, GetSuppliers, changePage, removeMostSuppliers } from '../Suppliers/helpers/functions.js'
-import { getOrganizerSuppliers, RegistOrganizerSupplier } from './helpers/suppliers.js'
+import { getOrganizerSuppliers, registOrganizerSupplier } from './helpers/suppliers.js'
 import { getOrganizersEvents } from './helpers/events.js'
 
 import MiniTable from '@/components/Layouts/MiniTable'
@@ -452,20 +449,20 @@ export default {
   },
   methods: {
     /*
-     *  ProcessForm: This method will validate the form using vee-validate
+     *  processForm: This method will validate the form using vee-validate
      *  component and then call the action method defined for this view
      *  if everything passes the validation.
      */
-    async ProcessForm () {
+    async processForm () {
       this.hadError = ''
       const result = await this.$validator.validateAll()
-      return result ? this.UpdateOrganizer() : result
+      return result ? this.updateOrganizer() : result
     },
     /**
-     * GetOrganizer: This method will fire a GET request and then
+     * getOrganizer: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
-    async GetOrganizer () {
+    async getOrganizer () {
       this.isRequesting = true
       try {
         const result = await this.axios.get(`/organizers/${this.id}`)
@@ -478,16 +475,16 @@ export default {
     /**
      * UpdateOraganizer: This method will send form to serve, for update
      */
-    async UpdateOrganizer () {
+    async updateOrganizer () {
       this.isRequesting = true
       try {
         const result = await this.axios.patch(`/organizers/${this.id}`, this.form)
         this.file = ''
 
         if (result) {
-          // Hide Modal and get GetOrganizerSuppliers
+          // Hide Modal and get getOrganizerSuppliers
           this.hideUpdateOrganizerModal()
-          this.GetOrganizer()
+          this.getOrganizer()
         }
       } catch (e) {
         this.hadSuccess = ''
@@ -538,7 +535,7 @@ export default {
     addTelephone,
     addNewAddress,
     removeAddress,
-    RemoveOrganizer,
+    removeOrganizer,
     rebuildArrayTel,
     getTotalSuppliers,
     getTotalPastEvents,
@@ -551,13 +548,13 @@ export default {
     RemoveSupplier,
     removeMostSuppliers,
     getOrganizerSuppliers,
-    RegistOrganizerSupplier,
+    registOrganizerSupplier,
     /* Events Methods */
     getOrganizersEvents
 
   },
   created () {
-    this.GetOrganizer()
+    this.getOrganizer()
     this.getEmail()
     this.getTelephone()
     this.getAddress()
@@ -941,10 +938,12 @@ $size: 35px;
 
 .form-input-address{
   // width: 250px;
-  width: 29%;
-  margin: 20px;
+  width: 32%;
+  // margin: 20px;
   margin-top: 0;
-  margin-right: 5px;
+  margin-right: 2px;
+  margin-left: 2px;
+  margin-bottom: 8px;
 }
 
 .form-group .addOrRemove{
