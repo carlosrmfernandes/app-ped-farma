@@ -27,15 +27,26 @@ async function getOrganizerSuppliers () {
 async function RegistOrganizerSupplier () {
   this.isRequesting = true
   this.supplier.role = 'ORGANIZER_AGENT'
-  try {
-    // eslint-disable-next-line no-const-assign
-    const result = await this.axios.post(`/organizers/${this.id}/suppliers`, this.supplier)
 
-    if (result) {
-      // Hide Modal and get GetOrganizerSuppliers
-      this.hideAddSupplierModal()
-      this.GetOrganizerSuppliers()
+  try {
+    // Get Organizer Number
+    const resultOrgNumber = await this.axios.get(`/organizers/${this.id}/organizer_numbers`)
+
+    // Verifying if that organizer has number
+    if (resultOrgNumber) {
+      // Creating organizer
+      await this.axios.post(`/organizers/${this.id}/suppliers`, this.supplier)
+    } else {
+      // Creating Organizer number, for be able to creater supplier
+      await this.axios.post(`/organizers/${this.id}/organizer_numbers`)
+
+      // Creating Organizer-Supplier
+      await this.axios.post(`/organizers/${this.id}/suppliers`, this.supplier)
     }
+
+    // Hide Modal and get GetOrganizerSuppliers
+    this.hideAddSupplierModal()
+    this.GetOrganizerSuppliers()
   } catch (e) {
     this.hadError =
           'Não foi possível realizar esta operação. Tente novamente'
