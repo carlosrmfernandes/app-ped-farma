@@ -371,6 +371,12 @@
                   <option id="ticket_type">VIP ADULTO</option>
                   <option id="ticket_type">VIP KID 2 - 11</option>
                   <option id="ticket_type">VIP KID 12 - 16</option>
+                  <option id="ticket_type">TEEN</option>
+                  <option id="ticket_type">KID</option>
+                  <option id="ticket_type">VIP_KID</option>
+                  <option id="ticket_type">VIP_TEEN</option>
+                  <option id="ticket_type">​ADULT</option>
+                  <option id="ticket_type">VIP_ADULT</option>
                 </select>
                 <span
                   v-show="errors.has('tickets.ticket_type')"
