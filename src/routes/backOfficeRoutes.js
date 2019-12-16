@@ -23,6 +23,7 @@ import RegistEvent from '@/views/BackOffice/Events/RegistEvent'
 import ListEvent from '@/views/BackOffice/Events/ListEvent'
 import EditEvent from '@/views/BackOffice/Events/EditEvent'
 import ShowEvent from '@/views/BackOffice/Events/ShowEvent'
+import DetailEvent from '@/views/BackOffice/Events/DetailEvent'
 
 // Companies
 import RegistCompany from '@/views/BackOffice/Companies/RegistCompany'
@@ -227,6 +228,15 @@ const Events = [{
     component: EditEvent,
     meta: {
       title: 'Editar Evento'
+    },
+    props: true
+  },
+  {
+    path: 'detail/:id',
+    name: 'DetailEvent',
+    component: DetailEvent,
+    meta: {
+      title: 'Detalhes do Evento'
     },
     props: true
   }
