@@ -165,9 +165,6 @@
                     <option id="ticket_type">VIP</option>
                     <option id="ticket_type">VIP_COUPLE</option>
                     <option id="ticket_type">VIP_KID</option>
-                    <option id="ticket_type">VIP ADULTO</option>
-                    <option id="ticket_type">VIP KID 2 - 11</option>
-                    <option id="ticket_type">VIP KID 12 - 16</option>
                     <option id="ticket_type">TEEN</option>
                     <option id="ticket_type">KID</option>
                     <option id="ticket_type">VIP_KID</option>
