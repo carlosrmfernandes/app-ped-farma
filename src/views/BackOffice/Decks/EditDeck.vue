@@ -125,24 +125,24 @@
               }}</span>
             </div>
           </div>
-          <div class="col-md-1 button-status">
+          <div class="col-md-3 button-status">
               <label for="startsAt">Alterar Status</label>
-              <b-button variant="success" size="sm" v-if="alterStatus === 'INACTIVE'"  @click="alterStatusMethods('ACTIVE')">
+              <button type="button" class="btn btn-success btn-sm btn-status"  v-if="alterStatus === 'INACTIVE'"  @click="alterStatusMethods('ACTIVE')">
                 <span v-if="!isRequesting">Activar</span>
                 <div class="loading-dots" v-if="isRequesting">
                   <div class="loading-dots--dot"></div>
                   <div class="loading-dots--dot"></div>
                   <div class="loading-dots--dot"></div>
                 </div>
-              </b-button>
-              <b-button variant="danger" size="sm" v-if="alterStatus === 'ACTIVE'" @click="alterStatusMethods('INACTIVE')">
+              </button>
+              <button type="button" class="btn btn-danger btn-sm btn-status"  v-if="alterStatus === 'ACTIVE'" @click="alterStatusMethods('INACTIVE')">
                 <span v-if="!isRequesting">Desativar</span>
                 <div class="loading-dots" v-if="isRequesting">
                   <div class="loading-dots--dot"></div>
                   <div class="loading-dots--dot"></div>
                   <div class="loading-dots--dot"></div>
                 </div>
-              </b-button>
+              </button>
           </div>
       </div>
       <div class="row events-panel">
@@ -151,12 +151,7 @@
             <span>Eventos do Deck</span>
           </div>
           <div class="events-head-right">
-            <b-button
-              variant="primary"
-              size="sm"
-              class="float-right mb-6"
-              @click="showDeckEventsModal"
-            >Add</b-button>
+          <span @click="showDeckEventsModal">Add</span>
           </div>
         </div>
         <div class="events-body">
@@ -408,6 +403,10 @@ export default {
   margin-bottom: 0.7rem !important;
 }
 
+.btn-status{
+  width: 80px;
+}
+
 .button-status{
   display: flex;
   flex-direction: column;
@@ -434,5 +433,13 @@ export default {
 
 .events-head-right{
   width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.events-head-right span{
+  font-weight: 500;
+  cursor: pointer;
 }
 </style>
