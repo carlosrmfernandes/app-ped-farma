@@ -39,7 +39,7 @@
           <thead class="thead-dark">
             <tr>
               <th v-if="canRemove">
-                <label class="checkbox first">
+                <label class="checkbox first" :class="{'active': selectAll}">
                 <input type="checkbox" v-model="selectAll" @click="select" />
                 <div class="square"></div>
               </label>
@@ -336,6 +336,7 @@ export default {
 
 .table .thead-dark th{
   background-color: #343A4E !important;
+  font-size: 12px;
 }
 tbody tr {
   cursor: pointer;
@@ -349,6 +350,8 @@ color: #fff;
 .table td{
   max-width: 70px;
   overflow: hidden;
+  font-size: 14px;
+  padding: 0.60rem;
 }
 .modal-backdrop {
   opacity: 0.5 !important;
@@ -367,19 +370,21 @@ color: #fff;
 }
 
 .number {
-  display: inline-block;
-  padding: 8.5px 11.5px;
+  /* padding: 8.5px 11.5px; */
   color: #fff;
   border-radius: 4px;
   background: #343a4e;
-  width: 30px;
-  height: 30px;
+  width: 23px;
+  height: 23px;
   margin-top: 5px;
   margin-right: 5px;
   margin-bottom: 0px;
   margin-left: 5px;
   cursor: pointer;
   font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .number.active {
   background: #d05d1c;
@@ -414,18 +419,26 @@ span.deleteicon span {
 }
 
 .checkbox .square {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border: 1px solid #343A4E;
-  border-radius: 4px;
+  border-radius: 3px;
   display: inline-block;
 }
+
+thead.thead-dark .checkbox .square {
+   display: none;
+}
 .checkbox.first {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border: 1px solid #fff;
-  border-radius: 4px;
+  border-radius: 3px;
   display: inline-block;
+}
+
+thead.thead-dark .checkbox.first.active {
+  background-color: #d05d1c;
 }
 
 .checkbox.first .square {

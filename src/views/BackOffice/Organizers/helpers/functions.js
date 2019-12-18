@@ -48,7 +48,6 @@ async function addEmail () {
 
 async function addTelephone () {
   this.isRequestingTel = true
-  console.log(this.telephones)
   const allTelephones = this.rebuildArrayTel(this.telephones)
   try {
     this.axios.put(`/organizers/${this.id}/organizer_phone_numbers`, allTelephones)

@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Novo Organizador</h1>
+      <h3>Novo Organizador</h3>
       <div class="alert alert-danger col-md-10" v-if="hadError" role="alert">
         {{hadError}}
       </div>
@@ -168,7 +168,7 @@
       <div class="panel-footer">
         <b-button
         variant="primary"
-        size="lg"
+        size="sm"
         class="float-left"
         :disabled="isRequesting ? true : false"
         @click="processForm">
@@ -186,12 +186,12 @@
       <p class="my-4">O Organizador pertecence a uma empresa existente?</p>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="primary" size="lg" class="float-right" @click="yesBelongs">
+          <b-button variant="primary" size="sm" class="float-right" @click="yesBelongs">
             <span v-if="!isRequesting">Sim</span>
           </b-button>
           <b-button
             variant="outline-danger"
-            size="lg"
+            size="sm"
             class="float-right mr-2"
             @click="noBelongs"
           >Não</b-button>
@@ -379,6 +379,10 @@ export default {
   /* border: 1px solid red; */
   margin-top: 40px;
   height: 40px;
+}
+
+p {
+  font-size: 0.9rem;
 }
 
 .add-input{

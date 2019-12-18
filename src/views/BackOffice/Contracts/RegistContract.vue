@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Novo Contrato</h1>
+      <h3>Novo Contrato</h3>
     </div>
     <div class="panel-body">
       <div class="row">
@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <h4>Subcontrato do Evento</h4>
+      <h5>Subcontrato do Evento</h5>
       <div class="row grid-divider">
          <div class="col-md-3">
           <div class="form-group">
@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <h4>Subcontrato do Pagamento</h4>
+      <h5>Subcontrato do Pagamento</h5>
       <div class="row grid-divider">
          <div class="col-md-3">
           <div class="form-group">
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <h4>Subcontrato do Produto</h4>
+      <h5>Subcontrato do Produto</h5>
       <div class="row grid-divider">
         <div class="col-md-3">
           <div class="form-group">
@@ -113,7 +113,7 @@
     <div class="panel-footer">
         <b-button
         variant="primary"
-        size="lg"
+        size="sm"
         class="float-left"
         :disabled="isRequesting ? true : false"
         @click="ProcessForm">

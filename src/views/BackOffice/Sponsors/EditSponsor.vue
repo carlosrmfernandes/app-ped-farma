@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Editar Patrocinador</h1>
+      <h3>Editar Patrocinador</h3>
       <b-button
         variant="outline-primary"
         size="sm"

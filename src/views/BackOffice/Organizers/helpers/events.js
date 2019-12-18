@@ -13,7 +13,7 @@ async function getOrganizersEvents () {
   try {
     const result = await this.axios.get(`/events?${query}`)
     const res = result.data
-    this.OrganizerEvents = res.data
+    this.organizerEvents = res.data
 
     this.pageCount = res.pages_count
   } catch (e) {

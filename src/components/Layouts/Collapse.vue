@@ -114,10 +114,11 @@ export default {
 .accordion-title {
   left: 10%;
   position: absolute;
-    -webkit-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
+  font-size: 14px;
 }
 
 .accordion.childSidebar .accordion-title {
