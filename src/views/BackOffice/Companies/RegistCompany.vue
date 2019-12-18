@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Nova Empresa</h1>
+      <h3>Nova Empresa</h3>
     </div>
     <div class="panel-body">
       <div class="row">
@@ -32,8 +32,8 @@
       <div class="panel-footer">
         <b-button
         variant="primary"
-        size="lg"
-        class="float-right"
+        size="sm"
+        class="float-left"
         :disabled="isRequesting ? true : false"
         @click="ProcessForm">
          <span v-if="!isRequesting"> Registar</span>

@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Organizadores</h1>
+      <h3>Organizadores</h3>
     </div>
     <div class="panel-body">
       <div>

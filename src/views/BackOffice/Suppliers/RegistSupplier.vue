@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Registar Operador</h1>
+      <h3>Registar Operador</h3>
       <div class="alert alert-danger col-md-10" v-if="hadError" role="alert">
         {{hadError}}
       </div>
@@ -68,7 +68,7 @@
         <div class="col-md-1" >
           <div class="form-group">
             <b-button variant="primary"
-            size="lg"
+            size="sm"
             class="float-left mt-6"
             :disabled="isRequesting ? true : false"
             @click="processForm">

@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Editar Contrato</h1>
+      <h3>Editar Contrato</h3>
        <b-button
         variant="outline-primary"
         size="sm"

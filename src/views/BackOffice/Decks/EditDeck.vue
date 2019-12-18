@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Editar Deck</h1>
+      <h3>Editar Deck</h3>
       <b-button
         variant="outline-primary"
         size="sm"
@@ -147,12 +147,17 @@
       </div>
       <div class="row events-panel">
         <div class="events-head">
-          <b-button
-            variant="primary"
-            size="sm"
-            class="float-right mb-6"
-            @click="showDeckEventsModal"
-          >Add</b-button>
+          <div class="events-head-left">
+            <span>Eventos do Deck</span>
+          </div>
+          <div class="events-head-right">
+            <b-button
+              variant="primary"
+              size="sm"
+              class="float-right mb-6"
+              @click="showDeckEventsModal"
+            >Add</b-button>
+          </div>
         </div>
         <div class="events-body">
           <MiniTable
@@ -420,8 +425,14 @@ export default {
   justify-content: flex-end;
 }
 
-.events-head{
-  width: 100%;
+.events-head-left{
+  width: 50%;
+  display: flex;
+  align-items: center;
+  /* padding-left: 10px; */
 }
 
+.events-head-right{
+  width: 50%;
+}
 </style>

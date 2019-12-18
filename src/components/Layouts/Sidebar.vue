@@ -3,7 +3,7 @@
   <nav id="sidebar">
     <div class="sidebar-header">
       <avatar :fullname="user.name" :size="96"></avatar>
-      <h3>{{user.name}}</h3>
+      <h4>{{user.name}}</h4>
     </div>
     <!-- <ul class="list-unstyled components">
       <p>Admin</p>
@@ -88,11 +88,11 @@ li{
 }
 
 li span{
-  font-size: 18px;
+  font-size: 15px;
   margin-right: 10px;
 }
 
-.sidebar-header h3{
+.sidebar-header h4{
   margin-top: 20px;
 }
 </style>

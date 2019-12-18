@@ -9,7 +9,7 @@
               </div>
               <div class="organizer-text">
                 <div class="organizer-name-box">
-                  <h3>{{ form.name }}</h3>
+                  <h6>{{ form.name }}</h6>
                 </div>
                 <div class="organizer-description">
                   <p>{{ form.description }}</p>
@@ -46,15 +46,15 @@
             <div class="organizer-stats">
                 <div class="organizer-stats-box">
                   <div class="organizer-stats-box-left">
-                    <h4> {{ totalActiveEvents }}</h4>
+                    <h6> {{ totalActiveEvents }}</h6>
                     <h6>Eventos Ativos</h6>
                   </div>
                   <div class="organizer-stats-box-center">
-                    <h4>{{ totalPastEvents }}</h4>
+                    <h6>{{ totalPastEvents }}</h6>
                     <h6>Eventos Passados</h6>
                   </div>
                   <div class="organizer-stats-box-right">
-                    <h4>{{ totalSuppliers }}</h4>
+                    <h6>{{ totalSuppliers }}</h6>
                     <h6>Operadores</h6>
                   </div>
                 </div>
@@ -208,19 +208,7 @@
                 <span>Operadores</span>
               </div>
               <div class="head-box-right-side">
-                <b-button
-                    variant="primary"
-                    size="sm"
-                    class="float-left"
-                    @click="showAddSupplierModal"
-                  >
-                  <span v-if="!isRequestingTel">Add</span>
-                  <div class="loading-dots" v-if="isRequestingTel">
-                    <div class="loading-dots--dot"></div>
-                    <div class="loading-dots--dot"></div>
-                    <div class="loading-dots--dot"></div>
-                  </div>
-                </b-button>
+                  <span class="add-text" @click="showAddSupplierModal">Add</span>
               </div>
             </div>
             <div class="body-center-box-body">
@@ -244,7 +232,7 @@
                 <span>Eventos</span>
               </div>
               <div class="head-box-right-side">
-                <b-button
+                <!-- <b-button
                     variant="primary"
                     size="sm"
                     class="float-left"
@@ -252,12 +240,7 @@
                     :disabled="true"
                   >
                   <span v-if="!isRequestingTel">Add</span>
-                  <div class="loading-dots" v-if="isRequestingTel">
-                    <div class="loading-dots--dot"></div>
-                    <div class="loading-dots--dot"></div>
-                    <div class="loading-dots--dot"></div>
-                  </div>
-                </b-button>
+                </b-button> -->
               </div>
             </div>
             <div class="body-center-box-body">
@@ -578,6 +561,9 @@ export default {
   display: flex;
   flex-direction: column;
 }
+span{
+  font-size: 13px;
+}
 
 /* Start Body Above Styles*/
 .panel-body .body-above {
@@ -650,9 +636,10 @@ export default {
 
 .organizer-description p{
   word-break: break-all;
+  font-size: 0.8rem;
 }
 
-.organizer-name-box h3{
+.organizer-name-box h6{
   margin-left: 30px;
 }
 
@@ -813,6 +800,10 @@ $size: 35px;
   width: 50%;
   justify-content: flex-end;
   padding-right: 5px;
+}
+.head-box-right-side .add-text{
+  cursor: pointer;
+  font-weight: 500;
 }
 
 .body-center-box-body-inputs{

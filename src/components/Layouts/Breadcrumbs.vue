@@ -86,7 +86,7 @@ export default {
 .breadcrumb .arro-left{
   position relative
   top 10px
-  left 15px
+  left 20px
 }
 
 .breadcrumb_list
@@ -126,7 +126,7 @@ export default {
 }
 
 .fa, .fas {
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .goBack{
