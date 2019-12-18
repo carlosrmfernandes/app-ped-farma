@@ -1,8 +1,5 @@
 <template>
   <div class="panel">
-    <!-- <div class="panel-header">
-      <h1>Editar Organizador</h1>
-    </div> -->
     <div class="panel-body">
       <div class="row body-above">
         <div class="body-above-start">
@@ -20,7 +17,7 @@
               </div>
             </div>
             <div class="organizer-stars">
-                <!-- Star Code-->
+                <!-- Stars Code-->
             </div>
         </div>
         <div class="body-above-end">
@@ -229,7 +226,7 @@
             <div class="body-center-box-body">
               <MiniTable
                 :cols="colsSuppliers"
-                :data="OrganizerSuppliers"
+                :data="organizerSuppliers"
                 :pagination="pagination"
                 :paginationMethod="getOrganizerSuppliers"
                 :sortMethod="getOrganizerSuppliers"
@@ -266,7 +263,7 @@
             <div class="body-center-box-body">
               <MiniTable
                 :cols="colsEvents"
-                :data="OrganizerEvents"
+                :data="organizerEvents"
                 :pagination="pagination"
                 :paginationMethod="getOrganizersEvents"
                 :sortMethod="getOrganizersEvents"
@@ -436,8 +433,8 @@ export default {
         { name: 'starts_at', label: 'Data' },
         { name: 'created_at', label: 'Criado Em' }
       ],
-      OrganizerSuppliers: [],
-      OrganizerEvents: [],
+      organizerSuppliers: [],
+      organizerEvents: [],
       pagination: {
         perPage: 10,
         pageable: { pageNumber: 1 }
@@ -569,17 +566,14 @@ export default {
 <style lang="scss" scoped>
 
 .panel {
-  /* border: 1px solid red; */
   padding: 20px;
 }
 .panel-header {
-  /* border: 1px solid red; */
   top: 0px;
   width: 100%;
   height: 15%;
 }
 .panel-body {
-  /* border: 1px solid red; */
   margin-top: -10px;
   display: flex;
   flex-direction: column;
@@ -593,11 +587,9 @@ export default {
   margin-left: 0px;
   display: flex;
   flex-direction: column;
-  // background-color: #fff;
 }
 
 .body-above-start{
-  // border: 1px solid red;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -607,7 +599,6 @@ export default {
 }
 
 .body-above-end{
-  // border: 1px solid green;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -619,7 +610,6 @@ export default {
 }
 
 .organizer-photo-name{
-  // border: 1px solid black;
   padding: 20px;
   display: flex;
   justify-content: flex-start;
@@ -638,7 +628,6 @@ export default {
 }
 
 .organizer-text{
-  // border: 1px solid black;
   padding: 5px;
   height: 100%;
   display: flex;
@@ -647,13 +636,11 @@ export default {
 }
 
 .organizer-name-box{
-  // border: 1px solid black;
   padding: 5px;
   display: flex;
 }
 
 .organizer-description{
-  // border: 1px solid black;
   height: 100%;
   padding: 5px;
   padding-left: 35px;
@@ -670,17 +657,14 @@ export default {
 }
 
 .organizer-stars{
-  // border: 1px solid black;
   padding: 20px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  // flex-grow: 1;
   width: 715px;
 }
 
 .organizer-social-networks{
-  // border: 1px solid black;
   padding: 20px;
   display: flex;
   justify-content: flex-start;
@@ -689,7 +673,6 @@ export default {
 }
 
 .organizer-social-networks-box{
-  // border: 1px solid #C3C7D9;
   border-radius: 4px;
   width: 70%;
   height: 70px;
@@ -729,10 +712,9 @@ $size: 35px;
 }
 
 .organizer-stats{
-  // border: 1px solid black;
-  flex-grow: 1;
   padding: 20px;
   display: flex;
+  flex-grow: 1;
   justify-content: flex-end;
 }
 
@@ -747,33 +729,24 @@ $size: 35px;
 }
 
 .organizer-stats-box-left{
-  flex-grow: 1;
-  // border: 1px solid #C3C7D9;
-  // border-radius: 4px;
-  // border-bottom: 1px solid #308acf;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .organizer-stats-box-center{
-  flex-grow: 1;
-  // border: 1px solid #C3C7D9;
-  // border-radius: 4px;
-  // border-bottom: 1px solid rgba(243, 56, 56, 0.911);
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .organizer-stats-box-right{
-  flex-grow: 1;
-  // border: 1px solid #C3C7D9;
-  // border-radius: 4px;
-  // border-bottom: 1px solid rgb(96, 219, 71);
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -783,15 +756,12 @@ $size: 35px;
 /* Start Body Center Styles*/
 .panel-body .body-center {
   width: 100%;
-  // border: 1px solid #000;
-  // border-radius: 4px;
   margin-left: 0px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   padding-top: 10px;
-  // background-color: #fff;
 }
 
 .body-center-box {
@@ -810,7 +780,6 @@ $size: 35px;
 
 .body-center .body-center-box:last-child{
   height: 400px;
-  // width: 1000px;
   flex-grow: 1;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
@@ -836,14 +805,12 @@ $size: 35px;
   display: flex;
   width: 50%;
   height: 70px;
-  // border: 1px solid red;
   padding-left: 5px;
   align-items: center
 }
 .head-box-right-side{
   display: flex;
   width: 50%;
-  // border: 1px solid blue;
   justify-content: flex-end;
   padding-right: 5px;
 }
@@ -876,7 +843,6 @@ $size: 35px;
   overflow-y: auto;
   padding: 5px;
   padding-top: 10px;
-  // border: 1px solid #C3C7D9;
 }
 
 .body-center .body-center-box:last-child .body-center-box-body{
@@ -892,7 +858,6 @@ $size: 35px;
 
 .body-bottom{
   width: 100%;
-  // border: 1px solid #000;
   border-radius: 4px;
   margin-left: 0px;
   display: flex;
@@ -900,7 +865,6 @@ $size: 35px;
   flex-wrap: wrap;
   justify-content: space-between;
   padding-top: 10px;
-  // background-color: #fff;
 }
 
 .body-bottom-left{
@@ -919,7 +883,6 @@ $size: 35px;
 
 .body-bottom-right{
   height: 400px;
-  // width: 60%;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
   display: flex;
@@ -937,9 +900,7 @@ $size: 35px;
 }
 
 .form-input-address{
-  // width: 250px;
   width: 32%;
-  // margin: 20px;
   margin-top: 0;
   margin-right: 2px;
   margin-left: 2px;

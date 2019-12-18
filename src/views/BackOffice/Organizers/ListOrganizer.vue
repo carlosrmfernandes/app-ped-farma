@@ -9,10 +9,10 @@
           :cols="cols"
           :data="organizers"
           title="Organizador"
-          :searchMethod="GetOrganizers"
+          :searchMethod="getOrganizers"
           :pagination="pagination"
-          :paginationMethod="GetOrganizers"
-          :sortMethod="GetOrganizers"
+          :paginationMethod="getOrganizers"
+          :sortMethod="getOrganizers"
           :needGrid="true"
           :changePage="changePage"
           resource="organizer"
@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import { RemoveOrganizer } from './helpers/functions.js'
+import { removeOrganizer } from './helpers/functions.js'
 
 import Table from '@/components/Layouts/Table'
 export default {
@@ -60,16 +60,12 @@ export default {
     }
   },
   methods: {
-    async GetPosts () {
-      // eslint-disable-next-line no-unused-expressions
-      this.organizers
-    },
     /*
      *  GetCompanies: This method will fire a GET request
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-    async GetOrganizers (type, sort = '', search = '') {
+    async getOrganizers (type, sort = '', search = '') {
       this.isRequesting = true
 
       if (type === 'next') {
@@ -105,13 +101,13 @@ export default {
       this.pagination.pageable.pageNumber = page
     },
     removeMostOrganizers (ids) {
-      this.RemoveOrganizer(ids)
+      this.removeOrganizer(ids)
     },
-    RemoveOrganizer
+    removeOrganizer
   },
   created () {
     // Get customer orders
-    this.GetOrganizers()
+    this.getOrganizers()
   }
 }
 </script>

@@ -115,9 +115,6 @@ export default {
       company_id: ''
     }
   },
-  mounted () {
-    this.geolocate()
-  },
   methods: {
     /*
      *  ProcessForm: This method will validate the form using vee-validate

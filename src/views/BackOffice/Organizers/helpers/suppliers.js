@@ -9,7 +9,7 @@ async function getOrganizerSuppliers () {
   try {
     const result = await this.axios.get(`/organizers/${this.id}/suppliers`)
     const res = result.data
-    this.OrganizerSuppliers = res.data
+    this.organizerSuppliers = res.data
 
     // Set Pagination
   } catch (e) {
