@@ -77,6 +77,7 @@ export default {
   data: function () {
     return {
       party_event_id: this.id,
+      partyEventSessionID: '',
       title: '',
       description: '',
       classification: '',
@@ -168,7 +169,7 @@ export default {
         const result = await this.axios.get(
           `/party_event_sessions/${sessionID}/party_tickets/grouped`
         )
-
+        // partyEventSessionID
         const res = result.data
         console.log(res.length)
         // const itemsCount = result.data.items_count
