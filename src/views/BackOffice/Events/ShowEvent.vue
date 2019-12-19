@@ -154,6 +154,27 @@
               </div>
             </div>
           </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="event_ticket_types">Tipo(s) de Bilhete(s)</label>
+              <input
+                type="text"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('event_ticket_types')
+                }"
+                id="event_ticket_types"
+                v-model="event_ticket_types"
+                name="event_ticket_types"
+                placeholder="Ex.: VIP, KID..."
+                v-validate="'required'"
+                data-vv-as="Tipo(s) de Bilhete(s)"
+              />
+              <span v-show="errors.has('event_ticket_types')" class="help is-danger">{{
+                errors.first("event_ticket_types")
+              }}</span>
+            </div>
+          </div>
         </div>
         <div class="col-md-6">
           <div class="row">
@@ -360,17 +381,10 @@
                   v-validate="'required'"
                   data-vv-as="Tipo"
                 >
-                  <option selected id="ticket_type">COUPLE</option>
-                  <option id="ticket_type">WOMAN</option>
-                  <option id="ticket_type">KID</option>
-                  <option id="ticket_type">MAN</option>
-                  <option id="ticket_type">REGULAR</option>
-                  <option id="ticket_type">VIP</option>
-                  <option id="ticket_type">VIP_COUPLE</option>
-                  <option id="ticket_type">VIP_KID</option>
-                  <option id="ticket_type">VIP ADULTO</option>
-                  <option id="ticket_type">VIP KID 2 - 11</option>
-                  <option id="ticket_type">VIP KID 12 - 16</option>
+                  <option selected
+                          v-for="ticket in ticket_types"
+                          :value="ticket"
+                          id="ticket_type">{{ ticket }}</option>
                 </select>
                 <span
                   v-show="errors.has('tickets.ticket_type')"
@@ -610,6 +624,7 @@ export default {
         organizer_id: '',
         title: '',
         starts_at: '',
+        event_ticket_types: [],
         classification: '',
         video_id: ''
       },
@@ -628,6 +643,7 @@ export default {
       collection_tickets: [],
       collection_products: [],
       collection_decks: [],
+      ticket_types: [],
       tickets: {},
       products: {},
       sponsors: []
@@ -639,6 +655,18 @@ export default {
         const result = await this.axios.get(`/decks?currentOnly=false&sorters=CREATED_AT`)
         const res = result.data
         this.collection_decks = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
+    async getTicketTypes () {
+      try {
+        const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
+        const res = result.data
+
+        for (let i = 0; i < res.data.length; i++) {
+          this.ticket_types[i] = res.data[i].name
+        }
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -726,6 +754,7 @@ export default {
             this.step_one.starts_at = result.data.starts_at
             this.step_one.ends_at = result.data.ends_at
             this.step_one.classification = result.data.classification
+            this.step_one.event_ticket_types = result.data.event_ticket_types
             this.step_one.video_id = result.data.video_id === 'null' ? '' : result.data.video_id
             break
           case 2:
@@ -770,6 +799,7 @@ export default {
 
           fData.append('poster', this.step_one.poster)
           fData.append('backdrop', this.step_one.backdrop)
+          fData.append('event_ticket_types', this.event_ticket_types)
           fData.append('classification', this.step_one.classification)
           fData.append('location_id', this.step_one.location_id)
           fData.append('organizer_id', this.step_one.organizer_id)
@@ -888,6 +918,7 @@ export default {
   created () {
     this.step++
     this.getLocations()
+    this.getTicketTypes()
     this.getOrganizers()
     this.getSponsors()
     this.getDecks()

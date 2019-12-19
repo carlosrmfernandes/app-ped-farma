@@ -1,8 +1,5 @@
 <template>
   <div class="panel">
-    <!-- <div class="panel-header">
-      <h1>Editar Organizador</h1>
-    </div> -->
     <div class="panel-body">
       <div class="row body-above">
         <div class="body-above-start">
@@ -12,7 +9,7 @@
               </div>
               <div class="organizer-text">
                 <div class="organizer-name-box">
-                  <h3>{{ form.name }}</h3>
+                  <h6>{{ form.name }}</h6>
                 </div>
                 <div class="organizer-description">
                   <p>{{ form.description }}</p>
@@ -20,21 +17,27 @@
               </div>
             </div>
             <div class="organizer-stars">
-                <!-- Star Code-->
+                <!-- Stars Code-->
             </div>
         </div>
         <div class="body-above-end">
             <div class="organizer-social-networks">
                 <div class="organizer-social-networks-box">
-                  <div class="twitter_color" :style="{ opacity: form.twitter ? '1' : styleOpacity }">
-                    <img src="../../../assets/images/social-networks/twitter.png" style="max-width: 100%">
-                  </div>
-                  <div class="facebook_color" :style="{ opacity: form.facebook ? '1' :  styleOpacity }">
-                    <img src="../../../assets/images/social-networks/facebook.png" style="max-width: 100%">
-                  </div>
-                  <div class="instagram_color" :style="{ opacity: form.instagram ? '1' : styleOpacity }">
-                    <img src="../../../assets/images/social-networks/instagram.png" style="max-width: 100%">
-                  </div>
+                  <a :href="form.twitter ? form.twitter : ''" >
+                    <div class="twitter_color" :style="{ opacity: form.twitter ? '1' : styleOpacity }">
+                      <img src="../../../assets/images/social-networks/twitter.png" style="max-width: 100%">
+                    </div>
+                  </a>
+                  <a :href="form.facebook ? form.facebook : ''" >
+                    <div class="facebook_color" :style="{ opacity: form.facebook ? '1' :  styleOpacity }">
+                      <img src="../../../assets/images/social-networks/facebook.png" style="max-width: 100%">
+                    </div>
+                  </a>
+                  <a :href="form.instagram ? form.instagram : ''" >
+                    <div class="instagram_color" :style="{ opacity: form.instagram ? '1' : styleOpacity }">
+                      <img src="../../../assets/images/social-networks/instagram.png" style="max-width: 100%">
+                    </div>
+                  </a>
                   <div class="edit-btn">
                     <span @click="showUpdateOrganizerModal">Editar</span>
                   </div>
@@ -43,15 +46,15 @@
             <div class="organizer-stats">
                 <div class="organizer-stats-box">
                   <div class="organizer-stats-box-left">
-                    <h4> {{ totalActiveEvents }}</h4>
+                    <h6> {{ totalActiveEvents }}</h6>
                     <h6>Eventos Ativos</h6>
                   </div>
                   <div class="organizer-stats-box-center">
-                    <h4>{{ totalPastEvents }}</h4>
+                    <h6>{{ totalPastEvents }}</h6>
                     <h6>Eventos Passados</h6>
                   </div>
                   <div class="organizer-stats-box-right">
-                    <h4>{{ totalSuppliers }}</h4>
+                    <h6>{{ totalSuppliers }}</h6>
                     <h6>Operadores</h6>
                   </div>
                 </div>
@@ -81,16 +84,15 @@
               </div>
             </div>
             <div class="body-center-box-body">
-              <div  >
+              <div class="body-center-box-body-inputs">
                   <div class="form-group" >
                     <div class="col-md-12 input-borders" v-for="(email,k) in emails" :key="k">
                       <input type="text"
                       :class="{'form-control': true, 'is-input-danger': errors.has('email.email')}"
-                      id="Organizer-email"
                       name="email.email"
                       placeholder="example@examples.com"
                       v-model="email.email"
-                      v-validate="'required|email'"
+                      v-validate="'email'"
                       data-vv-as="Email(s)"/>
                       <span class="addOrRemove">
                           <i class="fa fa-minus-circle" @click="remove(k,'email')" v-show="(k  || ( !k && emails.length > 1)) && (k != emails.length-1) "></i>
@@ -123,16 +125,14 @@
               </div>
             </div>
             <div class="body-center-box-body">
-              <div>
+              <div class="body-center-box-body-inputs">
                 <div class="form-group" >
                   <div class="col-md-12 input-borders" v-for="(telephone,k) in telephones" :key="k">
                     <input type="text"
                     :class="{'form-control': true, 'is-input-danger': errors.has('telephone.phone_number')}"
-                    id="Organizer-Telephone"
                     name="telephone.phone_number"
                     placeholder="+244 999000444"
                     v-model="telephone.phone_number"
-                    v-validate="'required'"
                     data-vv-as="Telefone(s)" />
                     <span class="addOrRemove">
                         <i class="fa fa-minus-circle" @click="remove(k,'phone')" v-show="(k  || ( !k && telephones.length > 1)) && (k != telephones.length-1) "></i>
@@ -208,25 +208,13 @@
                 <span>Operadores</span>
               </div>
               <div class="head-box-right-side">
-                <b-button
-                    variant="primary"
-                    size="sm"
-                    class="float-left"
-                    @click="showAddSupplierModal"
-                  >
-                  <span v-if="!isRequestingTel">Add</span>
-                  <div class="loading-dots" v-if="isRequestingTel">
-                    <div class="loading-dots--dot"></div>
-                    <div class="loading-dots--dot"></div>
-                    <div class="loading-dots--dot"></div>
-                  </div>
-                </b-button>
+                  <span class="add-text" @click="showAddSupplierModal">Add</span>
               </div>
             </div>
             <div class="body-center-box-body">
               <MiniTable
                 :cols="colsSuppliers"
-                :data="OrganizerSuppliers"
+                :data="organizerSuppliers"
                 :pagination="pagination"
                 :paginationMethod="getOrganizerSuppliers"
                 :sortMethod="getOrganizerSuppliers"
@@ -244,7 +232,7 @@
                 <span>Eventos</span>
               </div>
               <div class="head-box-right-side">
-                <b-button
+                <!-- <b-button
                     variant="primary"
                     size="sm"
                     class="float-left"
@@ -252,18 +240,13 @@
                     :disabled="true"
                   >
                   <span v-if="!isRequestingTel">Add</span>
-                  <div class="loading-dots" v-if="isRequestingTel">
-                    <div class="loading-dots--dot"></div>
-                    <div class="loading-dots--dot"></div>
-                    <div class="loading-dots--dot"></div>
-                  </div>
-                </b-button>
+                </b-button> -->
               </div>
             </div>
             <div class="body-center-box-body">
               <MiniTable
                 :cols="colsEvents"
-                :data="OrganizerEvents"
+                :data="organizerEvents"
                 :pagination="pagination"
                 :paginationMethod="getOrganizersEvents"
                 :sortMethod="getOrganizersEvents"
@@ -311,7 +294,7 @@
       </div>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="success" size="sm" class="float-right" @click="RegistOrganizerSupplier">
+          <b-button variant="success" size="sm" class="float-right" @click="registOrganizerSupplier">
             <span>Registar</span>
           </b-button>
         </div>
@@ -376,7 +359,7 @@
       </div>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="success" size="sm" class="float-right" @click="ProcessForm">
+          <b-button variant="success" size="sm" class="float-right" @click="processForm">
             <span>Atualizar</span>
           </b-button>
         </div>
@@ -385,9 +368,9 @@
   </div>
 </template>
 <script>
-import { RemoveOrganizer, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress, getTotalActiveEvents, getTotalPastEvents, getTotalSuppliers } from './helpers/functions.js'
+import { removeOrganizer, add, remove, addNewAddress, removeAddress, addEmail, addTelephone, addAddress, getAddress, getEmail, getTelephone, rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress, getTotalActiveEvents, getTotalPastEvents, getTotalSuppliers } from './helpers/functions.js'
 import { RemoveSupplier, GetSuppliers, changePage, removeMostSuppliers } from '../Suppliers/helpers/functions.js'
-import { getOrganizerSuppliers, RegistOrganizerSupplier } from './helpers/suppliers.js'
+import { getOrganizerSuppliers, registOrganizerSupplier } from './helpers/suppliers.js'
 import { getOrganizersEvents } from './helpers/events.js'
 
 import MiniTable from '@/components/Layouts/MiniTable'
@@ -433,8 +416,8 @@ export default {
         { name: 'starts_at', label: 'Data' },
         { name: 'created_at', label: 'Criado Em' }
       ],
-      OrganizerSuppliers: [],
-      OrganizerEvents: [],
+      organizerSuppliers: [],
+      organizerEvents: [],
       pagination: {
         perPage: 10,
         pageable: { pageNumber: 1 }
@@ -446,20 +429,20 @@ export default {
   },
   methods: {
     /*
-     *  ProcessForm: This method will validate the form using vee-validate
+     *  processForm: This method will validate the form using vee-validate
      *  component and then call the action method defined for this view
      *  if everything passes the validation.
      */
-    async ProcessForm () {
+    async processForm () {
       this.hadError = ''
       const result = await this.$validator.validateAll()
-      return result ? this.UpdateOrganizer() : result
+      return result ? this.updateOrganizer() : result
     },
     /**
-     * GetOrganizer: This method will fire a GET request and then
+     * getOrganizer: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
-    async GetOrganizer () {
+    async getOrganizer () {
       this.isRequesting = true
       try {
         const result = await this.axios.get(`/organizers/${this.id}`)
@@ -472,16 +455,16 @@ export default {
     /**
      * UpdateOraganizer: This method will send form to serve, for update
      */
-    async UpdateOrganizer () {
+    async updateOrganizer () {
       this.isRequesting = true
       try {
         const result = await this.axios.patch(`/organizers/${this.id}`, this.form)
         this.file = ''
 
         if (result) {
-          // Hide Modal and get GetOrganizerSuppliers
+          // Hide Modal and get getOrganizerSuppliers
           this.hideUpdateOrganizerModal()
-          this.GetOrganizer()
+          this.getOrganizer()
         }
       } catch (e) {
         this.hadSuccess = ''
@@ -532,7 +515,7 @@ export default {
     addTelephone,
     addNewAddress,
     removeAddress,
-    RemoveOrganizer,
+    removeOrganizer,
     rebuildArrayTel,
     getTotalSuppliers,
     getTotalPastEvents,
@@ -545,13 +528,13 @@ export default {
     RemoveSupplier,
     removeMostSuppliers,
     getOrganizerSuppliers,
-    RegistOrganizerSupplier,
+    registOrganizerSupplier,
     /* Events Methods */
     getOrganizersEvents
 
   },
   created () {
-    this.GetOrganizer()
+    this.getOrganizer()
     this.getEmail()
     this.getTelephone()
     this.getAddress()
@@ -566,20 +549,20 @@ export default {
 <style lang="scss" scoped>
 
 .panel {
-  /* border: 1px solid red; */
   padding: 20px;
 }
 .panel-header {
-  /* border: 1px solid red; */
   top: 0px;
   width: 100%;
   height: 15%;
 }
 .panel-body {
-  /* border: 1px solid red; */
   margin-top: -10px;
   display: flex;
   flex-direction: column;
+}
+span{
+  font-size: 13px;
 }
 
 /* Start Body Above Styles*/
@@ -590,11 +573,9 @@ export default {
   margin-left: 0px;
   display: flex;
   flex-direction: column;
-  // background-color: #fff;
 }
 
 .body-above-start{
-  // border: 1px solid red;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -604,7 +585,6 @@ export default {
 }
 
 .body-above-end{
-  // border: 1px solid green;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -616,7 +596,6 @@ export default {
 }
 
 .organizer-photo-name{
-  // border: 1px solid black;
   padding: 20px;
   display: flex;
   justify-content: flex-start;
@@ -635,7 +614,6 @@ export default {
 }
 
 .organizer-text{
-  // border: 1px solid black;
   padding: 5px;
   height: 100%;
   display: flex;
@@ -644,13 +622,11 @@ export default {
 }
 
 .organizer-name-box{
-  // border: 1px solid black;
   padding: 5px;
   display: flex;
 }
 
 .organizer-description{
-  // border: 1px solid black;
   height: 100%;
   padding: 5px;
   padding-left: 35px;
@@ -660,24 +636,22 @@ export default {
 
 .organizer-description p{
   word-break: break-all;
+  font-size: 0.8rem;
 }
 
-.organizer-name-box h3{
+.organizer-name-box h6{
   margin-left: 30px;
 }
 
 .organizer-stars{
-  // border: 1px solid black;
   padding: 20px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  // flex-grow: 1;
   width: 715px;
 }
 
 .organizer-social-networks{
-  // border: 1px solid black;
   padding: 20px;
   display: flex;
   justify-content: flex-start;
@@ -686,7 +660,6 @@ export default {
 }
 
 .organizer-social-networks-box{
-  // border: 1px solid #C3C7D9;
   border-radius: 4px;
   width: 70%;
   height: 70px;
@@ -726,10 +699,9 @@ $size: 35px;
 }
 
 .organizer-stats{
-  // border: 1px solid black;
-  flex-grow: 1;
   padding: 20px;
   display: flex;
+  flex-grow: 1;
   justify-content: flex-end;
 }
 
@@ -744,33 +716,24 @@ $size: 35px;
 }
 
 .organizer-stats-box-left{
-  flex-grow: 1;
-  // border: 1px solid #C3C7D9;
-  // border-radius: 4px;
-  // border-bottom: 1px solid #308acf;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .organizer-stats-box-center{
-  flex-grow: 1;
-  // border: 1px solid #C3C7D9;
-  // border-radius: 4px;
-  // border-bottom: 1px solid rgba(243, 56, 56, 0.911);
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .organizer-stats-box-right{
-  flex-grow: 1;
-  // border: 1px solid #C3C7D9;
-  // border-radius: 4px;
-  // border-bottom: 1px solid rgb(96, 219, 71);
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -780,15 +743,12 @@ $size: 35px;
 /* Start Body Center Styles*/
 .panel-body .body-center {
   width: 100%;
-  // border: 1px solid #000;
-  // border-radius: 4px;
   margin-left: 0px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   padding-top: 10px;
-  // background-color: #fff;
 }
 
 .body-center-box {
@@ -807,7 +767,6 @@ $size: 35px;
 
 .body-center .body-center-box:last-child{
   height: 400px;
-  // width: 1000px;
   flex-grow: 1;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
@@ -833,27 +792,39 @@ $size: 35px;
   display: flex;
   width: 50%;
   height: 70px;
-  // border: 1px solid red;
   padding-left: 5px;
   align-items: center
 }
 .head-box-right-side{
   display: flex;
   width: 50%;
-  // border: 1px solid blue;
   justify-content: flex-end;
   padding-right: 5px;
 }
+.head-box-right-side .add-text{
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.body-center-box-body-inputs{
+  width: 100%;
+}
 
 .col-md-12.input-borders{
+  width: 100%;
   padding-top: 8px;
   padding-bottom: 8px;
   border-bottom: 1px solid #C3C7D9;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .row.input-borders{
+  width: 100%;
   padding-top: 8px;
   border-bottom: 1px solid #C3C7D9;
+  display: flex;
+  flex-wrap: nowrap;
 }
 .body-center-box-body{
   width: 100%;
@@ -863,7 +834,6 @@ $size: 35px;
   overflow-y: auto;
   padding: 5px;
   padding-top: 10px;
-  // border: 1px solid #C3C7D9;
 }
 
 .body-center .body-center-box:last-child .body-center-box-body{
@@ -879,7 +849,6 @@ $size: 35px;
 
 .body-bottom{
   width: 100%;
-  // border: 1px solid #000;
   border-radius: 4px;
   margin-left: 0px;
   display: flex;
@@ -887,7 +856,6 @@ $size: 35px;
   flex-wrap: wrap;
   justify-content: space-between;
   padding-top: 10px;
-  // background-color: #fff;
 }
 
 .body-bottom-left{
@@ -906,7 +874,6 @@ $size: 35px;
 
 .body-bottom-right{
   height: 400px;
-  // width: 60%;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
   display: flex;
@@ -924,9 +891,11 @@ $size: 35px;
 }
 
 .form-input-address{
-  width: 280px;
-  margin: 20px;
+  width: 32%;
   margin-top: 0;
+  margin-right: 2px;
+  margin-left: 2px;
+  margin-bottom: 8px;
 }
 
 .form-group .addOrRemove{

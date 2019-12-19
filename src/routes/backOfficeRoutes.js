@@ -53,6 +53,11 @@ import RegistSupplier from '@/views/BackOffice/Suppliers/RegistSupplier'
 import ListSupplier from '@/views/BackOffice/Suppliers/ListSupplier'
 import EditSupplier from '@/views/BackOffice/Suppliers/EditSupplier'
 
+// Decks
+import RegistDeck from '@/views/BackOffice/Decks/RegistDeck'
+import ListDeck from '@/views/BackOffice/Decks/ListDeck'
+import EditDeck from '@/views/BackOffice/Decks/EditDeck'
+
 // Auth routes
 const Auth = [{
   path: '/',
@@ -405,6 +410,42 @@ const Suppliers = [{
   ]
 }]
 
+// Decks routes
+const Decks = [{
+  path: '/deck',
+  name: 'ListDeck',
+  component: View,
+  meta: {
+    title: 'Listar Decks'
+  },
+  children: [{
+    path: '/',
+    name: 'ListDeck',
+    component: ListDeck,
+    meta: {
+      title: 'Listar Decks'
+    }
+  },
+  {
+    path: 'regist',
+    name: 'RegistDeck',
+    component: RegistDeck,
+    meta: {
+      title: 'Registar Decks'
+    }
+  },
+  {
+    path: 'edit/:id',
+    name: 'EditDeck',
+    component: EditDeck,
+    meta: {
+      title: 'Editar Decks'
+    },
+    props: true
+  }
+  ]
+}]
+
 // Admin routes
 const Admin = [{
   path: '/admin/all',
@@ -473,7 +514,8 @@ const Admin = [{
   ...Payments,
   ...Locations,
   ...Products,
-  ...Suppliers
+  ...Suppliers,
+  ...Decks
   ]
 }]
 

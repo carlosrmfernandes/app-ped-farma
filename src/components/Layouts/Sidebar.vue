@@ -3,7 +3,7 @@
   <nav id="sidebar">
     <div class="sidebar-header">
       <avatar :fullname="user.name" :size="96"></avatar>
-      <h3>{{user.name}}</h3>
+      <h4>{{user.name}}</h4>
     </div>
     <!-- <ul class="list-unstyled components">
       <p>Admin</p>
@@ -37,9 +37,9 @@
     <router-link :to="{name: 'ListProduct'}" tag="a">
       <Collapse title="Produtos"></Collapse>
     </router-link>
-    <!-- <router-link :to="{name: 'ListSupplier'}" tag="a">
-      <Collapse title="Operadores" ></Collapse>
-    </router-link> -->
+    <router-link :to="{name: 'ListDeck'}" tag="a">
+      <Collapse title="Decks"></Collapse>
+    </router-link>
     <ul class="list-unstyled CTAs">
       <li @click="DoLogout" >
         <a href="#" class="article"><span>Sair</span> <i class="fa fa-power-off fa-lg" aria-hidden="true"></i></a>
@@ -88,11 +88,11 @@ li{
 }
 
 li span{
-  font-size: 18px;
+  font-size: 15px;
   margin-right: 10px;
 }
 
-.sidebar-header h3{
+.sidebar-header h4{
   margin-top: 20px;
 }
 </style>

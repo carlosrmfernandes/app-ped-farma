@@ -73,14 +73,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #2e3553;
+  /* border-bottom: 1px solid #2e3553; */
   color: #fff;
   transition: all 0.3s ease;
 }
 
 .accordion .accordion-header.atual {
-   color: #2e3553;
-   background-color: #fff;
+   color: #fff;
+   background-color: #343A4E;
 }
 
 .accordion .accordion-header.childSidebar {
@@ -100,7 +100,7 @@ export default {
   width: 100%;
   height: 40px;
   color: #2e3553;
-  background-color: #fff;
+  background-color: #343A4E;
 }
 
 .accordion .accordion-header .accordion-title:hover{
@@ -114,10 +114,11 @@ export default {
 .accordion-title {
   left: 10%;
   position: absolute;
-    -webkit-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
+  font-size: 14px;
 }
 
 .accordion.childSidebar .accordion-title {
@@ -171,7 +172,7 @@ export default {
 
 .accordion.disabled.childSidebar {
 
-  background-color: #0b132e;
+  background-color: #343A4E;
   cursor: pointer;
 }
 

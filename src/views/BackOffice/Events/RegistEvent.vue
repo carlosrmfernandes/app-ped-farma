@@ -180,6 +180,27 @@
               </div>
             </div>
           </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="event_ticket_types">Tipo(s) de Bilhete(s)</label>
+              <input
+                type="text"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('event_ticket_types')
+                }"
+                id="event_ticket_types"
+                v-model="event_ticket_types"
+                name="event_ticket_types"
+                placeholder="Ex.: VIP, KID..."
+                v-validate="'required'"
+                data-vv-as="Tipo(s) de Bilhete(s)"
+              />
+              <span v-show="errors.has('event_ticket_types')" class="help is-danger">{{
+                errors.first("event_ticket_types")
+              }}</span>
+            </div>
+          </div>
         </div>
         <div class="col-md-6">
           <div class="row">
@@ -386,17 +407,11 @@
                   v-validate="'required'"
                   data-vv-as="Tipo"
                 >
-                  <option selected id="ticket_type">COUPLE</option>
-                  <option id="ticket_type">WOMAN</option>
-                  <option id="ticket_type">KID</option>
-                  <option id="ticket_type">MAN</option>
-                  <option id="ticket_type">REGULAR</option>
-                  <option id="ticket_type">VIP</option>
-                  <option id="ticket_type">VIP_COUPLE</option>
-                  <option id="ticket_type">VIP_KID</option>
-                  <option id="ticket_type">VIP ADULTO</option>
-                  <option id="ticket_type">VIP KID 2 - 11</option>
-                  <option id="ticket_type">VIP KID 12 - 16</option>
+                  <option selected
+                          v-for="ticket in ticket_types"
+                          :value="ticket"
+                          id="ticket_type">{{ ticket }}</option>
+
                 </select>
                 <span
                   v-show="errors.has('tickets.ticket_type')"
@@ -638,6 +653,8 @@ export default {
       collection_tickets: [],
       sponsors: {},
       sponsors_id: [],
+      event_ticket_types: [],
+      ticket_types: [],
       isRequesting: false,
       hadSuccess: false,
       hadError: ''
@@ -649,6 +666,19 @@ export default {
         const result = await this.axios.get(`/decks?currentOnly=false&sorters=CREATED_AT`)
         const res = result.data
         this.collection_decks = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
+    async getTicketTypes () {
+      try {
+        const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
+        const res = result.data
+
+        for (let i = 0; i < res.data.length; i++) {
+          this.ticket_types[i] = res.data[i].name
+        }
+        console.log(this.ticket_types[0])
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -735,6 +765,7 @@ export default {
 
           fData.append('poster', this.poster)
           fData.append('backdrop', this.backdrop)
+          fData.append('event_ticket_types', this.event_ticket_types)
           fData.append('classification', this.classification)
           fData.append('location_id', this.location_id)
           fData.append('organizer_id', this.organizer_id)
@@ -864,6 +895,7 @@ export default {
   created () {
     this.step++
     this.getLocations()
+    this.getTicketTypes()
     this.getSponsors()
     this.getOrganizers()
     this.getProducts()

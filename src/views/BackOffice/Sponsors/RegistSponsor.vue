@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Novo Patrocinador</h1>
+      <h3>Novo Patrocinador</h3>
     </div>
     <div class="panel-body">
      <div class="row">
@@ -163,7 +163,7 @@
       <div class="panel-footer">
         <b-button
         variant="primary"
-        size="lg"
+        size="sm"
         class="float-left"
         :disabled="isRequesting ? true : false"
         @click="ProcessForm">
@@ -181,12 +181,12 @@
       <p class="my-4">Este Patrocinador pertecence a uma entidade cadastrada?</p>
       <template v-slot:modal-footer>
         <div class="w-100">
-          <b-button variant="primary" size="lg" class="float-right" @click="yesBelongs">
+          <b-button variant="primary" size="sm" class="float-right" @click="yesBelongs">
             <span v-if="!isRequesting">Sim</span>
           </b-button>
           <b-button
             variant="outline-danger"
-            size="lg"
+            size="sm"
             class="float-right mr-2"
             @click="noBelongs"
           >Não</b-button>
@@ -358,6 +358,11 @@ export default {
   /* border: 1px solid red; */
   margin-top: 40px;
 }
+
+p {
+  font-size: 0.9rem;
+}
+
 .panel-footer {
   /* border: 1px solid red; */
   margin-top: 40px;

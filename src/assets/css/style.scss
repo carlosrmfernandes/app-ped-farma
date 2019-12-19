@@ -27,6 +27,11 @@ a, a:hover, a:focus {
 label {
     color: #212529 !important;
     margin-left: 0px;
+    font-size: 14px;
+}
+
+.panel-body{
+    // background: #fff;
 }
 
 .navbar {
@@ -49,6 +54,10 @@ label {
     height: 1px;
     border-bottom: 1px dashed #ddd;
     margin: 40px 0;
+}
+
+.form-control{
+    font-size: 0.8rem;
 }
 
 /* ---------------------------------------------------
@@ -76,10 +85,10 @@ label {
     padding: 20px;
     background: #343A4E;
     display: flex;
-    // flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: wrap; 
+    flex-direction: column;
     justify-content: center;
-    justify-items: center;
+    align-items: center;
 }
 
 #sidebar ul.components {
@@ -93,7 +102,7 @@ label {
 }
 
 #sidebar ul li a {
-    padding: 10px;
+    // padding: 10px;
     font-size: 1.1em;
     display: block;
 }

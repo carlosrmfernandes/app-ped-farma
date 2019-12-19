@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h1>Registar Operador</h1>
+      <h3>Registar Operador</h3>
       <div class="alert alert-danger col-md-10" v-if="hadError" role="alert">
         {{hadError}}
       </div>
@@ -68,10 +68,10 @@
         <div class="col-md-1" >
           <div class="form-group">
             <b-button variant="primary"
-            size="lg"
+            size="sm"
             class="float-left mt-6"
             :disabled="isRequesting ? true : false"
-            @click="ProcessForm">
+            @click="processForm">
             <span v-if="!isRequesting"> Registar</span>
               <div class="loading-dots" v-if="isRequesting">
                 <div class="loading-dots--dot"></div>
@@ -99,20 +99,20 @@ export default {
   },
   methods: {
     /*
-     *  ProcessForm: This method will validate the form using vee-validate
+     *  processForm: This method will validate the form using vee-validate
      *  component and then call the action method defined for this view
      *  if everything passes the validation.
      */
-    async ProcessForm () {
+    async processForm () {
       this.hadError = ''
       const result = await this.$validator.validateAll()
-      return result ? this.RegistSupplier() : result
+      return result ? this.registSupplier() : result
     },
     /*
      *  RegistOrganizer: This method will create a post request to regist a
      *  new organizer and then redirect to the ListOrganizer component.
      */
-    async RegistSupplier () {
+    async registSupplier () {
       this.isRequesting = true
       this.form.role = 'ORGANIZER_AGENT'
       try {

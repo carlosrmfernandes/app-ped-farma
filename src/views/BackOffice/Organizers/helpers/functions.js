@@ -1,8 +1,8 @@
 /**
- * RemoveOrganizer: This method will fire a DELETE request and then
+ * removeOrganizer: This method will fire a DELETE request and then
  * remove all organizers id
  */
-async function RemoveOrganizer (ids = []) {
+async function removeOrganizer (ids = []) {
   this.isRequesting = true
   try {
     if (ids.length >= 1) {
@@ -48,21 +48,18 @@ async function addEmail () {
 
 async function addTelephone () {
   this.isRequestingTel = true
-  var result = ''
   const allTelephones = this.rebuildArrayTel(this.telephones)
   try {
-    result = this.axios.put(`/organizers/${this.id}/organizer_phone_numbers`, allTelephones)
-
-    if (result) {
-      this.phone_numbers = []
-      this.getTelephone()
-    }
+    this.axios.put(`/organizers/${this.id}/organizer_phone_numbers`, allTelephones)
   } catch (e) {
     this.hadSuccess = ''
     this.hadError = 'Não foi possível realizar esta operação.'
   }
+
+  this.telephones = []
   this.isRequestingTel = false
   setTimeout(() => {
+    this.getTelephone()
     this.hadSuccess = ''
   }, 500)
 }
@@ -137,9 +134,9 @@ async function getTelephone () {
 
 async function add (index, type) {
   if (type === 'email') {
-    this.emails.push({ name: '' })
+    this.emails.push({ email: '' })
   } else if (type === 'phone') {
-    this.telephones.push({ name: '' })
+    this.telephones.push({ phone_number: '' })
   }
 }
 
@@ -163,14 +160,12 @@ function rebuildArrayEmails (datas) {
   const result = []
   let emails = {}
   for (const data of datas) {
-    result.push(data.email)
+    if (data.email !== '') {
+      result.push(data.email)
+    }
   }
 
-  if (result[0] === '') {
-    result.shift()
-  }
-
-  emails = { emails: result.reverse() }
+  emails = { emails: result }
 
   return emails
 }
@@ -179,14 +174,12 @@ function rebuildArrayTel (datas) {
   const result = []
   let telephones = {}
   for (const data of datas) {
-    result.push(data.phone_number)
+    if (data.phone_number !== '') {
+      result.push(data.phone_number)
+    }
   }
 
-  if (result[0] === '') {
-    result.shift()
-  }
-
-  telephones = { phone_numbers: result.reverse() }
+  telephones = { phone_numbers: result }
 
   return telephones
 }
@@ -195,18 +188,16 @@ function rebuildArrayAddress (datas) {
   const result = []
   let addresses = {}
   for (const data of datas) {
-    result.push({
-      address: data.address,
-      municipality: data.municipality,
-      province: data.province
-    })
+    if (data.address !== '' || data.municipality !== '' || data.province !== '') {
+      result.push({
+        address: data.address,
+        municipality: data.municipality,
+        province: data.province
+      })
+    }
   }
 
-  if (result[0].address === '' && result[0].municipality === '' && result[0].province === '') {
-    result.shift()
-  }
-
-  addresses = { addresses: result.reverse() }
+  addresses = { addresses: result }
 
   return addresses
 }
@@ -244,7 +235,7 @@ async function getTotalSuppliers () {
   }
 }
 
-export { RemoveOrganizer, add, remove, removeAddress,
+export { removeOrganizer, add, remove, removeAddress,
   addNewAddress, addEmail, addTelephone,
   addAddress, getAddress, getEmail, getTelephone,
   rebuildArrayEmails, rebuildArrayTel, rebuildArrayAddress,

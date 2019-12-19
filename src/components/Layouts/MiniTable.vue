@@ -168,6 +168,7 @@ export default {
 
 .table .thead-dark th {
   background-color: #343a4e !important;
+  font-size: 12px;
 }
 tbody tr {
   cursor: pointer;
@@ -178,10 +179,13 @@ tbody tr:hover {
   color: #fff;
 }
 
-.table td {
+.table td{
   max-width: 70px;
   overflow: hidden;
+  font-size: 13px;
+  padding: 0.55rem;
 }
+
 .modal-backdrop {
   opacity: 0.5 !important;
 }

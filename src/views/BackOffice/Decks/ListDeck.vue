@@ -1,34 +1,35 @@
 <template>
- <div class="panel">
+  <div class="panel">
     <div class="panel-header">
-      <h3>Empresas</h3>
+      <h3>Decks</h3>
     </div>
     <div class="panel-body">
       <div>
         <Table
-        :cols="cols"
-        :data="companies"
-        title="Empresas"
-        :searchMethod="GetCompanies"
-        :detailMethod="GetCompanies"
-        :pagination="pagination"
-        :paginationMethod="GetCompanies"
-        :sortMethod="GetCompanies"
-        :changePage="changePage"
-        :needGrid="true"
-        resource="company"
-        editRoute="EditCompany"
-        :pageCount="pageCount"
-        registRoute="RegistCompany"
-        buttonRegistName="Nova Empresa"
+          :cols="cols"
+          :data="decks"
+          title="Decks"
+          :searchMethod="getDecks"
+          :pagination="pagination"
+          :paginationMethod="getDecks"
+          :sortMethod="getDecks"
+          :needGrid="true"
+          :changePage="changePage"
+          resource="decks"
+          editRoute="EditDeck"
+          :pageCount="pageCount"
+          :removeResource="removeMostDecks"
+          registRoute="RegistDeck"
+          buttonRegistName = "Novo Deck"
         />
       </div>
-      <div class="panel-footer">
-      </div>
+      <div class="panel-footer"></div>
     </div>
   </div>
 </template>
 <script>
+import { removeDeck } from './helpers/functions.js'
+
 import Table from '@/components/Layouts/Table'
 export default {
   components: {
@@ -36,32 +37,35 @@ export default {
   },
   data () {
     return {
+      form: {},
       cols: [
-        { name: 'name', label: 'Nome' }
+        { name: 'name', label: 'Nome' },
+        { name: 'number', label: 'Numero' },
+        { name: 'orientation', label: 'Orientação' },
+        { name: 'status', label: 'Status' },
+        { name: 'starts_at', label: 'Data de Inicio' },
+        { name: 'ends_at', label: 'Data de Termino' }
       ],
       isRequesting: false,
+      decks: [],
       pagination: {
-        perPage: 10,
+        perPage: 12,
         pageable: { pageNumber: 1 }
       },
-      companies: [],
+      ids: [],
       hadError: '',
+      hadSuccess: '',
       editID: '',
       pageCount: 0
-
     }
   },
   methods: {
-    async GetPosts () {
-      // eslint-disable-next-line no-unused-expressions
-      this.companies
-    },
     /*
-     *  GetCompanies: This method will fire a GET request
+     *  getCompanies: This method will fire a GET request
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-    async GetCompanies (type, sort = '', search = '') {
+    async getDecks (type, sort = '', search = '') {
       this.isRequesting = true
 
       if (type === 'next') {
@@ -76,15 +80,16 @@ export default {
       let query = ''
       query += `pageNumber=${this.pagination.pageable.pageNumber}`
       query += `&pageSize=${this.pagination.perPage}`
-      // query += sort ? `&sortBy=${sort}` : ''
+      query += `&currentOnly=false`
       query += search ? `&search=${search}` : ''
 
       try {
-        const result = await this.axios.get(`/companies/pages?${query}`)
+        const result = await this.axios.get(`/decks?${query}`)
         const res = result.data
-        this.companies = res.data
+        this.decks = res.data
 
         this.pageCount = res.pages_count
+        // Set Pagination
       } catch (e) {
         this.hadError =
           'Não foi possível carregar as encomendas. Actualize a página.'
@@ -93,11 +98,15 @@ export default {
     },
     changePage (page) {
       this.pagination.pageable.pageNumber = page
-    }
+    },
+    removeMostDecks (ids) {
+      this.removeDeck(ids)
+    },
+    removeDeck
   },
   created () {
-    // Get customer orders
-    this.GetCompanies()
+    // get customer orders
+    this.getDecks()
   }
 }
 </script>
@@ -121,10 +130,10 @@ export default {
   margin-top: 40px;
   height: 40px;
 }
-label{
-    float: left !important;
+label {
+  float: left !important;
 }
-.modal-content{
-    margin-top: 15% !important;
+.modal-content {
+  margin-top: 15% !important;
 }
 </style>
