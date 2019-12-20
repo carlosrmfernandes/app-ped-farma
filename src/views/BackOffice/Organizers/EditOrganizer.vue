@@ -708,7 +708,7 @@ $size: 35px;
 .organizer-stats-box{
   border: 1px solid #C3C7D9;
   border-radius: 4px;
-  width: 70%;
+  width: 50%;
   height: 130px;
   display: flex;
   flex-direction: row;
@@ -752,7 +752,7 @@ $size: 35px;
 }
 
 .body-center-box {
-  height: 400px;
+  height: 350px;
   width: 20%;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
@@ -766,7 +766,7 @@ $size: 35px;
 }
 
 .body-center .body-center-box:last-child{
-  height: 400px;
+  height: 350px;
   flex-grow: 1;
   border: 1px solid #C3C7D9;
   border-radius: 4px;

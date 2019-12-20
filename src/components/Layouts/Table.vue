@@ -399,9 +399,6 @@ color: #fff;
   cursor: none;
 }
 
-span.deleteicon {
-  /* position: relative; */
-}
 span.deleteicon span {
   position: absolute;
   display: block;

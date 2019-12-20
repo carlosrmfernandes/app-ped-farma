@@ -164,6 +164,7 @@ export default {
 <style scoped>
 .main-mini-table {
   width: 100%;
+  background-color: #fff;
 }
 
 .table .thead-dark th {
@@ -230,9 +231,6 @@ tbody tr:hover {
   cursor: none;
 }
 
-span.deleteicon {
-  /* position: relative; */
-}
 span.deleteicon span {
   position: absolute;
   display: block;

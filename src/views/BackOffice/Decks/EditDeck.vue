@@ -418,6 +418,10 @@ export default {
   padding: 15px;
 }
 
+.events-body {
+  /* background-color: #fff; */
+}
+
 .events-head{
   width: 100%;
   display: flex;
