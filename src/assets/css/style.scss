@@ -27,7 +27,7 @@ a, a:hover, a:focus {
 label {
     color: #212529 !important;
     margin-left: 0px;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .navbar {
@@ -53,7 +53,7 @@ label {
 }
 
 .form-control{
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 /* ---------------------------------------------------
@@ -65,12 +65,14 @@ label {
 }
 
 #sidebar {
-    width: 10%;
+    width: 100%;
     height: 100%;
-    position: fixed;
+    /* position: fixed; */
     background: #343A4E;
     color: #fff;
     transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
 }
 
 #sidebar.active {
@@ -125,6 +127,7 @@ ul ul a {
 
 ul.CTAs {
     padding: 20px;
+    padding-left: 30px;
     position: absolute;
     bottom: 0;
 }
@@ -157,7 +160,7 @@ ul.CTAs a {
 
 .is-danger{
     color:red;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .is-input-danger{

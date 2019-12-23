@@ -338,6 +338,11 @@ export default {
   background-color: #343A4E !important;
   font-size: 12px;
 }
+
+tbody {
+  background-color: #fff;
+}
+
 tbody tr {
   cursor: pointer;
 }
@@ -350,7 +355,7 @@ color: #fff;
 .table td{
   max-width: 70px;
   overflow: hidden;
-  font-size: 14px;
+  font-size: 12px;
   padding: 0.60rem;
 }
 .modal-backdrop {

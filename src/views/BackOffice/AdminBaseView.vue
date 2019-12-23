@@ -30,17 +30,22 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  width: 100%;
   height: 100%;
+  position: absolute;
 }
 
 .left-side{
   width: 190px;
-  border: 1px solid red;
+  // height: 100%;
+  // border: 1px solid red;
 }
 
 .right-side{
   display: flex;
-  flex-shrink: 1;
-  border: 1px solid yellow
+  flex-grow: 1;
+  // border: 1px solid yellow;
+  flex-direction: column;
+  overflow-y: auto;
 }
 </style>

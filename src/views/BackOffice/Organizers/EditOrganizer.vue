@@ -752,7 +752,7 @@ $size: 35px;
 }
 
 .body-center-box {
-  height: 350px;
+  height: 230px;
   width: 20%;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
@@ -766,7 +766,7 @@ $size: 35px;
 }
 
 .body-center .body-center-box:last-child{
-  height: 350px;
+  height: 230px;
   flex-grow: 1;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
@@ -859,7 +859,7 @@ $size: 35px;
 }
 
 .body-bottom-left{
-  height: 400px;
+  height: 300px;
   width: 40.5%;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
@@ -873,7 +873,7 @@ $size: 35px;
 }
 
 .body-bottom-right{
-  height: 400px;
+  height: 300px;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
   display: flex;

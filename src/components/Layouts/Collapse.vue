@@ -68,6 +68,7 @@ export default {
 .accordion .accordion-header {
   box-sizing: border-box;
   padding: 10px;
+  padding-left: 30px;
   width: 100%;
   height: 40px;
   display: flex;
@@ -112,13 +113,13 @@ export default {
 }
 
 .accordion-title {
-  left: 10%;
+  /* left: 10%; */
   position: absolute;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .accordion.childSidebar .accordion-title {
@@ -131,7 +132,7 @@ export default {
   /* padding: 10px 16px; */
   transition: all 0.3s ease;
   color: #ffffff;
-  font-size: 14px;
+  font-size: 12px;
   cursor: default;
 }
 
