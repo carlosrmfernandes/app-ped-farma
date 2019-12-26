@@ -28,7 +28,7 @@ Vue.use(VeeValidate)
 Validator.localize('pt_PT', pt)
 Vue.use(VueAxios, axios)
 Vue.component('datetime', Datetime)
-axios.defaults.baseURL = process.env.VUE_APP_API
+axios.defaults.baseURL = `https://box.nextbss.co.ao/api/`
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 Settings.defaultLocale = 'pt'
