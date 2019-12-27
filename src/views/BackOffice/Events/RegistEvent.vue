@@ -409,9 +409,8 @@
                 >
                   <option selected
                           v-for="ticket in ticket_types"
-                          :value="ticket"
-                          id="ticket_type">{{ ticket }}</option>
-
+                          :value="ticket.name"
+                          id="ticket_type">{{ ticket.name }}</option>
                 </select>
                 <span
                   v-show="errors.has('tickets.ticket_type')"
@@ -772,9 +771,10 @@ export default {
           if (res) {
             // Get this party_event_id
             this.party_event_id = res.data.id
-            console.log('Party event ID: ', this.party_event_id)
             // Next step
             this.step++
+            // Get ticket types
+            this.getTicketTypes()
           }
         } catch (e) {
           this.hadError =
@@ -861,11 +861,7 @@ export default {
       try {
         const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
         const res = result.data
-
-        for (let i = 0; i < res.data.length; i++) {
-          this.ticket_types[i] = res.data[i].name
-        }
-        console.log(this.ticket_types[0])
+        this.ticket_types = res.data
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -895,7 +891,6 @@ export default {
   created () {
     this.step++
     this.getLocations()
-    this.getTicketTypes()
     this.getSponsors()
     this.getOrganizers()
     this.getProducts()
