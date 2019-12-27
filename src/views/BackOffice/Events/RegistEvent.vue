@@ -893,7 +893,7 @@ export default {
     }
   },
   created () {
-    this.step = 2
+    this.step++
     this.getLocations()
     this.getTicketTypes()
     this.getSponsors()
