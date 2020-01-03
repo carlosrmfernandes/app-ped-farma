@@ -772,7 +772,6 @@ export default {
             this.step_two.price = resultTwo.data.sessions[0].price
             this.collection_tickets = resultTwo.data.sessions[0].tickets
             this.collection_products = resultTwo.data.sessions[0].products
-            console.log(resultTwo.data)
             break
           case 3:
             const resultThree = await this.axios.get(
