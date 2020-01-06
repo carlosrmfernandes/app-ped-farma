@@ -335,8 +335,19 @@ export default {
 }
 
 .table .thead-dark th{
-  background-color: #343A4E !important;
+  background-color: #fff;
   font-size: 12px;
+}
+
+.table .thead-dark th {
+  color: rgba(0,0,0,.55);
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 1px solid #dee2e6 !important;
 }
 
 tbody {
@@ -348,8 +359,9 @@ tbody tr {
 }
 
 tbody tr:hover {
-background-color: #52596F;
-color: #fff;
+background-color: rgba(0,0,0,.04);
+border: 1px solid rgba(0,0,0,.08);
+color: #000;
 }
 
 .table td{
@@ -434,7 +446,7 @@ thead.thead-dark .checkbox .square {
 .checkbox.first {
   width: 15px;
   height: 15px;
-  border: 1px solid #fff;
+  border: 1px solid #343A4E;
   border-radius: 3px;
   display: inline-block;
 }

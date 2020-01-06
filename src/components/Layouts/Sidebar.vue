@@ -2,7 +2,7 @@
   <!-- Sidebar Holder -->
   <nav id="sidebar">
     <div class="sidebar-header">
-      <avatar :fullname="user.name" :size="96"></avatar>
+      <avatar :fullname="user.name" :size="80"></avatar>
       <h4>{{user.name}}</h4>
     </div>
     <!-- <ul class="list-unstyled components">
