@@ -124,8 +124,8 @@ export default {
     return {
       form: {},
       orientations: [
-        { id: 'PORTRAIT', name: 'Portrait' },
-        { id: 'LANDSCAPE', name: 'Landscape' }
+        { id: 'PORTRAIT', name: 'Retrato' },
+        { id: 'LANDSCAPE', name: 'Panorama' }
       ],
       hadError: '',
       isRequesting: false,

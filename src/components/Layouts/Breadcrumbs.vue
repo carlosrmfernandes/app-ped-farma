@@ -62,7 +62,6 @@ export default {
 
 <style lang="stylus" scoped>
 .header {
-  position: fixed;
   width: 90%;
   height: 5%;
   top: 0;

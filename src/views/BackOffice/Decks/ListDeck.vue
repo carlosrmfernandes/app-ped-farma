@@ -13,7 +13,7 @@
           :pagination="pagination"
           :paginationMethod="getDecks"
           :sortMethod="getDecks"
-          :needGrid="true"
+          :needGrid="false"
           :changePage="changePage"
           resource="decks"
           editRoute="EditDeck"

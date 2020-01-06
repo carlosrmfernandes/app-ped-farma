@@ -88,7 +88,7 @@ li{
 }
 
 li span{
-  font-size: 15px;
+  font-size: 13px;
   margin-right: 10px;
 }
 

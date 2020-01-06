@@ -13,8 +13,8 @@ export default {
 
 <style >
 .right-content {
-  position: absolute;
-  width: 90%;
+  /* position: absolute; */
+  width: 100%;
   height: 95%;
   bottom: 0;
   right: 0;
