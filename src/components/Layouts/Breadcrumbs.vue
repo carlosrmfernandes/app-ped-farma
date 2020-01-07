@@ -59,7 +59,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="scss" scoped>
 .header {
   height: 50px;
   top: 0;
@@ -69,22 +69,22 @@ export default {
 }
 
 .breadcrumb{
- background-color #F0F0F0
- padding-bottom: 0
+ background-color: #F0F0F0;
+ padding-bottom: 0;
 }
 
 .breadcrumb h2{
-  position relative
-  top 30px
-  left 15px
-  font-weight bold;
-  font-size 24px;
-  color #FFFFFF
+  position: relative;
+  top: 30px;
+  left: 15px;
+  font-weight: bold;
+  font-size: 24px;
+  color: #FFFFFF;
 }
 .breadcrumb .arro-left{
-  position relative
-  top 10px
-  left 20px
+  position: relative;
+  top: 10px;
+  left: 20px;
 }
 
 .breadcrumb_list
@@ -93,7 +93,7 @@ export default {
     padding-top: 0px;
     top: 5px;
     position: relative;
-    display flex
+    display: flex;
 }
 .breadcrumb_list li
 {
@@ -105,7 +105,7 @@ export default {
 .breadcrumb_list a
 {
   color:#b3b3b3;
-  font-size:12px;
+  font-size:12px;;
   text-decoration:none;
   position: relative;
   bottom: 2px;
@@ -138,8 +138,7 @@ export default {
 }
 
 .goBack{
-  cursor pointer
-  width 50px
+  cursor: pointer;
+  width: 50px;
 }
-
 </style>

@@ -24,6 +24,10 @@ export default {
     moreClass: {
       type: Boolean,
       default: false
+    },
+    actives: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -41,7 +45,8 @@ export default {
       } else {
         this.maxHeight = containerHeight + 200 + 'px'
       }
-      this.active = !this.active
+      // this.active = !this.active
+      this.active = this.actives
     }
 
   }

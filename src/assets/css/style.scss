@@ -30,6 +30,10 @@ label {
     font-size: 12px;
 }
 
+.modal-backdrop {
+    background-color:rgba(0, 0, 0, 0.5);
+}
+
 .navbar {
     padding: 15px 10px;
     background: #fff;
@@ -54,6 +58,14 @@ label {
 
 .form-control{
     font-size: 0.7rem;
+}
+
+.btn-sm-new{
+    line-height: 1.1;
+}
+
+.btn-sm-new span{
+    font-size: 11px;
 }
 
 /* ---------------------------------------------------

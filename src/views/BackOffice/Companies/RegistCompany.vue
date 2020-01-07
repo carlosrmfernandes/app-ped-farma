@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h3>Nova Empresa</h3>
+      <h4>Nova Empresa</h4>
     </div>
     <div class="panel-body">
       <div class="row">

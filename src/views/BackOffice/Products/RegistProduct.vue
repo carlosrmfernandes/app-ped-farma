@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h3>Registar Produto</h3>
+      <h4>Registar Produto</h4>
       <div class="alert alert-danger col-md-10" v-if="hadError" role="alert">
         {{hadError}}
       </div>

@@ -201,7 +201,7 @@ color: #000;
 }
 
 .modal-backdrop {
-  opacity: 0.5 !important;
+  background-color:rgba(0, 0, 0, 0.5);
 }
 
 .modal-title {
@@ -249,11 +249,11 @@ span.deleteicon span {
   display: block;
   top: -2px;
   right: 22px;
-  width: 16px;
+  width: 12px;
   height: 16px;
   background: url(http://cdn.sstatic.net/stackoverflow/img/sprites.png?v=4) 0 -690px;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .checkbox {

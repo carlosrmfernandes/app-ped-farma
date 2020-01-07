@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h3>Editar Localização</h3>
+      <h4>Editar Localização</h4>
       <b-button
         variant="outline-primary"
         size="sm"
