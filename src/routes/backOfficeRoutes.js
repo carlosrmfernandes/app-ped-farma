@@ -22,8 +22,7 @@ import EditSponsor from '@/views/BackOffice/Sponsors/EditSponsor'
 import RegistEvent from '@/views/BackOffice/Events/RegistEvent'
 import ListEvent from '@/views/BackOffice/Events/ListEvent'
 import EditEvent from '@/views/BackOffice/Events/EditEvent'
-import ShowEvent from '@/views/BackOffice/Events/ShowEvent'
-import DetailEvent from '@/views/BackOffice/Events/DetailEvent'
+import DetailsEvent from '@/views/BackOffice/Events/DetailsEvent'
 
 // Companies
 import RegistCompany from '@/views/BackOffice/Companies/RegistCompany'
@@ -237,9 +236,9 @@ const Events = [{
     props: true
   },
   {
-    path: 'detail/:id',
-    name: 'DetailEvent',
-    component: DetailEvent,
+    path: 'details/:id',
+    name: 'DetailsEvent',
+    component: DetailsEvent,
     meta: {
       title: 'Detalhes do Evento'
     },
@@ -492,15 +491,6 @@ const Admin = [{
       component: EditEvent,
       meta: {
         title: 'Editar Evento'
-      },
-      props: true
-    },
-    {
-      path: 'show/:id',
-      name: 'ShowEvent',
-      component: ShowEvent,
-      meta: {
-        title: 'Detalhes do Evento'
       },
       props: true
     }

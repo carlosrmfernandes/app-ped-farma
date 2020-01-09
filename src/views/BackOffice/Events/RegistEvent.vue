@@ -89,7 +89,7 @@
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="startsAt"">Data do Evento</label>
+              <label for="startsAt">Data do Evento</label>
               <input
                 required
                 type="date"
@@ -346,7 +346,7 @@
         </div>
         <div class="jumbotron">
           <h2>Tickets</h2>
-          <div class="row"  v-for="(tickets, index) in collection_tickets">
+          <div class="row" :key="tickets.id"  v-for="(tickets, index) in collection_tickets">
             <div class="col-md-3">
               <div class="form-group">
                 <label for="ticket_amount">Quantidade</label>
@@ -410,6 +410,7 @@
                   <option selected
                           v-for="ticket in ticket_types"
                           :value="ticket.name"
+                          :key="ticket.id"
                           id="ticket_type">{{ ticket.name }}</option>
                 </select>
                 <span
@@ -428,7 +429,7 @@
         </div>
         <div class="jumbotron">
           <h2>Produtos</h2>
-          <div class="row" v-for="(products, index) in collection_products">
+          <div class="row" :key="products.id" v-for="(products, index) in collection_products">
             <div class="col-md-3">
               <div class="form-group">
                 <label for="products.company_product_id">Produto</label>
@@ -862,6 +863,7 @@ export default {
         const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
         const res = result.data
         this.ticket_types = res.data
+        console.log(this.ticket_types)
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
