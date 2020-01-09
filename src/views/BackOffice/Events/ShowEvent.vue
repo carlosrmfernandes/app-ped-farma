@@ -127,7 +127,33 @@
             </div>
           </div>
           <div class="col-md-3">
-
+            <div class="form-group">
+              <label for="organizer">Organizador</label>
+              <select
+                required
+                id="organizer"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('organizer_id')
+                }"
+                v-model="step_one.organizer_id"
+                name="organizer_id"
+                v-validate="'required'"
+                data-vv-as="Organizador"
+              >
+                <option
+                  v-for="organizer in organizers"
+                  :value="organizer.id"
+                  :key="organizer.name"
+                >{{ organizer.name }}</option
+                >
+              </select>
+              <span
+                v-show="errors.has('organizer_id')"
+                class="help is-danger"
+              >{{ errors.first("organizer_id") }}</span
+              >
+            </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
@@ -152,27 +178,6 @@
                 >{{ errors.first("step_one.description") }}</span
                 >
               </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="event_ticket_types">Tipo(s) de Bilhete(s)</label>
-              <input
-                type="text"
-                :class="{
-                  'form-control': true,
-                  'is-input-danger': errors.has('event_ticket_types')
-                }"
-                id="event_ticket_types"
-                v-model="event_ticket_types"
-                name="event_ticket_types"
-                placeholder="Ex.: VIP, KID..."
-                v-validate="'required'"
-                data-vv-as="Tipo(s) de Bilhete(s)"
-              />
-              <span v-show="errors.has('event_ticket_types')" class="help is-danger">{{
-                errors.first("event_ticket_types")
-              }}</span>
             </div>
           </div>
         </div>
@@ -767,7 +772,6 @@ export default {
             this.step_two.price = resultTwo.data.sessions[0].price
             this.collection_tickets = resultTwo.data.sessions[0].tickets
             this.collection_products = resultTwo.data.sessions[0].products
-            console.log(resultTwo.data.sessions[0].products.length)
             break
           case 3:
             const resultThree = await this.axios.get(

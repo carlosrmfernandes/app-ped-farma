@@ -409,9 +409,8 @@
                 >
                   <option selected
                           v-for="ticket in ticket_types"
-                          :value="ticket"
-                          id="ticket_type">{{ ticket }}</option>
-
+                          :value="ticket.name"
+                          id="ticket_type">{{ ticket.name }}</option>
                 </select>
                 <span
                   v-show="errors.has('tickets.ticket_type')"
@@ -421,11 +420,11 @@
               </div>
             </div>
             <div v-show="index !== 0" class="col-md-3 mt-4 pt-2">
-              <button v-on:click="removeTicket(index)" class="btn btn-danger">Remover</button>
+              <button v-on:click="removeTicket(index)" class="btn btn-danger btn-sm">Remover</button>
             </div>
           </div>
           <!-- End tickets section -->
-          <button class="btn btn-primary" v-on:click="addTicket">Adicionar Ticket</button>
+          <button class="btn btn-primary btn-sm" v-on:click="addTicket">Adicionar Ticket</button>
         </div>
         <div class="jumbotron">
           <h2>Produtos</h2>
@@ -482,15 +481,15 @@
               </div>
             </div>
             <div v-show="index !== 0" class="col-md-3 mt-4 pt-2">
-              <button v-on:click="removeProduct(index)" class="btn btn-danger">Remover</button>
+              <button v-on:click="removeProduct(index)" class="btn btn-danger btn-sm">Remover</button>
             </div>
           </div>
-          <button v-on:click="addProduct" class="btn btn-primary">Adicionar Produto</button>
+          <button v-on:click="addProduct" class="btn btn-primary btn-sm">Adicionar Produto</button>
         </div>
         <b-button
           variant="primary"
           size="lg"
-          class="float-left mb-5 col-md-2"
+          class="float-left mb-5 col-md-2 btn-sm"
           :disabled="isRequesting ? true : false"
           @click="ProcessForm(2)"
         >
@@ -501,7 +500,7 @@
             <div class="loading-dots--dot"></div>
           </div>
         </b-button>
-        <button class="btn btn-dark btn-lg mb-5 col-md-2 ml-3">
+        <button class="btn btn-dark btn-sm mb-5 col-md-2 ml-3">
           <span>Adicionar Sessão</span>
         </button>
       </section>
@@ -591,7 +590,7 @@
             </div>
           </div>
         </div>
-        <button @click.prevent="prev()" class="btn btn-primary ml-2">
+        <button @click.prevent="prev()" class="btn btn-primary ml-2 btn-sm">
           Anterior
         </button>
         <b-button
@@ -666,19 +665,6 @@ export default {
         const result = await this.axios.get(`/decks?currentOnly=false&sorters=CREATED_AT`)
         const res = result.data
         this.collection_decks = res.data
-      } catch (e) {
-        this.hadError = 'Não foi possível carregar as informações.'
-      }
-    },
-    async getTicketTypes () {
-      try {
-        const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
-        const res = result.data
-
-        for (let i = 0; i < res.data.length; i++) {
-          this.ticket_types[i] = res.data[i].name
-        }
-        console.log(this.ticket_types[0])
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -785,7 +771,9 @@ export default {
           if (res) {
             // Get this party_event_id
             this.party_event_id = res.data.id
-            console.log('Party event ID: ', this.party_event_id)
+            // Get ticket types
+            this.getTicketTypes()
+            console.log(this.ticket_types)
             // Next step
             this.step++
           }
@@ -870,6 +858,15 @@ export default {
         this.isRequesting = false
       }
     },
+    async getTicketTypes () {
+      try {
+        const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
+        const res = result.data
+        this.ticket_types = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
     SelectPoster (file) {
       this.poster = file
     },
@@ -895,7 +892,6 @@ export default {
   created () {
     this.step++
     this.getLocations()
-    this.getTicketTypes()
     this.getSponsors()
     this.getOrganizers()
     this.getProducts()
@@ -907,4 +903,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped lang="scss">
+  .jumbotron {
+    background-color: #fff
+  }
+</style>
