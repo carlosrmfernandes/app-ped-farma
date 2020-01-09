@@ -771,10 +771,11 @@ export default {
           if (res) {
             // Get this party_event_id
             this.party_event_id = res.data.id
-            // Next step
-            this.step++
             // Get ticket types
             this.getTicketTypes()
+            console.log(this.ticket_types)
+            // Next step
+            this.step++
           }
         } catch (e) {
           this.hadError =
