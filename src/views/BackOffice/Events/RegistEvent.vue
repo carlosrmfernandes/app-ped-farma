@@ -89,7 +89,7 @@
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="startsAt"">Data do Evento</label>
+              <label for="startsAt">Data do Evento</label>
               <input
                 required
                 type="date"
@@ -346,7 +346,7 @@
         </div>
         <div class="jumbotron">
           <h2>Tickets</h2>
-          <div class="row"  v-for="(tickets, index) in collection_tickets">
+          <div class="row" :key="tickets.id"  v-for="(tickets, index) in collection_tickets">
             <div class="col-md-3">
               <div class="form-group">
                 <label for="ticket_amount">Quantidade</label>
@@ -408,6 +408,7 @@
                   data-vv-as="Tipo"
                 >
                   <option selected
+                          :key="ticket.id"
                           v-for="ticket in ticket_types"
                           :value="ticket.name"
                           id="ticket_type">{{ ticket.name }}</option>
@@ -428,7 +429,7 @@
         </div>
         <div class="jumbotron">
           <h2>Produtos</h2>
-          <div class="row" v-for="(products, index) in collection_products">
+          <div class="row" :key="products.id" v-for="(products, index) in collection_products">
             <div class="col-md-3">
               <div class="form-group">
                 <label for="products.company_product_id">Produto</label>
@@ -848,7 +849,7 @@ export default {
 
           if (res) {
             // Redirect to the Event views
-            this.$router.push({ name: 'ListEvent' })
+            await this.$router.push({ name: 'ListEvent' })
           }
         } catch (e) {
           this.hadError =
