@@ -173,7 +173,7 @@ export default {
 }
 
 .table .thead-dark th {
-  color: rgba(0,0,0,.55);
+  color: rgba(0,0,0,.65);
   background-color: #fff;
   border-color: #fff;
 }
