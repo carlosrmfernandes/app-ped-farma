@@ -408,9 +408,9 @@
                   data-vv-as="Tipo"
                 >
                   <option selected
+                          :key="ticket.id"
                           v-for="ticket in ticket_types"
                           :value="ticket.name"
-                          :key="ticket.id"
                           id="ticket_type">{{ ticket.name }}</option>
                 </select>
                 <span
@@ -772,10 +772,11 @@ export default {
           if (res) {
             // Get this party_event_id
             this.party_event_id = res.data.id
-            // Next step
-            this.step++
             // Get ticket types
             this.getTicketTypes()
+            console.log(this.ticket_types)
+            // Next step
+            this.step++
           }
         } catch (e) {
           this.hadError =
@@ -848,7 +849,7 @@ export default {
 
           if (res) {
             // Redirect to the Event views
-            this.$router.push({ name: 'ListEvent' })
+            await this.$router.push({ name: 'ListEvent' })
           }
         } catch (e) {
           this.hadError =
@@ -863,7 +864,6 @@ export default {
         const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
         const res = result.data
         this.ticket_types = res.data
-        console.log(this.ticket_types)
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
