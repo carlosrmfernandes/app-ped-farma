@@ -96,7 +96,7 @@
           </div>
           <div class="jumbotron">
             <h2>Tickets</h2>
-            <div class="row"  v-for="(tickets, index) in collection_tickets">
+            <div class="row" :key="tickets.id" v-for="(tickets, index) in collection_tickets">
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="ticket_amount">Quantidade</label>
@@ -158,6 +158,7 @@
                     data-vv-as="Tipo"
                   >
                     <option selected
+                            :key="ticket.id"
                             v-for="ticket in ticket_types"
                             :value="ticket"
                             id="ticket_type">{{ ticket }}</option>
@@ -179,7 +180,7 @@
           </div>
           <div class="jumbotron">
             <h2>Produtos</h2>
-            <div class="row" v-for="(products, index) in collection_products">
+            <div class="row" :key="products.id" v-for="(products, index) in collection_products">
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="company_product_id">Produto</label>
@@ -367,7 +368,7 @@
 </template>
 
 <script>
-import UploadPhoto from '@/components/Form/Photo'
+// import UploadPhoto from '@/components/Form/Photo'
 
 export default {
   props: {
@@ -413,7 +414,7 @@ export default {
     }
   },
   components: {
-    UploadPhoto
+    // UploadPhoto
   },
   methods: {
     /*
@@ -422,7 +423,7 @@ export default {
      */
     async updatePartyEvent (step) {
       try {
-        if (step == 2) {
+        if (step === 2) {
           this.event_session.price = parseInt(this.event_session.price, 10)
 
           this.products.amount = parseInt(
@@ -460,7 +461,7 @@ export default {
             // Next step
             this.step++
           }
-        } else if (step == 3) {
+        } else if (step === 3) {
           this.isRequesting = true
           this.tags = this.tags.split(', ')
           try {
@@ -480,7 +481,7 @@ export default {
               // Next step
               this.step++
               // Redirect to the Event views
-              this.$router.push({ name: 'ListEvent' })
+              await this.$router.push({ name: 'ListEvent' })
             }
           } catch (e) {
             this.hadError =
@@ -527,19 +528,19 @@ export default {
           `/party_events/${this.party_event_id}`
         )
         this.step =
-          result.data.step != 3
+          result.data.step !== 3
             ? (result.data.step += 1)
             : this.$router.push({ name: 'DetailsEvent', id: this.party_event_id })
-        if (this.step == 2) {
-          const step_two_result = await this.axios.get(
+        if (this.step === 2) {
+          const stepTwoResult = await this.axios.get(
             `/party_events/${this.party_event_id}/step_2`
           )
-          this.party_event_data = step_two_result.data
-        } else if (this.step == 3) {
-          const step_three_result = await this.axios.get(
+          this.party_event_data = stepTwoResult.data
+        } else if (this.step === 3) {
+          const stepThreeResult = await this.axios.get(
             `/party_events/${this.party_event_id}/step_3`
           )
-          this.party_event_data = step_three_result.data
+          this.party_event_data = stepThreeResult.data
         }
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
