@@ -130,12 +130,13 @@ export default {
       hadError: '',
       editID: '',
       pagination: {
-        perPage: 12,
+        perPage: 15,
         pageable: { pageNumber: 1 }
       },
       ids: [],
       hadSuccess: '',
-      pageCount: 0
+      pageCount: 0,
+      totalElements: 0
     }
   },
   methods: {
@@ -151,7 +152,7 @@ export default {
      *  to fetch the events and the will store the result
      *  into the orders local state property
      */
-    async getEvents (type, sort = '', search = '') {
+    async getEvents (type, sort = '', search = '', size) {
       this.isRequesting = true
 
       if (type === 'next') {
@@ -165,13 +166,14 @@ export default {
       // API query options like: sorts and pagination
       let query = ''
       query += `pageNumber=${this.pagination.pageable.pageNumber}`
-      query += `&pageSize=${this.pagination.perPage}`
+      query += size ? `&pageSize=${size}` : `&pageSize=${this.pagination.perPage}`
       // query += sort ? `&sortBy=${sort}` : ''
       query += search ? `&search=${search}` : ''
 
       try {
         const result = await this.axios.get(`/events?${query}`)
         const res = result.data
+        this.totalElements = res.items_count
         this.events = res.data
 
         this.pageCount = res.pages_count
