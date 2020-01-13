@@ -96,7 +96,7 @@
           </div>
           <div class="jumbotron">
             <h2>Tickets</h2>
-            <div class="row"  v-for="(tickets, index) in collection_tickets">
+            <div class="row" :key="tickets.id" v-for="(tickets, index) in collection_tickets">
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="ticket_amount">Quantidade</label>
@@ -157,17 +157,12 @@
                     v-validate="'required'"
                     data-vv-as="Tipo"
                   >
-                    <option selected id="ticket_type">COUPLE</option>
-                    <option id="ticket_type">WOMAN</option>
-                    <option id="ticket_type">KID</option>
-                    <option id="ticket_type">MAN</option>
-                    <option id="ticket_type">REGULAR</option>
-                    <option id="ticket_type">VIP</option>
-                    <option id="ticket_type">VIP_COUPLE</option>
-                    <option id="ticket_type">VIP_KID</option>
-                    <option id="ticket_type">VIP ADULTO</option>
-                    <option id="ticket_type">VIP KID 2 - 11</option>
-                    <option id="ticket_type">VIP KID 12 - 16</option>
+                    <option selected
+                            :key="ticket.id"
+                            v-for="ticket in ticket_types"
+                            :value="ticket"
+                            id="ticket_type">{{ ticket }}</option>
+
                   </select>
                   <span
                     v-show="errors.has('tickets.ticket_type')"
@@ -185,7 +180,7 @@
           </div>
           <div class="jumbotron">
             <h2>Produtos</h2>
-            <div class="row" v-for="(products, index) in collection_products">
+            <div class="row" :key="products.id" v-for="(products, index) in collection_products">
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="company_product_id">Produto</label>
@@ -273,6 +268,7 @@
               <div class="form-group">
                 <label for="sponsors_id">Patrocinador</label>
                 <select
+                  multiple
                   required
                   id="sponsors_id"
                   :class="{
@@ -293,6 +289,34 @@
                 </select>
                 <span v-show="errors.has('sponsors_id')" class="help is-danger">{{
                 errors.first("sponsors_id")
+              }}</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="decks">Decks</label>
+                <select
+                  multiple
+                  required
+                  id="decks"
+                  :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('decks')
+                }"
+                  v-model="decks"
+                  name="decks"
+                  v-validate="'required'"
+                  data-vv-as="Patrocinador"
+                >
+                  <option
+                    v-for="deck in collection_decks"
+                    :value="deck.id"
+                    :key="deck.id"
+                  >{{ deck.name }}</option
+                  >
+                </select>
+                <span v-show="errors.has('decks')" class="help is-danger">{{
+                errors.first("decks")
               }}</span>
               </div>
             </div>
@@ -344,7 +368,7 @@
 </template>
 
 <script>
-import UploadPhoto from '@/components/Form/Photo'
+// import UploadPhoto from '@/components/Form/Photo'
 
 export default {
   props: {
@@ -378,15 +402,19 @@ export default {
       collection_tickets: [],
       collection_products: [],
       tickets: {},
+      event_ticket_types: [],
+      ticket_types: [],
       sponsors: {},
-      sponsors_id: '',
+      decks: [],
+      collection_decks: [],
+      sponsors_id: [],
       isRequesting: false,
       hadSuccess: false,
       hadError: ''
     }
   },
   components: {
-    UploadPhoto
+    // UploadPhoto
   },
   methods: {
     /*
@@ -395,7 +423,7 @@ export default {
      */
     async updatePartyEvent (step) {
       try {
-        if (step == 2) {
+        if (step === 2) {
           this.event_session.price = parseInt(this.event_session.price, 10)
 
           this.products.amount = parseInt(
@@ -433,7 +461,7 @@ export default {
             // Next step
             this.step++
           }
-        } else if (step == 3) {
+        } else if (step === 3) {
           this.isRequesting = true
           this.tags = this.tags.split(', ')
           try {
@@ -443,7 +471,8 @@ export default {
               method: 'put',
               headers: { 'Content-Type': 'application/json' },
               data: {
-                sponsors: [this.sponsors_id],
+                decks: this.decks,
+                sponsors: this.sponsors_id,
                 tags: this.tags
               }
             })
@@ -452,7 +481,7 @@ export default {
               // Next step
               this.step++
               // Redirect to the Event views
-              this.$router.push({ name: 'ListEvent' })
+              await this.$router.push({ name: 'ListEvent' })
             }
           } catch (e) {
             this.hadError =
@@ -468,6 +497,27 @@ export default {
       }
       this.isRequesting = false
     },
+    async getDecks () {
+      try {
+        const result = await this.axios.get(`/decks?currentOnly=false&sorters=CREATED_AT`)
+        const res = result.data
+        this.collection_decks = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
+    async getTicketTypes () {
+      try {
+        const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
+        const res = result.data
+
+        for (let i = 0; i < res.data.length; i++) {
+          this.ticket_types[i] = res.data[i].name
+        }
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
     /*
      * getEventStep: This method will fire a GET request and then
      * assign the response data into the state property: form
@@ -478,19 +528,19 @@ export default {
           `/party_events/${this.party_event_id}`
         )
         this.step =
-          result.data.step != 3
+          result.data.step !== 3
             ? (result.data.step += 1)
-            : this.$router.push({ name: 'ShowEvent', id: this.party_event_id })
-        if (this.step == 2) {
-          const step_two_result = await this.axios.get(
+            : this.$router.push({ name: 'DetailsEvent', id: this.party_event_id })
+        if (this.step === 2) {
+          const stepTwoResult = await this.axios.get(
             `/party_events/${this.party_event_id}/step_2`
           )
-          this.party_event_data = step_two_result.data
-        } else if (this.step == 3) {
-          const step_three_result = await this.axios.get(
+          this.party_event_data = stepTwoResult.data
+        } else if (this.step === 3) {
+          const stepThreeResult = await this.axios.get(
             `/party_events/${this.party_event_id}/step_3`
           )
-          this.party_event_data = step_three_result.data
+          this.party_event_data = stepThreeResult.data
         }
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
@@ -587,10 +637,12 @@ export default {
   },
   created () {
     this.getLocations()
+    this.getTicketTypes()
     this.getSponsors()
     this.getOrganizers()
     this.getProducts()
     this.getEventStep()
+    this.getDecks()
   },
   mounted () {
     this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })

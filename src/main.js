@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueTabulator from 'vue-tabulator'
 import moment from 'moment'
 import { Datetime } from 'vue-datetime'
 import { Settings } from 'luxon'
@@ -27,8 +28,11 @@ moment.locale('pt_PT')
 Vue.use(VeeValidate)
 Validator.localize('pt_PT', pt)
 Vue.use(VueAxios, axios)
+Vue.use(VueTabulator)
 Vue.component('datetime', Datetime)
-axios.defaults.baseURL = process.env.VUE_APP_API
+
+axios.defaults.baseURL = `https://box.nextbss.co.ao/api/`
+
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 Settings.defaultLocale = 'pt'

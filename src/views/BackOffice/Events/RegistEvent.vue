@@ -89,7 +89,7 @@
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="startsAt"">Data do Evento</label>
+              <label for="startsAt">Data do Evento</label>
               <input
                 required
                 type="date"
@@ -178,6 +178,27 @@
                   >{{ errors.first("description") }}</span
                 >
               </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="event_ticket_types">Tipo(s) de Bilhete(s)</label>
+              <input
+                type="text"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('event_ticket_types')
+                }"
+                id="event_ticket_types"
+                v-model="event_ticket_types"
+                name="event_ticket_types"
+                placeholder="Ex.: VIP, KID..."
+                v-validate="'required'"
+                data-vv-as="Tipo(s) de Bilhete(s)"
+              />
+              <span v-show="errors.has('event_ticket_types')" class="help is-danger">{{
+                errors.first("event_ticket_types")
+              }}</span>
             </div>
           </div>
         </div>
@@ -325,7 +346,7 @@
         </div>
         <div class="jumbotron">
           <h2>Tickets</h2>
-          <div class="row"  v-for="(tickets, index) in collection_tickets">
+          <div class="row" :key="tickets.id"  v-for="(tickets, index) in collection_tickets">
             <div class="col-md-3">
               <div class="form-group">
                 <label for="ticket_amount">Quantidade</label>
@@ -386,17 +407,11 @@
                   v-validate="'required'"
                   data-vv-as="Tipo"
                 >
-                  <option selected id="ticket_type">COUPLE</option>
-                  <option id="ticket_type">WOMAN</option>
-                  <option id="ticket_type">KID</option>
-                  <option id="ticket_type">MAN</option>
-                  <option id="ticket_type">REGULAR</option>
-                  <option id="ticket_type">VIP</option>
-                  <option id="ticket_type">VIP_COUPLE</option>
-                  <option id="ticket_type">VIP_KID</option>
-                  <option id="ticket_type">VIP ADULTO</option>
-                  <option id="ticket_type">VIP KID 2 - 11</option>
-                  <option id="ticket_type">VIP KID 12 - 16</option>
+                  <option selected
+                          :key="ticket.id"
+                          v-for="ticket in ticket_types"
+                          :value="ticket.name"
+                          id="ticket_type">{{ ticket.name }}</option>
                 </select>
                 <span
                   v-show="errors.has('tickets.ticket_type')"
@@ -406,15 +421,15 @@
               </div>
             </div>
             <div v-show="index !== 0" class="col-md-3 mt-4 pt-2">
-              <button v-on:click="removeTicket(index)" class="btn btn-danger">Remover</button>
+              <button v-on:click="removeTicket(index)" class="btn btn-danger btn-sm">Remover</button>
             </div>
           </div>
           <!-- End tickets section -->
-          <button class="btn btn-primary" v-on:click="addTicket">Adicionar Ticket</button>
+          <button class="btn btn-primary btn-sm" v-on:click="addTicket">Adicionar Ticket</button>
         </div>
         <div class="jumbotron">
           <h2>Produtos</h2>
-          <div class="row" v-for="(products, index) in collection_products">
+          <div class="row" :key="products.id" v-for="(products, index) in collection_products">
             <div class="col-md-3">
               <div class="form-group">
                 <label for="products.company_product_id">Produto</label>
@@ -467,15 +482,15 @@
               </div>
             </div>
             <div v-show="index !== 0" class="col-md-3 mt-4 pt-2">
-              <button v-on:click="removeProduct(index)" class="btn btn-danger">Remover</button>
+              <button v-on:click="removeProduct(index)" class="btn btn-danger btn-sm">Remover</button>
             </div>
           </div>
-          <button v-on:click="addProduct" class="btn btn-primary">Adicionar Produto</button>
+          <button v-on:click="addProduct" class="btn btn-primary btn-sm">Adicionar Produto</button>
         </div>
         <b-button
           variant="primary"
           size="lg"
-          class="float-left mb-5 col-md-2"
+          class="float-left mb-5 col-md-2 btn-sm"
           :disabled="isRequesting ? true : false"
           @click="ProcessForm(2)"
         >
@@ -486,7 +501,7 @@
             <div class="loading-dots--dot"></div>
           </div>
         </b-button>
-        <button class="btn btn-dark btn-lg mb-5 col-md-2 ml-3">
+        <button class="btn btn-dark btn-sm mb-5 col-md-2 ml-3">
           <span>Adicionar Sessão</span>
         </button>
       </section>
@@ -500,8 +515,9 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label for="sponsors_id">Patrocinador</label>
+              <label for="sponsors_id">Patrocinador(es)</label>
               <select
+                multiple
                 required
                 id="sponsors_id"
                 :class="{
@@ -527,6 +543,34 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
+              <label for="decks">Decks</label>
+              <select
+                multiple
+                required
+                id="decks"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('decks')
+                }"
+                v-model="decks"
+                name="decks"
+                v-validate="'required'"
+                data-vv-as="Patrocinador"
+              >
+                <option
+                  v-for="deck in collection_decks"
+                  :value="deck.id"
+                  :key="deck.id"
+                >{{ deck.name }}</option
+                >
+              </select>
+              <span v-show="errors.has('decks')" class="help is-danger">{{
+                errors.first("decks")
+              }}</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
               <label for="tags">Tags</label>
               <input
                 type="text"
@@ -547,7 +591,7 @@
             </div>
           </div>
         </div>
-        <button @click.prevent="prev()" class="btn btn-primary ml-2">
+        <button @click.prevent="prev()" class="btn btn-primary ml-2 btn-sm">
           Anterior
         </button>
         <b-button
@@ -592,6 +636,8 @@ export default {
       classification: '',
       title: '',
       tags: '',
+      decks: [],
+      collection_decks: [],
       description: '',
       starts_at: '',
       video_id: '',
@@ -606,13 +652,24 @@ export default {
       tickets: {},
       collection_tickets: [],
       sponsors: {},
-      sponsors_id: '',
+      sponsors_id: [],
+      event_ticket_types: [],
+      ticket_types: [],
       isRequesting: false,
       hadSuccess: false,
       hadError: ''
     }
   },
   methods: {
+    async getDecks () {
+      try {
+        const result = await this.axios.get(`/decks?currentOnly=false&sorters=CREATED_AT`)
+        const res = result.data
+        this.collection_decks = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
     /*
      * getLOcations: This method will fire a GET request and then
      * assign the response data into the state property: form
@@ -695,6 +752,7 @@ export default {
 
           fData.append('poster', this.poster)
           fData.append('backdrop', this.backdrop)
+          fData.append('event_ticket_types', this.event_ticket_types)
           fData.append('classification', this.classification)
           fData.append('location_id', this.location_id)
           fData.append('organizer_id', this.organizer_id)
@@ -714,7 +772,9 @@ export default {
           if (res) {
             // Get this party_event_id
             this.party_event_id = res.data.id
-            console.log('Party event ID: ', this.party_event_id)
+            // Get ticket types
+            this.getTicketTypes()
+            console.log(this.ticket_types)
             // Next step
             this.step++
           }
@@ -781,14 +841,15 @@ export default {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             data: {
-              sponsors: [this.sponsors_id],
+              decks: this.decks,
+              sponsors: this.sponsors_id,
               tags: this.tags
             }
           })
 
           if (res) {
             // Redirect to the Event views
-            this.$router.push({ name: 'ListEvent' })
+            await this.$router.push({ name: 'ListEvent' })
           }
         } catch (e) {
           this.hadError =
@@ -796,6 +857,15 @@ export default {
           console.log(e)
         }
         this.isRequesting = false
+      }
+    },
+    async getTicketTypes () {
+      try {
+        const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
+        const res = result.data
+        this.ticket_types = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
       }
     },
     SelectPoster (file) {
@@ -826,6 +896,7 @@ export default {
     this.getSponsors()
     this.getOrganizers()
     this.getProducts()
+    this.getDecks()
   },
   mounted () {
     this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })
@@ -833,4 +904,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped lang="scss">
+  .jumbotron {
+    background-color: #fff
+  }
+</style>
