@@ -3,13 +3,22 @@
     <div class="panel">
       <div class="panel-header">
         <h3>Detalhes do Evento</h3>
-        <b-button
-          variant="outline-primary"
-          size="sm"
-          class="float-right"
-          @click="editOrganizer"
-          v-show="isEditable"
-        >Editar</b-button>
+        <b-button-group size="sm">
+          <b-dropdown split text="Mudar Estado">
+            <b-dropdown-item>Item 1</b-dropdown-item>
+            <b-dropdown-item>Item 2</b-dropdown-item>
+          </b-dropdown>
+        </b-button-group>
+        <div class="btn-group float-right btn-group-sm ml-2" role="group">
+          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Mudar Estado
+          </button>
+          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a class="dropdown-item" href="#">DRAFT</a>
+            <a class="dropdown-item" href="#">CURRENT</a>
+            <a class="dropdown-item" href="#">UPCOMING</a>
+          </div>
+        </div>
         <b-button
           variant="success"
           size="sm"
