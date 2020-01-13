@@ -36,7 +36,7 @@ export default {
 }
 
 .left-side{
-  width: 190px;
+  // width: 270px;
   // height: 100%;
   // border: 1px solid red;
 }

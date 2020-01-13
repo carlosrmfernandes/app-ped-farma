@@ -45,7 +45,7 @@
               </label>
               <!-- <span>Tudo</span> -->
               </th>
-              <th v-for="(col, index) in cols" :key="index">{{ col.label }}</th>
+              <th class="header-table" v-for="(col, index) in cols" :key="index" @click="Sort(col.name)"><i class="fa fa-sort" aria-hidden="true" style="margin-right: 3px;"></i>{{ col.label }}</th>
             </tr>
           </thead>
           <tbody>
@@ -244,8 +244,8 @@ export default {
       }
     },
     Sort (column = '') {
-      this.selectedSort = column
-      this.sortMethod('', this.selectedDirection, this.selectedSort)
+      this.selectedSort = column.toUpperCase()
+      this.sortMethod('', this.selectedSort, this.selectedDirection)
     },
     resizeTable () {
       this.sortMethod('', '', '', this.elementsPerPage)
@@ -388,6 +388,10 @@ color: #000;
   overflow: hidden;
   font-size: 11.4px;
   padding: 0.45rem;
+}
+
+.header-table{
+  cursor: pointer;
 }
 
 .modal-title {
