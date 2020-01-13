@@ -244,7 +244,7 @@ export default {
       }
     },
     Sort (column = '') {
-      this.selectedSort = column
+      this.selectedSort = column.toUpperCase()
       this.sortMethod('', this.selectedSort, this.selectedDirection)
     },
     resizeTable () {
