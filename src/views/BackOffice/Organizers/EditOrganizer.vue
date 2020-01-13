@@ -71,7 +71,7 @@
                 <b-button
                 variant="success"
                 size="sm"
-                class="float-left"
+                class="float-left btn-sm-new"
                 @click="addEmail"
               >
                 <span v-if="!isRequestingEmail">Salvar</span>
@@ -112,7 +112,7 @@
                 <b-button
                     variant="success"
                     size="sm"
-                    class="float-left"
+                    class="float-left btn-sm-new"
                     @click="addTelephone"
                   >
                   <span v-if="!isRequestingTel">Salvar</span>
@@ -149,7 +149,7 @@
                 <span>Endereços</span>
               </div>
               <div class="head-box-right-side">
-                <b-button variant="success" size="sm" class="float-right" @click="addAddress" >
+                <b-button variant="success" size="sm" class="float-right btn-sm-new" @click="addAddress" >
                   <span v-if="!isRequestingAddress">Salvar</span>
                   <div class="loading-dots" v-if="isRequestingAddress">
                     <div class="loading-dots--dot"></div>
@@ -604,8 +604,8 @@ span{
 }
 
 .organizer-photo{
-  width: 180px;
-  height: 100%;
+  width: 160px;
+  height: 170px;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
   display: flex;
@@ -709,7 +709,7 @@ $size: 35px;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
   width: 50%;
-  height: 130px;
+  height: 100px;
   display: flex;
   flex-direction: row;
   padding: 10px;
@@ -781,7 +781,7 @@ $size: 35px;
 
 .body-center-box-head{
   width: 100%;
-  height: 70px;
+  height: 40px;
   border-bottom: 1px solid #C3C7D9;
   display: flex;
   justify-content: center;
@@ -791,7 +791,7 @@ $size: 35px;
 .head-box-left-side{
   display: flex;
   width: 50%;
-  height: 70px;
+  height: 40px;
   padding-left: 5px;
   align-items: center
 }
@@ -859,7 +859,7 @@ $size: 35px;
 }
 
 .body-bottom-left{
-  height: 300px;
+  height: 260px;
   width: 40.5%;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
@@ -873,7 +873,7 @@ $size: 35px;
 }
 
 .body-bottom-right{
-  height: 300px;
+  height: 260px;
   border: 1px solid #C3C7D9;
   border-radius: 4px;
   display: flex;

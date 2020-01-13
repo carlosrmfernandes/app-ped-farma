@@ -97,6 +97,18 @@
                 <i class="fas fa-angle-right"></i>
             </div>
           </div>
+          <div class="pagination-right">
+              <div class="label-maker">
+                <select id="p-name" class="budget" v-model="elementsPerPage" @change="resizeTable">
+                  <option value="15">15</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+                <label
+                  for="p-name"
+                >Mostrando {{showingElements}} - {{elementsPerPage}} de {{totalElements}}</label>
+              </div>
+          </div>
         </div>
       </div>
     </div>
@@ -188,6 +200,9 @@ export default {
     },
     registRoute: {
       type: String
+    },
+    totalElements: {
+      type: Number
     }
   },
   data () {
@@ -195,7 +210,6 @@ export default {
       searchInput: '',
       currentPage: 1,
       elementsPerPage: this.pagination.perPage,
-      totalElements: this.data.length,
       showingElements: 0,
       ascending: false,
       sortOrder: false,
@@ -232,6 +246,9 @@ export default {
     Sort (column = '') {
       this.selectedSort = column
       this.sortMethod('', this.selectedDirection, this.selectedSort)
+    },
+    resizeTable () {
+      this.sortMethod('', '', '', this.elementsPerPage)
     },
     tableGrid () {
       this.gridOrList = !this.gridOrList
@@ -335,8 +352,21 @@ export default {
 }
 
 .table .thead-dark th{
-  background-color: #343A4E !important;
+  background-color: #fff;
   font-size: 12px;
+}
+
+.table .thead-dark th {
+  color: rgba(0,0,0,.65);
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.table thead th {
+  padding: 0.45rem;
+  padding-top: 0.75rem;
+  vertical-align: bottom;
+  border-bottom: 1px solid #dee2e6 !important;
 }
 
 tbody {
@@ -348,18 +378,16 @@ tbody tr {
 }
 
 tbody tr:hover {
-background-color: #52596F;
-color: #fff;
+background-color: rgba(0,0,0,.04);
+border: 1px solid rgba(0,0,0,.08);
+color: #000;
 }
 
 .table td{
   max-width: 70px;
   overflow: hidden;
-  font-size: 12px;
-  padding: 0.60rem;
-}
-.modal-backdrop {
-  opacity: 0.5 !important;
+  font-size: 11.4px;
+  padding: 0.45rem;
 }
 
 .modal-title {
@@ -372,6 +400,34 @@ color: #fff;
 
 .table__pagination__control{
   display: inline-flex;
+}
+
+.pagination-right {
+  float: right;
+  padding-top: 0px;
+  margin-top: 0px;
+  width: 15%;
+  /* border: 1px solid red; */
+}
+
+.pagination-right .label-maker {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pagination-right .label-maker select {
+  width: 23%;
+  height: 28px;
+  margin: 10px;
+  font-size: 12px;
+  background-color: #fff;
+  border: 1px solid #cfd4da;
+  border-radius: 4px;
+}
+
+.pagination-right .label-maker label {
+    font-size: 12px;
+    margin-top: 15px;
 }
 
 .number {
@@ -409,11 +465,11 @@ span.deleteicon span {
   display: block;
   top: -2px;
   right: 22px;
-  width: 16px;
+  width: 12px;
   height: 16px;
   background: url(http://cdn.sstatic.net/stackoverflow/img/sprites.png?v=4) 0 -690px;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .checkbox {
@@ -421,8 +477,8 @@ span.deleteicon span {
 }
 
 .checkbox .square {
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   border: 1px solid #343A4E;
   border-radius: 3px;
   display: inline-block;
@@ -432,9 +488,9 @@ thead.thead-dark .checkbox .square {
    display: none;
 }
 .checkbox.first {
-  width: 15px;
-  height: 15px;
-  border: 1px solid #fff;
+  width: 13px;
+  height: 13px;
+  border: 1px solid #343A4E;
   border-radius: 3px;
   display: inline-block;
 }

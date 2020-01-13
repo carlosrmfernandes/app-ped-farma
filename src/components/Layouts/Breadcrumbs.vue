@@ -7,8 +7,11 @@
         </div>
     </div> -->
       <!-- <h2>{{atualHeader}}</h2> -->
-    <!-- <ul class="breadcrumb_list">
-        <li class="li-4" v-for="view in viewsInfo" :key="view.id">
+      <a class="goBack" @click="$router.go(-1)">
+          <span class="arro-left"><i class="fas fa-arrow-left"></i></span>
+      </a>
+      <ul class="breadcrumb_list">
+        <li class="li-4" v-for="view in viewsInfo" :key="view.id" :class="{last : view.title == $route.meta.title}" >
           <router-link
             v-if="view.title != $route.meta.title"
             :to="{ name: view.component }"
@@ -19,11 +22,7 @@
             {{ view.title }}
           </span>
         </li>
-      </ul> -->
-      <a class="goBack" @click="$router.go(-1)">
-          <span class="arro-left"><i class="fas fa-arrow-left"></i></span>
-      </a>
-
+      </ul>
   </div>
   </div>
 </template>
@@ -60,10 +59,9 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="scss" scoped>
 .header {
-  width: 90%;
-  height: 5%;
+  height: 50px;
   top: 0;
   right: 0;
   background-color: #F0F0F0;
@@ -71,29 +69,31 @@ export default {
 }
 
 .breadcrumb{
- background-color #F0F0F0
+ background-color: #F0F0F0;
+ padding-bottom: 0;
 }
 
 .breadcrumb h2{
-  position relative
-  top 30px
-  left 15px
-  font-weight bold;
-  font-size 24px;
-  color #FFFFFF
+  position: relative;
+  top: 30px;
+  left: 15px;
+  font-weight: bold;
+  font-size: 24px;
+  color: #FFFFFF;
 }
 .breadcrumb .arro-left{
-  position relative
-  top 10px
-  left 20px
+  position: relative;
+  top: 10px;
+  left: 20px;
 }
 
 .breadcrumb_list
 {
     padding-left: 15px;
     padding-top: 0px;
-    top: 15px;
+    top: 5px;
     position: relative;
+    display: flex;
 }
 .breadcrumb_list li
 {
@@ -105,14 +105,14 @@ export default {
 .breadcrumb_list a
 {
   color:#b3b3b3;
-  font-size:12px;
+  font-size:12px;;
   text-decoration:none;
   position: relative;
   bottom: 2px;
 }
 .breadcrumb_list a:visited,.breadcrumb_list a:hover
 {
-  color:#e6e6e6;
+  color:#b3b3b3;
 }
 
 .li-4:after
@@ -124,12 +124,21 @@ export default {
   margin-right: 5px;
 }
 
+.li-4.last:after
+{
+  content:"";
+  font-size: 18px;
+  padding-left:6px;
+  color: #b3b3b3;
+  margin-right: 5px;
+}
+
 .fa, .fas {
     font-size: 20px;
 }
 
 .goBack{
-  cursor pointer
+  cursor: pointer;
+  width: 50px;
 }
-
 </style>

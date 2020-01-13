@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h3>Localizações</h3>
+      <h4>Localizações</h4>
     </div>
     <div class="panel-body">
       <div>
@@ -48,14 +48,16 @@ export default {
       isRequesting: false,
       locations: [],
       pagination: {
-        perPage: 10,
+        perPage: 15,
         pageable: { pageNumber: 1 }
       },
       ids: [],
       hadError: '',
       hadSuccess: '',
       editID: '',
-      pageCount: 0
+      pageCount: 0,
+      totalElements: 0
+
     }
   },
   methods: {
@@ -68,7 +70,7 @@ export default {
      *  to fetch the companies and the will store the result
      *  into the orders local state property
      */
-    async GetLocations (type, sort = '', search = '') {
+    async GetLocations (type, sort = '', search = '', size) {
       this.isRequesting = true
 
       if (type === 'next') {
@@ -82,7 +84,7 @@ export default {
       // API query options like: sorts and pagination
       let query = ''
       query += `pageNumber=${this.pagination.pageable.pageNumber}`
-      query += `&pageSize=${this.pagination.perPage}`
+      query += size ? `&pageSize=${size}` : `&pageSize=${this.pagination.perPage}`
       // query += sort ? `&sortBy=${sort}` : ''
       query += search ? `&search=${search}` : ''
 

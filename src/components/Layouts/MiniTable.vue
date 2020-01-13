@@ -168,16 +168,29 @@ export default {
 }
 
 .table .thead-dark th {
-  background-color: #343a4e !important;
+  background-color: #fff;
   font-size: 12px;
 }
+
+.table .thead-dark th {
+  color: rgba(0,0,0,.65);
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+
 tbody tr {
   cursor: pointer;
 }
 
 tbody tr:hover {
-  background-color: #52596f;
-  color: #fff;
+background-color: rgba(0,0,0,.04);
+border: 1px solid rgba(0,0,0,.08);
+color: #000;
 }
 
 .table td{
@@ -188,7 +201,7 @@ tbody tr:hover {
 }
 
 .modal-backdrop {
-  opacity: 0.5 !important;
+  background-color:rgba(0, 0, 0, 0.5);
 }
 
 .modal-title {
@@ -236,11 +249,11 @@ span.deleteicon span {
   display: block;
   top: -2px;
   right: 22px;
-  width: 16px;
+  width: 12px;
   height: 16px;
   background: url(http://cdn.sstatic.net/stackoverflow/img/sprites.png?v=4) 0 -690px;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .checkbox {

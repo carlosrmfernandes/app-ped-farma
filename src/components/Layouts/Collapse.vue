@@ -24,6 +24,10 @@ export default {
     moreClass: {
       type: Boolean,
       default: false
+    },
+    actives: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -41,7 +45,8 @@ export default {
       } else {
         this.maxHeight = containerHeight + 200 + 'px'
       }
-      this.active = !this.active
+      // this.active = !this.active
+      this.active = this.actives
     }
 
   }
@@ -55,7 +60,7 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   overflow: hidden;
-  background-color: #0b132e;
+  /* background-color: #0b132e; */
   cursor: pointer;
 }
 
@@ -80,36 +85,36 @@ export default {
 }
 
 .accordion .accordion-header.atual {
-   color: #fff;
-   background-color: #343A4E;
+  color: #000;
+  background: rgba(0,0,0,.08);
 }
 
 .accordion .accordion-header.childSidebar {
-   color: #2e3553;
-   background-color: #fff;
+  color: #000;
+  background: rgba(0,0,0,.08);
 }
 
 .accordion .accordion-header:hover {
   width: 100%;
   height: 40px;
-  background-color: #fff;
-  color: #2e3553;
+  background: rgba(0,0,0,.09);
+  color: #000;
 }
 
 .accordion .accordion-header:active,
 .accordion .accordion-header:focus {
   width: 100%;
   height: 40px;
-  color: #2e3553;
-  background-color: #343A4E;
+  color: #000;
+  background: rgba(0,0,0,.08);
 }
 
 .accordion .accordion-header .accordion-title:hover{
-  color: #2e3553;
+  color: #000;
 }
 
 .accordion .accordion-header:hover .accordion-title{
-  color: #2e3553;
+  color: #000;
 }
 
 .accordion-title {
@@ -152,7 +157,7 @@ export default {
 .accordion .accordion-body .accordion-content a:hover {
   width: 100%;
   /* height: 35px; */
-  background-color: #fff;
+  background: rgba(0,0,0,.08);
   color: #2e3553;
 }
 
@@ -167,7 +172,7 @@ export default {
 }
 
 .accordion.disabled {
-  background-color: #343A4E;
+  /* background-color: #343A4E; */
   height: 40px;
 }
 
@@ -180,7 +185,7 @@ export default {
 .accordion.disabled .accordion-header {
   border-bottom: none;
   height: 40px;
-  color: #fff;
+  color: #000;
 }
 
 .accordion.disabled .accordion-header:hover {
