@@ -31,7 +31,7 @@ Vue.use(VueAxios, axios)
 Vue.use(VueTabulator)
 Vue.component('datetime', Datetime)
 
-axios.defaults.baseURL = `http://10.10.40.161:8081/api/`
+axios.defaults.baseURL = `https://box.nextbss.co.ao/api/`
 
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
