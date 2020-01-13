@@ -3,20 +3,15 @@
     <div class="panel">
       <div class="panel-header">
         <h3>Detalhes do Evento</h3>
-        <b-button-group size="sm">
-          <b-dropdown split text="Mudar Estado">
-            <b-dropdown-item>Item 1</b-dropdown-item>
-            <b-dropdown-item>Item 2</b-dropdown-item>
-          </b-dropdown>
-        </b-button-group>
         <div class="btn-group float-right btn-group-sm ml-2" role="group">
           <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Mudar Estado
+            {{ event.status }}
           </button>
           <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-            <a class="dropdown-item" href="#">DRAFT</a>
-            <a class="dropdown-item" href="#">CURRENT</a>
-            <a class="dropdown-item" href="#">UPCOMING</a>
+            <a class="dropdown-item" @click="setEventStatus('DRAFT')">Rascunho</a>
+            <a class="dropdown-item" @click="setEventStatus('CURRENT')">Activo</a>
+            <a class="dropdown-item" @click="setEventStatus('UPCOMING')">Brevemente</a>
+            <a class="dropdown-item" @click="setEventStatus('COMPLETE')">Passado</a>
           </div>
         </div>
         <b-button
@@ -325,6 +320,7 @@ export default {
         )
         this.event.title = result.data.title
         this.event.description = result.data.description
+        this.event.status = result.data.status
         this.event.location_id = result.data.location.id
         this.event.organizer_id = result.data.organizer.name
         this.event.starts_at = result.data.starts_at
@@ -427,6 +423,23 @@ export default {
         this.hadError = 'Não foi possível carregar as informações.'
       }
     },
+    /*
+     * setEventStatus: This method will fire a PUT request and then
+     * redirect to list events page
+     */
+    async setEventStatus (status) {
+      try {
+        const result = await this.axios.put(`/events/${this.party_event_id}/status/${status}`)
+        const res = result.data
+        console.log(res.status)
+        if (res) {
+          // Redirect to the Event views
+          await this.$router.push({ name: 'ListEvent' })
+        }
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
     async updatePartyEvent () {
       this.isRequesting = true
       try {
@@ -478,6 +491,10 @@ export default {
 
 .session-card:hover {
   box-shadow: 0 0 11px rgba(33,33,33,.2);
+  cursor: pointer;
+}
+
+.dropdown-item {
   cursor: pointer;
 }
 </style>
