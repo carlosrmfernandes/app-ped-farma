@@ -69,7 +69,10 @@ export default {
      */
     async getOrganizers (type, sort = '', search = '', size) {
       this.isRequesting = true
-
+      var sorters = []
+      if (sort) {
+        sorters.push(sort)
+      }
       if (type === 'next') {
         this.pagination.pageable.pageNumber += 1
       }
@@ -82,7 +85,7 @@ export default {
       let query = ''
       query += `pageNumber=${this.pagination.pageable.pageNumber}`
       query += size ? `&pageSize=${size}` : `&pageSize=${this.pagination.perPage}`
-      // query += sort ? `&sortBy=${sort}` : ''
+      query += sort ? `&sorters=${sorters}` : ''
       query += search ? `&search=${search}` : ''
 
       try {
