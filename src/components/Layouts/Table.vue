@@ -45,7 +45,7 @@
               </label>
               <!-- <span>Tudo</span> -->
               </th>
-              <th class="header-table" v-for="(col, index) in cols" :key="index" ><i class="fa fa-sort" aria-hidden="true" style="margin-right: 3px;"></i>{{ col.label }}</th>
+              <th class="header-table" v-for="(col, index) in cols" :key="index" @click="Sort(col.name)"><i class="fa fa-sort" aria-hidden="true" style="margin-right: 3px;"></i>{{ col.label }}</th>
             </tr>
           </thead>
           <tbody>
