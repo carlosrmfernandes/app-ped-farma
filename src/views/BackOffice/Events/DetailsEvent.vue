@@ -11,7 +11,7 @@
             <a class="dropdown-item" @click="setEventStatus('DRAFT')">Rascunho</a>
             <a class="dropdown-item" @click="setEventStatus('CURRENT')">Activo</a>
             <a class="dropdown-item" @click="setEventStatus('UPCOMING')">Brevemente</a>
-            <a class="dropdown-item" @click="setEventStatus('COMPLETE')">Passado</a>
+            <a class="dropdown-item" @click="setEventStatus('COMPLETED')">Passado</a>
           </div>
         </div>
         <b-button
@@ -431,7 +431,7 @@ export default {
       try {
         const result = await this.axios.put(`/events/${this.party_event_id}/status/${status}`)
         const res = result.data
-        console.log(res.status)
+
         if (res) {
           // Redirect to the Event views
           await this.$router.push({ name: 'ListEvent' })
