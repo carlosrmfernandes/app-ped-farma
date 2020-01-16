@@ -228,7 +228,11 @@
         </div>
       </div>
       <div class="panel-body mt-3">
-        <p>Sessões</p>
+        <p>Sessões
+          <router-link v-bind:to="'/events/' + party_event_id + '/sessions/new'">
+            <button class="btn btn-sm btn-success float-right">Nova Sessão</button>
+          </router-link>
+        </p>
         <MiniTable
           :cols="cols"
           :data="sessions"
@@ -491,8 +495,8 @@ export default {
         const res = result.data
 
         if (res) {
-          // Redirect to the Event views
-          await this.$router.push({ name: 'ListEvent' })
+          // redirect to event details page
+          await this.$router.push({ name: 'DetailsEvent', id: this.party_event_id })
         }
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'

@@ -23,6 +23,7 @@ import RegistEvent from '@/views/BackOffice/Events/RegistEvent'
 import ListEvent from '@/views/BackOffice/Events/ListEvent'
 import EditEvent from '@/views/BackOffice/Events/EditEvent'
 import DetailsEvent from '@/views/BackOffice/Events/DetailsEvent'
+import SessionEvent from '@/views/BackOffice/Events/SessionEvent'
 
 // Companies
 import RegistCompany from '@/views/BackOffice/Companies/RegistCompany'
@@ -208,14 +209,14 @@ const Events = [{
   name: 'ListEvent',
   component: View,
   meta: {
-    title: 'Listar Eventos'
+    title: 'Eventos'
   },
   children: [{
     path: '/',
     name: 'ListEvent',
     component: ListEvent,
     meta: {
-      title: 'Listar Eventos'
+      title: 'Eventos'
     }
   },
   {
@@ -241,6 +242,15 @@ const Events = [{
     component: DetailsEvent,
     meta: {
       title: 'Detalhes do Evento'
+    },
+    props: true
+  },
+  {
+    path: ':id/sessions/new',
+    name: 'SessionEvent',
+    component: SessionEvent,
+    meta: {
+      title: 'Adicionar Sessão'
     },
     props: true
   }
