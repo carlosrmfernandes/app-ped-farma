@@ -501,9 +501,6 @@
             <div class="loading-dots--dot"></div>
           </div>
         </b-button>
-        <button class="btn btn-dark btn-sm mb-5 col-md-2 ml-3">
-          <span>Adicionar Sessão</span>
-        </button>
       </section>
       <!-- ends step two section -->
       <section v-if="step === 3">

@@ -201,12 +201,7 @@
                   width="140px"
                   height="185px"
                   name="backdrop"
-                  v-validate="'required'"
-                  data-vv-as="Backdrop"
                 />
-                <span v-show="errors.has('backdrop')" class="help is-danger">{{
-                errors.first("backdrop")
-              }}</span>
               </div>
               <div class="col-md-4">
                 Poster
@@ -216,12 +211,7 @@
                   width="140px"
                   height="185px"
                   name="poster"
-                  v-validate="'required'"
-                  data-vv-as="Poster"
                 />
-                <span v-show="errors.has('poster')" class="help is-danger">{{
-                errors.first("poster")
-              }}</span>
               </div>
             </div>
           </div>
@@ -253,11 +243,78 @@
         />
         <div class="row">
           <div class="col-md-6">
-            <p>Patrocinadores</p>
+            <p>
+              Patrocinadores
+              <button class="btn btn-sm btn-success float-right" @click="toggleModal('addSponsorsToEvent')" data-target="#addSponsorsToEvent">Adicionar Patrocinador(es)</button>
+            </p>
+            <!-- Modal -->
+            <b-modal ref="addSponsorsToEvent" id="addSponsorsToEvent" title="Adicionar Patrocinador(es)">
+              <div class="d-block text-center">
+                <div class="form-group">
+                  <label for="title">Nome do Evento</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="event.title"
+                    name="title"
+                    placeholder="Nome do evento"
+                    disabled
+                  />
+                </div><!-- Nome do evento -->
+
+                <div class="form-group">
+                  <label for="decks">Patrocinadores</label>
+                  <select
+                    multiple
+                    required
+                    id="sponsors"
+                    :class="{
+                              'form-control': true,
+                              'is-input-danger': errors.has('sponsors')
+                            }"
+                    v-model="sponsorIds"
+                    name="sponsorIds"
+                    v-validate="'required'"
+                    data-vv-as="Patrocinador(es)"
+                  >
+                    <option
+                      v-for="sponsor in sponsors"
+                      :value="sponsor.id"
+                      :key="sponsor.name"
+                    >{{ sponsor.name }}</option
+                    >
+                  </select>
+                  <span v-show="errors.has('sponsorIds')" class="help is-danger">
+                    {{ errors.first("sponsorIds") }}
+                  </span>
+                </div>
+              </div>
+              <template v-slot:modal-footer>
+                <div class="w-100">
+                  <b-button @click="hideModal('addSponsorsToEvent')"
+                            class="btn-sm mr-2"
+                  >Cancelar</b-button>
+                  <b-button
+                    variant="primary"
+                    size="lg"
+                    class="btn btn-primary btn-sm"
+                    :disabled="isRequesting ? true : false"
+                    @click="addSponsorsToEvent"
+                  >
+                    <span v-if="!isRequesting">Adicionar</span>
+                    <div class="loading-dots" v-if="isRequesting">
+                      <div class="loading-dots--dot"></div>
+                      <div class="loading-dots--dot"></div>
+                      <div class="loading-dots--dot"></div>
+                    </div>
+                  </b-button>
+                </div>
+              </template>
+            </b-modal> <!-- Modal add deck to event -->
             <MiniTable
-              :cols="suplier_cols"
-              :data="supliers"
-              title="Supliers"
+              :cols="sponsor_cols"
+              :data="event_sponsors"
+              title="Patrocinadores"
               :searchMethod="getEventSponsors"
               :pagination="pagination"
               :paginationMethod="getEventSponsors"
@@ -265,7 +322,7 @@
               :needGrid="false"
               :changePage="changePage"
               resource="supliers"
-              editRoute="EditSuplier"
+              editRoute="EditSponsor"
               :pageCount="pageCount"
               :removeResource="removeSession"
               registRoute="RegistSuplier"
@@ -274,7 +331,75 @@
             />
           </div>
           <div class="col-md-6">
-            <p>Decks</p>
+            <p>
+                Decks
+                <!-- Button trigger modal -->
+                <button class="btn btn-sm btn-success float-right" @click="toggleModal('addDecksToEvent')" data-target="#addDecksToEvent">Adicionar Deck(s)</button>
+            </p>
+            <!-- Modal -->
+            <b-modal ref="addDecksToEvent" id="addDecksToEvent" title="Adicionar Deck(s)">
+              <div class="d-block text-center">
+                <div class="form-group">
+                  <label for="title">Nome do Evento</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="event.title"
+                    name="title"
+                    placeholder="Nome do evento"
+                    disabled
+                  />
+                </div><!-- Nome do evento -->
+
+                <div class="form-group">
+                  <label for="decks">Decks</label>
+                  <select
+                    multiple
+                    required
+                    id="decks"
+                    :class="{
+                              'form-control': true,
+                              'is-input-danger': errors.has('decks')
+                            }"
+                    v-model="deckIds"
+                    name="deckIds"
+                    v-validate="'required'"
+                    data-vv-as="Deck(s)"
+                  >
+                    <option
+                      v-for="deck in collection_decks"
+                      :value="deck.id"
+                      :key="deck.id"
+                    >{{ deck.name }}</option
+                    >
+                  </select>
+                  <span v-show="errors.has('decks')" class="help is-danger">
+                    {{ errors.first("decks") }}
+                  </span>
+                </div>
+              </div>
+              <template v-slot:modal-footer>
+                <div class="w-100">
+                  <b-button @click="hideModal('addDecksToEvent')"
+                    class="btn-sm mr-2"
+                  >Cancelar</b-button>
+                  <b-button
+                    variant="primary"
+                    size="lg"
+                    class="btn btn-primary btn-sm"
+                    :disabled="isRequesting ? true : false"
+                    @click="addDecksToEvent"
+                  >
+                    <span v-if="!isRequesting">Adicionar</span>
+                    <div class="loading-dots" v-if="isRequesting">
+                      <div class="loading-dots--dot"></div>
+                      <div class="loading-dots--dot"></div>
+                      <div class="loading-dots--dot"></div>
+                    </div>
+                  </b-button>
+                </div>
+              </template>
+            </b-modal> <!-- Modal add deck to event -->
             <MiniTable
               :cols="deck_cols"
               :data="decks"
@@ -291,6 +416,32 @@
               :removeResource="removeSession"
               registRoute="RegistSession"
               buttonRegistName = "Lista de Decks"
+              :canRemove = false
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p>
+              Tipos de Ticket
+              <button class="btn btn-sm btn-success float-right" @click="toggleModal" data-target="#addTicketsToEvent">Adicionar Ticket(s)</button>
+            </p>
+            <MiniTable
+              :cols="ticketTypes_cols"
+              :data="ticketTypes"
+              title="Tickets"
+              :searchMethod="getEventTicketsType"
+              :pagination="pagination"
+              :paginationMethod="getEventTicketsType"
+              :sortMethod="getEventTicketsType"
+              :needGrid="false"
+              :changePage="changePage"
+              resource="tickets"
+              editRoute="EditTicketType"
+              :pageCount="pageCount"
+              :removeResource="removeTicketType"
+              registRoute="addTicketType"
+              buttonRegistName = "Lista de Tickets"
               :canRemove = false
             />
           </div>
@@ -340,12 +491,15 @@ export default {
         { name: 'ends_at', label: 'Data de Termino' }
       ],
       decks: [],
-      suplier_cols: [
+      deckIds: [],
+      sponsor_cols: [
         { name: 'name', label: 'Nome' },
         { name: 'email', label: 'Email' },
         { name: 'phone_number', label: 'Telefone' }
       ],
-      supliers: [],
+      event_sponsors: [],
+      sponsorIds: [],
+      sponsors: [],
       cols: [
         { name: 'type', label: 'Tipo' },
         { name: 'price', label: 'Preço' },
@@ -367,10 +521,25 @@ export default {
       session_products: [],
       session_tickets: [],
       locations: '',
-      organizers: ''
+      organizers: '',
+      ticketTypes_cols: [
+        { name: 'name', label: 'Nome' }
+      ],
+      ticketTypes: [],
+      collection_decks: [],
+      notDeckIds: []
     }
   },
   methods: {
+    hideModal: function (modal) {
+      // this.$refs[`${modal}`].hide()
+      this.$root.$emit('bv::hide::modal', `${modal}`, '#btnShow')
+    },
+    toggleModal: function (modal) {
+      // We pass the ID of the button that we want to return focus to
+      // when the modal has hidden
+      this.$refs[`${modal}`].toggle('#toggle-btn')
+    },
     /*
      * getEventStep: This method will fire a GET request and then
      * assign the response data into the state property: form
@@ -485,6 +654,15 @@ export default {
         this.hadError = 'Não foi possível carregar as informações.'
       }
     },
+    async getSponsors () {
+      try {
+        const result = await this.axios.get(`/sponsors`)
+        const res = result.data
+        this.sponsors = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
     /*
      * setEventStatus: This method will fire a PUT request and then
      * redirect to list events page
@@ -504,11 +682,13 @@ export default {
     },
     async getEventDecks () {
       try {
-        const result = await this.axios.get(`/decks?eventIds=${this.party_event_id}`)
+        const result = await this.axios.get(`/decks?eventIds=${this.party_event_id}&currentOnly=false`)
         const res = result.data
         const itemsCount = result.data.items_count
 
         for (let i = 0; i < itemsCount; i++) {
+          this.notDeckIds[i] = res.data[i].id
+
           this.decks.push({
             id: res.data[i].id,
             name: res.data[i].name,
@@ -530,7 +710,7 @@ export default {
         const itemsCount = result.data.items_count
 
         for (let i = 0; i < itemsCount; i++) {
-          this.supliers.push({
+          this.event_sponsors.push({
             id: res.data[i].id,
             name: res.data[i].name,
             email: res.data[i].email,
@@ -573,6 +753,93 @@ export default {
         console.log(e)
       }
       this.isRequesting = false
+    },
+    async getEventTicketsType () {
+      try {
+        const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
+        const res = result.data
+        const itemsCount = result.data.items_count
+
+        for (let i = 0; i < itemsCount; i++) {
+          this.ticketTypes.push({
+            id: res.data[i].id,
+            name: res.data[i].name
+          })
+        }
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
+    async getDecks () {
+      try {
+        const result = await this.axios.get(`/decks?notIds=${this.notDeckIds}`)
+        const res = result.data
+        this.collection_decks = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
+    async addDecksToEvent () {
+      this.hadError = ''
+      const result = await this.$validator.validateAll()
+
+      if (result) {
+        this.isRequesting = true
+
+        try {
+          // Fire the POST request
+          const res = await this.axios({
+            url: `/events/${this.party_event_id}/decks`,
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+              deckIds: this.deckIds
+            }
+          })
+
+          if (res) {
+            this.hideModal('addTicketsToEvent')
+          }
+        } catch (e) {
+          this.hadError =
+            'Não foi possível realizar esta operação. Tente novamente'
+          console.log(e)
+        }
+        this.isRequesting = false
+      } else {
+        return result
+      }
+    },
+    async addSponsorsToEvent () {
+      this.hadError = ''
+      const result = await this.$validator.validateAll()
+
+      if (result) {
+        this.isRequesting = true
+
+        try {
+          // Fire the POST request
+          const res = await this.axios({
+            url: `/sponsor_events`,
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+              eventId: this.party_event_id,
+              sponsorsIds: this.sponsorIds
+            }
+          })
+          if (res) {
+            this.hideModal('addSponsorsToEvent')
+          }
+        } catch (e) {
+          this.hadError =
+            'Não foi possível realizar esta operação. Tente novamente'
+          console.log(e)
+        }
+        this.isRequesting = false
+      } else {
+        return result
+      }
     }
   },
   created () {
@@ -580,7 +847,10 @@ export default {
     this.getLocations()
     this.getEvent()
     this.getEventDecks()
+    this.getDecks()
     this.getEventSponsors()
+    this.getSponsors()
+    this.getEventTicketsType()
     this.getEventSessions()
   }
 }
