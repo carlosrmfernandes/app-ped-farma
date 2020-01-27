@@ -91,6 +91,19 @@
               }}</span>
             </div>
           </div>
+           <div class="col-md-3">
+            <div class="form-group">
+              <label for="event-name">Status</label>
+              <select class="custom-select" v-model="form.status">
+                <option disabled value="">Choose...</option>
+                <option
+                  :value="stat.id"
+                  v-for="(stat, index) of status"
+                  :key="index"
+                >{{stat.name}}</option>
+              </select>
+            </div>
+          </div>
       </div>
       <div class="row">
         <div class="col-md-1" >
@@ -126,6 +139,13 @@ export default {
       orientations: [
         { id: 'PORTRAIT', name: 'Retrato' },
         { id: 'LANDSCAPE', name: 'Panorama' }
+      ],
+      status: [
+        { id: 'DRAFT', name: 'Rascunho' },
+        { id: 'UPCOMING', name: 'Brevemente' },
+        { id: 'CURRENT', name: 'Activo' },
+        { id: 'INACTIVE', name: 'Desactivado' },
+        { id: 'COMPLETED', name: 'Passado' }
       ],
       hadError: '',
       isRequesting: false,
