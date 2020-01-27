@@ -774,7 +774,6 @@ export default {
             this.party_event_id = res.data.id
             // Get ticket types
             this.getTicketTypes()
-            console.log(this.ticket_types)
             // Next step
             this.step++
           }

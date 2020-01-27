@@ -11,7 +11,7 @@
             <a class="dropdown-item" @click="setEventStatus('DRAFT')">Rascunho</a>
             <a class="dropdown-item" @click="setEventStatus('CURRENT')">Activo</a>
             <a class="dropdown-item" @click="setEventStatus('UPCOMING')">Brevemente</a>
-            <a class="dropdown-item" @click="setEventStatus('COMPLETE')">Passado</a>
+            <a class="dropdown-item" @click="setEventStatus('COMPLETED')">Passado</a>
           </div>
         </div>
         <b-button
@@ -228,7 +228,11 @@
         </div>
       </div>
       <div class="panel-body mt-3">
-        <p>Sessões</p>
+        <p>Sessões
+          <router-link v-bind:to="'/events/' + party_event_id + '/sessions/new'">
+            <button class="btn btn-sm btn-success float-right">Nova Sessão</button>
+          </router-link>
+        </p>
         <MiniTable
           :cols="cols"
           :data="sessions"
@@ -247,6 +251,50 @@
           buttonRegistName = "Adicionar Sessão"
           :canRemove = false
         />
+        <div class="row">
+          <div class="col-md-6">
+            <p>Patrocinadores</p>
+            <MiniTable
+              :cols="suplier_cols"
+              :data="supliers"
+              title="Supliers"
+              :searchMethod="getEventSponsors"
+              :pagination="pagination"
+              :paginationMethod="getEventSponsors"
+              :sortMethod="getEventSponsors"
+              :needGrid="false"
+              :changePage="changePage"
+              resource="supliers"
+              editRoute="EditSuplier"
+              :pageCount="pageCount"
+              :removeResource="removeSession"
+              registRoute="RegistSuplier"
+              buttonRegistName = "Lista de Patrocinadores"
+              :canRemove = false
+            />
+          </div>
+          <div class="col-md-6">
+            <p>Decks</p>
+            <MiniTable
+              :cols="deck_cols"
+              :data="decks"
+              title="Decks"
+              :searchMethod="getEventDecks"
+              :pagination="pagination"
+              :paginationMethod="getEventDecks"
+              :sortMethod="getEventDecks"
+              :needGrid="false"
+              :changePage="changePage"
+              resource="decks"
+              editRoute="EditDeck"
+              :pageCount="pageCount"
+              :removeResource="removeSession"
+              registRoute="RegistSession"
+              buttonRegistName = "Lista de Decks"
+              :canRemove = false
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -283,6 +331,21 @@ export default {
         poster_path: '',
         backdrop_path: ''
       },
+      deck_cols: [
+        { name: 'name', label: 'Nome' },
+        { name: 'number', label: 'Número' },
+        { name: 'orientation', label: 'Orientação' },
+        { name: 'status', label: 'Estado' },
+        { name: 'starts_at', label: 'Data de Inicio' },
+        { name: 'ends_at', label: 'Data de Termino' }
+      ],
+      decks: [],
+      suplier_cols: [
+        { name: 'name', label: 'Nome' },
+        { name: 'email', label: 'Email' },
+        { name: 'phone_number', label: 'Telefone' }
+      ],
+      supliers: [],
       cols: [
         { name: 'type', label: 'Tipo' },
         { name: 'price', label: 'Preço' },
@@ -292,7 +355,6 @@ export default {
         { name: 'ends_at', label: 'Data de Termino' }
       ],
       isRequesting: false,
-      decks: [],
       pagination: {
         perPage: 12,
         pageable: { pageNumber: 1 }
@@ -431,10 +493,49 @@ export default {
       try {
         const result = await this.axios.put(`/events/${this.party_event_id}/status/${status}`)
         const res = result.data
-        console.log(res.status)
+
         if (res) {
-          // Redirect to the Event views
-          await this.$router.push({ name: 'ListEvent' })
+          // redirect to event details page
+          await this.$router.push({ name: 'DetailsEvent', id: this.party_event_id })
+        }
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
+    async getEventDecks () {
+      try {
+        const result = await this.axios.get(`/decks?eventIds=${this.party_event_id}`)
+        const res = result.data
+        const itemsCount = result.data.items_count
+
+        for (let i = 0; i < itemsCount; i++) {
+          this.decks.push({
+            id: res.data[i].id,
+            name: res.data[i].name,
+            number: res.data[i].number,
+            orientation: res.data[i].orientation,
+            status: res.data[i].status,
+            starts_at: res.data[i].starts_at,
+            ends_at: res.data[i].ends_at
+          })
+        }
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
+    async getEventSponsors () {
+      try {
+        const result = await this.axios.get(`/sponsors?eventIds=${this.party_event_id}`)
+        const res = result.data
+        const itemsCount = result.data.items_count
+
+        for (let i = 0; i < itemsCount; i++) {
+          this.supliers.push({
+            id: res.data[i].id,
+            name: res.data[i].name,
+            email: res.data[i].email,
+            phone_number: res.data[i].phone_number
+          })
         }
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
@@ -478,6 +579,8 @@ export default {
     this.getOrganizers()
     this.getLocations()
     this.getEvent()
+    this.getEventDecks()
+    this.getEventSponsors()
     this.getEventSessions()
   }
 }
