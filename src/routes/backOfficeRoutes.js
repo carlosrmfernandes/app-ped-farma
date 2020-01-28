@@ -24,6 +24,7 @@ import ListEvent from '@/views/BackOffice/Events/ListEvent'
 import EditEvent from '@/views/BackOffice/Events/EditEvent'
 import DetailsEvent from '@/views/BackOffice/Events/DetailsEvent'
 import SessionEvent from '@/views/BackOffice/Events/SessionEvent'
+import EditSessionEvent from '@/views/BackOffice/Events/EditSessionEvent'
 
 // Companies
 import RegistCompany from '@/views/BackOffice/Companies/RegistCompany'
@@ -251,6 +252,15 @@ const Events = [{
     component: SessionEvent,
     meta: {
       title: 'Adicionar Sessão'
+    },
+    props: true
+  },
+  {
+    path: ':id/sessions/:id/edit',
+    name: 'EditSessionEvent',
+    component: EditSessionEvent,
+    meta: {
+      title: 'Editar Sessão'
     },
     props: true
   }

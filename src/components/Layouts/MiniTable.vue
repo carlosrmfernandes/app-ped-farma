@@ -25,7 +25,7 @@
                 <div class="square"></div>
               </label>
             </td>
-            <td v-for="(col, index) in cols" :key="index">{{row[col.name]}}</td>
+            <td v-for="(col, index) in cols" :key="index" @click="clickArrow({ name: editRoute, params: { id: row.id } })">{{row[col.name]}}</td>
           </tr>
         </tbody>
       </table>
