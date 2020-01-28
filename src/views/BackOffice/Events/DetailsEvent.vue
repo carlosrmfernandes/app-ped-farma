@@ -234,7 +234,7 @@
           :needGrid="false"
           :changePage="changePage"
           resource="sessions"
-          editRoute="EditSession"
+          editRoute="EditSessionEvent"
           :pageCount="pageCount"
           :removeResource="removeSession"
           registRoute="RegistSession"
@@ -424,8 +424,48 @@
           <div class="col-md-3">
             <p>
               Tipos de Ticket
-              <button class="btn btn-sm btn-success float-right" @click="toggleModal" data-target="#addTicketsToEvent">Adicionar Ticket(s)</button>
+              <button class="btn btn-sm btn-success float-right" @click="toggleModal('addTicketTypesToEvent')" data-target="#addTicketTypesToEvent">Adicionar Ticket(s)</button>
             </p>
+
+            <!-- Modal -->
+            <b-modal ref="addTicketTypesToEvent" id="addTicketTypesToEvent" title="Adicionar Tipo Ticket(s)">
+              <div class="d-block text-center">
+                <div class="form-group">
+                  <label for="title">Nome</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="ticket.name"
+                    placeholder="Ex.: VIP"
+                    name="ticket.name"
+                    v-validate="'required'"
+                    data-vv-as="Nome do Ticket"
+                  />
+                </div><!-- Quantidade do ticket -->
+              </div>
+              <template v-slot:modal-footer>
+                <div class="w-100">
+                  <b-button @click="hideModal('addTicketTypesToEvent')"
+                            class="btn-sm mr-2"
+                  >Cancelar</b-button>
+                  <b-button
+                    variant="primary"
+                    size="lg"
+                    class="btn btn-primary btn-sm"
+                    :disabled="isRequesting ? true : false"
+                    @click="addTicketTypesToEvent"
+                  >
+                    <span v-if="!isRequesting">Adicionar</span>
+                    <div class="loading-dots" v-if="isRequesting">
+                      <div class="loading-dots--dot"></div>
+                      <div class="loading-dots--dot"></div>
+                      <div class="loading-dots--dot"></div>
+                    </div>
+                  </b-button>
+                </div>
+              </template>
+            </b-modal> <!-- Modal add deck to event -->
+
             <MiniTable
               :cols="ticketTypes_cols"
               :data="ticketTypes"
@@ -481,6 +521,9 @@ export default {
         video_id: '',
         poster_path: '',
         backdrop_path: ''
+      },
+      ticket: {
+        name: ''
       },
       deck_cols: [
         { name: 'name', label: 'Nome' },
@@ -759,7 +802,7 @@ export default {
         const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
         const res = result.data
         const itemsCount = result.data.items_count
-
+        // event_id
         for (let i = 0; i < itemsCount; i++) {
           this.ticketTypes.push({
             id: res.data[i].id,
@@ -768,6 +811,38 @@ export default {
         }
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
+    async addTicketTypesToEvent () {
+      this.hadError = ''
+      const result = await this.$validator.validateAll()
+
+      if (result) {
+        this.isRequesting = true
+
+        try {
+          // Fire the POST request
+          const res = await this.axios({
+            url: `/events/${this.party_event_id}/ticket_types`,
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+              event_id: this.party_event_id,
+              name: this.ticket.name.toUpperCase()
+            }
+          })
+
+          if (res) {
+            this.hideModal('addTicketTypesToEvent')
+          }
+        } catch (e) {
+          this.hadError =
+            'Não foi possível realizar esta operação. Tente novamente'
+          console.log(e)
+        }
+        this.isRequesting = false
+      } else {
+        return result
       }
     },
     async getDecks () {
@@ -798,7 +873,7 @@ export default {
           })
 
           if (res) {
-            this.hideModal('addTicketsToEvent')
+            this.hideModal('addDecksToEvent')
           }
         } catch (e) {
           this.hadError =
