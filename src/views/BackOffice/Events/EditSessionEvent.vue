@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h3>Editar Sessão</h3>
+      <h3>Editar Sessão {{ party_event_id }}</h3>
     </div>
     <div class="panel-body">
       <div class="row mt-5">
@@ -56,14 +56,12 @@
                 v-for="location in locations"
                 :value="location.id"
                 :key="location.id"
-              >{{ location.name }}</option
-              >
+              >{{ location.name }}</option>
             </select>
             <span
               v-show="errors.has('event_session.location_id')"
               class="help is-danger"
-            >{{ errors.first("event_session.location_id") }}</span
-            >
+            >{{ errors.first("event_session.location_id") }}</span>
           </div>
         </div>
         <div class="col-md-3">
@@ -85,154 +83,30 @@
             <span
               v-show="errors.has('event_session.price')"
               class="help is-danger"
-            >{{ errors.first("event_session.price") }}</span
-            >
+            >{{ errors.first("event_session.price") }}</span>
           </div>
         </div>
       </div>
-      <div class="jumbotron">
-        <h2>Tickets</h2>
-        <div class="row" :key="tickets.id"  v-for="(tickets, index) in collection_tickets">
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="ticket_amount">Quantidade</label>
-              <input
-                type="number"
-                :class="{
-                    'form-control': true,
-                    'is-input-danger': errors.has('tickets.amount')
-                  }"
-                placeholder="Ex.: 1100"
-                v-validate="'required'"
-                data-vv-as="Quantidade"
-                v-model="tickets.amount"
-                name="tickets.amount"
-                id="ticket_amount"
-              />
-              <span
-                v-show="errors.has('tickets.amount')"
-                class="help is-danger"
-              >{{ errors.first("tickets.amount") }}</span
-              >
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="ticket_price">Preço</label>
-              <input
-                type="number"
-                :class="{
-                    'form-control': true,
-                    'is-input-danger': errors.has('tickets.price')
-                  }"
-                placeholder="Ex.: 5500"
-                v-validate="'required'"
-                data-vv-as="Preço"
-                name="tickets.price"
-                v-model="tickets.price"
-                id="ticket_price"
-              />
-              <span
-                v-show="errors.has('tickets.price')"
-                class="help is-danger"
-              >{{ errors.first("tickets.price") }}</span
-              >
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="ticket_type">Tipo</label>
-              <select
-                required
-                v-model="tickets.ticket_type"
-                :class="{
-                    'form-control': true,
-                    'is-input-danger': errors.has('tickets.ticket_type')
-                  }"
-                name="tickets.ticket_type"
-                v-validate="'required'"
-                data-vv-as="Tipo"
-              >
-                <option selected
-                        :key="ticket.id"
-                        v-for="ticket in ticket_types"
-                        :value="ticket.name"
-                        id="ticket_type">{{ ticket.name }}</option>
-              </select>
-              <span
-                v-show="errors.has('tickets.ticket_type')"
-                class="help is-danger"
-              >{{ errors.first("tickets.ticket_type") }}</span
-              >
-            </div>
-          </div>
-          <div v-show="index !== 0" class="col-md-3 mt-4 pt-2">
-            <button v-on:click="removeTicket(index)" class="btn btn-danger btn-sm">Remover</button>
-          </div>
-        </div>
-        <!-- End tickets section -->
-        <button class="btn btn-primary btn-sm" v-on:click="addTicket">Adicionar Ticket</button>
-      </div>
-      <div class="jumbotron">
-        <h2>Produtos</h2>
-        <div class="row" :key="products.id" v-for="(products, index) in collection_products">
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="products.company_product_id">Produto</label>
-              <select
-                required
-                id="products.company_product_id"
-                :class="{
-                    'form-control': true
-                  }"
-                v-model="products.company_product_id"
-                name="products.company_product_id"
-              >
-                <option
-                  v-for="product in company_products"
-                  :value="product.id"
-                  :key="product.id"
-                >{{ product.name }}</option
-                >
-              </select>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="amount">Quantidade</label>
-              <input
-                type="number"
-                :class="{
-                    'form-control': true
-                  }"
-                placeholder="Ex.: 3500"
-                v-model="products.amount"
-                name="products.amount"
-                id="amount"
-              />
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="price">Preço</label>
-              <input
-                type="number"
-                :class="{
-                    'form-control': true
-                  }"
-                placeholder="Ex.: 5000"
-                name="products.price"
-                v-model="products.price"
-                id="price"
-              />
-            </div>
-          </div>
-          <div v-show="index !== 0" class="col-md-3 mt-4 pt-2">
-            <button v-on:click="removeProduct(index)" class="btn btn-danger btn-sm">Remover</button>
-          </div>
-        </div>
-        <button v-on:click="addProduct" class="btn btn-primary btn-sm">Adicionar Produto</button>
-      </div>
+      <!--   Tickets table   -->
+      <MiniTable
+        :cols="cols"
+        :data="tickets"
+        title="Sessions"
+        :searchMethod="getSessionsTickets"
+        :pagination="pagination"
+        :paginationMethod="getSessionsTickets"
+        :sortMethod="getSessionsTickets"
+        :needGrid="false"
+        :changePage="changePage"
+        resource="sessions"
+        editRoute="EditSessionTicket"
+        :pageCount="pageCount"
+        :removeResource="removeSessionTicket"
+        registRoute="RegistSession"
+        buttonRegistName = "Adicionar Sessão"
+        :canRemove = false
+      />
+      <!--   Products table   -->
       <b-button
         variant="primary"
         size="md ml-2 mb-4"
@@ -262,17 +136,11 @@ export default {
   data: function () {
     return {
       party_event_id: this.id,
+      event_session_id: this.id,
       locations: '',
-      organizers: '',
-      organizer_id: '',
       classifications: '',
-      poster: '',
-      backdrop: '',
       classification: '',
       title: '',
-      tags: '',
-      decks: [],
-      collection_decks: [],
       description: '',
       starts_at: '',
       video_id: '',
@@ -285,8 +153,6 @@ export default {
       company_products: '',
       tickets: {},
       collection_tickets: [],
-      sponsors: {},
-      sponsors_id: [],
       event_ticket_types: [],
       ticket_types: [],
       isRequesting: false,
@@ -329,10 +195,7 @@ export default {
       try {
         this.event_session.price = parseInt(this.event_session.price, 10)
 
-        this.products.amount = parseInt(
-          this.products.amount,
-          10
-        )
+        this.products.amount = parseInt(this.products.amount, 10)
         this.products.price = parseInt(this.products.price, 10)
 
         this.tickets.amount = parseInt(this.tickets.amount, 10)
@@ -358,7 +221,10 @@ export default {
 
         if (res) {
           // redirect to event details page
-          await this.$router.push({ name: 'DetailsEvent', id: this.party_event_id })
+          await this.$router.push({
+            name: 'DetailsEvent',
+            id: this.party_event_id
+          })
         }
       } catch (e) {
         this.hadError =
@@ -369,7 +235,9 @@ export default {
     },
     async getTicketTypes () {
       try {
-        const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
+        const result = await this.axios.get(
+          `/events/${this.party_event_id}/ticket_types`
+        )
         const res = result.data
         this.ticket_types = res.data
       } catch (e) {
@@ -380,13 +248,21 @@ export default {
       this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })
     },
     removeTicket: function (index) {
-      if (index !== 0) { this.collection_tickets.splice(index, 1) }
+      if (index !== 0) {
+        this.collection_tickets.splice(index, 1)
+      }
     },
     addProduct: function () {
-      this.collection_products.push({ amount: '', price: '', company_product_id: '' })
+      this.collection_products.push({
+        amount: '',
+        price: '',
+        company_product_id: ''
+      })
     },
     removeProduct: function (index) {
-      if (index !== 0) { this.collection_products.splice(index, 1) }
+      if (index !== 0) {
+        this.collection_products.splice(index, 1)
+      }
     }
   },
   created () {
@@ -401,5 +277,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
