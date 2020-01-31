@@ -140,15 +140,29 @@
           </div> -->
           <div class="col-md-3">
             <div class="form-group">
-              <label for="event-name">Disponibilidade do Evento</label>
-              <select class="custom-select" :disabled="isEditable" v-model="form.events_availability">
-                <option disabled value="">Choose...</option>
+              <label for="available_event_statuses">Status de Eventos Disponíveis</label>
+              <select
+                :disabled="isEditable"
+                multiple
+                required
+                id="available_event_statuses"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('form.available_event_statuses')
+                }"
+                v-model="form.available_event_statuses"
+                v-validate="'required'"
+                data-vv-as="Status de Eventos Disponíveis"
+              >
                 <option
                   :value="stat.id"
-                  v-for="(stat, index) of decksStatus"
+                  v-for="(stat, index) of status"
                   :key="index"
                 >{{stat.name}}</option>
               </select>
+              <span v-show="errors.has('decks')" class="help is-danger">{{
+                errors.first("decks")
+              }}</span>
             </div>
           </div>
           <div class="col-md-3 button-status">
@@ -277,11 +291,8 @@ export default {
         { id: 'LANDSCAPE', name: 'Landscape' }
       ],
       status: [
-        { id: 'DRAFT', name: 'Rascunho' },
         { id: 'UPCOMING', name: 'Brevemente' },
-        { id: 'CURRENT', name: 'Activo' },
-        { id: 'INACTIVE', name: 'Desactivado' },
-        { id: 'COMPLETED', name: 'Passado' }
+        { id: 'CURRENT', name: 'Activo' }
       ],
       decksStatus: [
         { id: 'CURRENT', name: 'Activo' },
@@ -561,11 +572,14 @@ export default {
   justify-content: space-between;
 }
 
-.config-row-right{
+.config-row-right {
   display: flex;
   width: 100px;
   justify-content: flex-end;
   align-items: center;
   margin-right: 5px;
 }
+/*select {*/
+/*  color: #ffffff;*/
+/*}*/
 </style>
