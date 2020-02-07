@@ -58,12 +58,8 @@ export default {
       let order = this.sortOrder ? 1 : -1
       let k = 0
       data.forEach(element => {
-        const result = this.axios.get(
-          `/events/${element.id}`
-        )
-        console.log(result)
         if (this.resource === 'event') {
-          data[k]['img'] = `${this.root}party_events/attachments/poster/${result.poster_path}`
+          data[k]['img'] = `${this.root}event_posters/${element.id}/file`
         } else if (this.resource === 'company') {
           data[k]['img'] = `${this.root}/company_logos/${element.logo_path}`
         } else if (this.resource === 'organizer') {
