@@ -197,7 +197,7 @@
                 Backdrop
                 <UploadPhoto
                   :OnChange="SelectBackdrop"
-                  v-model="backdrop"
+                  v-model="event.backdrop"
                   width="140px"
                   height="185px"
                   name="backdrop"
@@ -207,7 +207,7 @@
                 Poster
                 <UploadPhoto
                   :OnChange="SelectPoster"
-                  v-model="poster"
+                  v-model="event.poster"
                   width="140px"
                   height="185px"
                   name="poster"
@@ -519,8 +519,8 @@ export default {
         location_id: '',
         status: '',
         video_id: '',
-        poster_path: '',
-        backdrop_path: ''
+        poster: '',
+        backdrop: ''
       },
       ticket: {
         name: ''
@@ -600,7 +600,12 @@ export default {
         this.event.starts_at = result.data.starts_at
         this.event.classification = result.data.classification
         this.event.video_id = result.data.video_id === 'null' ? '' : result.data.video_id
-        // this.poster_path = result.data.poster_path
+
+        // let posterPath = await this.axios.get(
+        //   `/party_events/attachments/poster/${result.data.poster_path}`
+        // )
+        // console.log('Poster: ', posterPath)
+        // this.event.poster = posterPath
         // this.backdrop_path = result.data.backdrop_path
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
@@ -742,6 +747,8 @@ export default {
             ends_at: res.data[i].ends_at
           })
         }
+
+        console.log(this.notDeckIds)
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -915,6 +922,12 @@ export default {
       } else {
         return result
       }
+    },
+    SelectPoster (file) {
+      this.event.poster = file
+    },
+    SelectBackdrop (file) {
+      this.event.backdrop = file
     }
   },
   created () {

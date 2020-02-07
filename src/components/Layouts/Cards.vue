@@ -63,7 +63,7 @@ export default {
         )
         console.log(result)
         if (this.resource === 'event') {
-          data[k]['img'] = `${this.root}event_posters/${result.poster_path}`
+          data[k]['img'] = `${this.root}party_events/attachments/poster/${result.poster_path}`
         } else if (this.resource === 'company') {
           data[k]['img'] = `${this.root}/company_logos/${element.logo_path}`
         } else if (this.resource === 'organizer') {
