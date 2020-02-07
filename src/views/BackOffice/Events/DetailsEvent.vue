@@ -747,6 +747,8 @@ export default {
             ends_at: res.data[i].ends_at
           })
         }
+
+        console.log(this.notDeckIds)
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -922,10 +924,10 @@ export default {
       }
     },
     SelectPoster (file) {
-      this.poster = file
+      this.event.poster = file
     },
     SelectBackdrop (file) {
-      this.backdrop = file
+      this.event.backdrop = file
     }
   },
   created () {
