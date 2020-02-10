@@ -927,16 +927,14 @@ export default {
     },
     async getPoster () {
       try {
-        const result = await this.axios.get(`/event_posters/${this.party_event_id}/file`)
-        return result
+        return await this.axios.get(`/event_posters/${this.party_event_id}/file`)
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
     },
     async getBackdrop () {
       try {
-        const result = await this.axios.get(`/event_backdrops/${this.party_event_id}/file`)
-        return result
+        return await this.axios.get(`/event_backdrops/${this.party_event_id}/file`)
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
