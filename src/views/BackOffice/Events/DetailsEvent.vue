@@ -198,6 +198,7 @@
                 <UploadPhoto
                   :OnChange="SelectBackdrop"
                   v-model="event.backdrop"
+                  :defaultImage="getBackdrop()"
                   width="140px"
                   height="185px"
                   name="backdrop"
@@ -209,6 +210,7 @@
                   :OnChange="SelectPoster"
                   v-model="event.poster"
                   width="140px"
+                  :defaultImage="getPoster()"
                   height="185px"
                   name="poster"
                 />
@@ -921,6 +923,22 @@ export default {
         this.isRequesting = false
       } else {
         return result
+      }
+    },
+    async getPoster () {
+      try {
+        const result = await this.axios.get(`/event_posters/${this.party_event_id}/file`)
+        return result
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
+    async getBackdrop () {
+      try {
+        const result = await this.axios.get(`/event_backdrops/${this.party_event_id}/file`)
+        return result
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
       }
     },
     SelectPoster (file) {
