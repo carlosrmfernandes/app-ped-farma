@@ -50,47 +50,73 @@
           </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
-              <label for="startsAt">Data de Inicio</label>
-              <input
-                required
-                type="date"
-                :class="{
-                  'form-control': true,
-                  'is-input-danger': errors.has('form.starts_at')
-                }"
-                id="startsAt"
-                v-model="form.starts_at"
-                name="form.starts_at"
-                v-validate="'required'"
-                data-vv-as="Data de Inicio"
-              />
-              <span v-show="errors.has('form.starts_at')" class="help is-danger">{{
-                errors.first("form.starts_at")
-              }}</span>
-            </div>
+          <div class="form-group">
+            <label for="startsAt">Data de Inicio</label>
+            <input
+              required
+              type="date"
+              :class="{
+                'form-control': true,
+                'is-input-danger': errors.has('form.starts_at')
+              }"
+              id="startsAt"
+              v-model="form.starts_at"
+              name="form.starts_at"
+              v-validate="'required'"
+              data-vv-as="Data de Inicio"
+            />
+            <span v-show="errors.has('form.starts_at')" class="help is-danger">{{
+              errors.first("form.starts_at")
+            }}</span>
           </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="startsAt">Data de Termino</label>
-              <input
-                required
-                type="date"
-                :class="{
-                  'form-control': true,
-                  'is-input-danger': errors.has('form.ends_at')
-                }"
-                id="startsEnd"
-                v-model="form.ends_at"
-                name="form.ends_at"
-                v-validate="'required'"
-                data-vv-as="Data de Termino"
-              />
-              <span v-show="errors.has('form.ends_at')" class="help is-danger">{{
-                errors.first("form.ends_at")
-              }}</span>
-            </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="startsAt">Data de Termino</label>
+            <input
+              required
+              type="date"
+              :class="{
+                'form-control': true,
+                'is-input-danger': errors.has('form.ends_at')
+              }"
+              id="startsEnd"
+              v-model="form.ends_at"
+              name="form.ends_at"
+              v-validate="'required'"
+              data-vv-as="Data de Termino"
+            />
+            <span v-show="errors.has('form.ends_at')" class="help is-danger">{{
+              errors.first("form.ends_at")
+            }}</span>
           </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="available_event_statuses">Status de Eventos Disponíveis</label>
+            <select
+              multiple
+              required
+              id="available_event_statuses"
+              :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('form.available_event_statuses')
+                }"
+              v-model="form.available_event_statuses"
+              v-validate="'required'"
+              data-vv-as="Status de Eventos Disponíveis"
+            >
+              <option
+                :value="stat.id"
+                v-for="(stat, index) of status"
+                :key="index"
+              >{{stat.name}}</option>
+            </select>
+            <span v-show="errors.has('decks')" class="help is-danger">{{
+                errors.first("decks")
+              }}</span>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-md-1" >
@@ -126,6 +152,10 @@ export default {
       orientations: [
         { id: 'PORTRAIT', name: 'Retrato' },
         { id: 'LANDSCAPE', name: 'Panorama' }
+      ],
+      status: [
+        { id: 'UPCOMING', name: 'Brevemente' },
+        { id: 'CURRENT', name: 'Activo' }
       ],
       hadError: '',
       isRequesting: false,

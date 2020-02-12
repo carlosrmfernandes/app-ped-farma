@@ -125,6 +125,46 @@
               }}</span>
             </div>
           </div>
+          <!-- <div class="col-md-3">
+            <div class="form-group">
+              <label for="event-name">Status</label>
+              <select class="custom-select" :disabled="isEditable" v-model="form.status">
+                <option disabled value="">Choose...</option>
+                <option
+                  :value="stat.id"
+                  v-for="(stat, index) of status"
+                  :key="index"
+                >{{stat.name}}</option>
+              </select>
+            </div>
+          </div> -->
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="available_event_statuses">Status de Eventos Disponíveis</label>
+              <select
+                :disabled="isEditable"
+                multiple
+                required
+                id="available_event_statuses"
+                :class="{
+                  'form-control': true,
+                  'is-input-danger': errors.has('form.available_event_statuses')
+                }"
+                v-model="form.available_event_statuses"
+                v-validate="'required'"
+                data-vv-as="Status de Eventos Disponíveis"
+              >
+                <option
+                  :value="stat.id"
+                  v-for="(stat, index) of status"
+                  :key="index"
+                >{{stat.name}}</option>
+              </select>
+              <span v-show="errors.has('decks')" class="help is-danger">{{
+                errors.first("decks")
+              }}</span>
+            </div>
+          </div>
           <div class="col-md-3 button-status">
               <label for="startsAt">Alterar Status</label>
               <button type="button" class="btn btn-success btn-sm btn-status"  v-if="alterStatus === 'INACTIVE'"  @click="alterStatusMethods('ACTIVE')">
@@ -225,7 +265,7 @@
   </div>
 </template>
 <script>
-import { removeDeck } from './helpers/functions.js'
+import { removeDeck, removeSettings, addNewSettings, getAllDecks } from './helpers/functions.js'
 import { getDecksEvents, changePage, getAllEvents } from './helpers/events.js'
 import MiniTable from '@/components/Layouts/MiniTable'
 
@@ -250,6 +290,14 @@ export default {
         { id: 'PORTRAIT', name: 'Portrait' },
         { id: 'LANDSCAPE', name: 'Landscape' }
       ],
+      status: [
+        { id: 'UPCOMING', name: 'Brevemente' },
+        { id: 'CURRENT', name: 'Activo' }
+      ],
+      decksStatus: [
+        { id: 'CURRENT', name: 'Activo' },
+        { id: 'UPCOMING', name: 'Brevemente' }
+      ],
       colsEvents: [
         { name: 'title', label: 'Titulo' },
         { name: 'status', label: 'Status' },
@@ -257,10 +305,16 @@ export default {
         { name: 'starts_at', label: 'Data' },
         { name: 'created_at', label: 'Criado Em' }
       ],
+      statues: [],
+      settings: [{
+        status: '',
+        deck_ids: {}
+      }],
       pagination: {
         perPage: 10,
         pageable: { pageNumber: 1 }
       },
+      decks: [2],
       isEditable: true,
       alterStatus: '',
       eventId: '',
@@ -270,6 +324,9 @@ export default {
     }
   },
   methods: {
+    viewvalue () {
+      console.log(this.statues)
+    },
     /*
      *  processForm: This method will validate the form using vee-validate
      *  component and then call the action method defined for this view
@@ -281,7 +338,7 @@ export default {
       return result ? this.updateDeck() : result
     },
     /**
-     * GetOrganizer: This method will fire a GET request and then
+     * GetDecks: This method will fire a GET request and then
      * assign the response data into the state property: form
      */
     async getDeck () {
@@ -296,7 +353,7 @@ export default {
       this.isRequesting = false
     },
     /*
-     *  RegistOrganizer: This method will create a post request to regist a
+     *  updateDeck: This method will create a post request to regist a
      *  new organizer and then redirect to the ListOrganizer component.
      */
     async updateDeck () {
@@ -354,6 +411,9 @@ export default {
       }
       this.isRequesting = false
     },
+    addConfig (selecteds) {
+      console.log(selecteds)
+    },
     changeValue () {
       this.eventsIds = { deck_id: this.id, event_id: this.eventId }
     },
@@ -379,11 +439,15 @@ export default {
     },
     changePage,
     removeDeck,
+    getAllDecks,
     getAllEvents,
-    getDecksEvents
+    getDecksEvents,
+    removeSettings,
+    addNewSettings
   },
   created () {
     this.getDeck()
+    this.getAllDecks()
     this.getDecksEvents()
   }
 }
@@ -410,6 +474,18 @@ export default {
 .button-status{
   display: flex;
   flex-direction: column;
+}
+
+.addOrRemove{
+  padding: 5px;
+  padding-top: 8px;
+  padding-right: 0;
+}
+
+.table-decks{
+  /* padding-left: 15px; */
+  margin: 5px;
+  overflow: auto;
 }
 
 .events-panel{
@@ -446,4 +522,64 @@ export default {
   font-weight: 500;
   cursor: pointer;
 }
+
+.settings{
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.settings-head{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.settings-head-left{
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.settings-head-right{
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.settings-head-right span{
+  font-weight: 500;
+  cursor: pointer;
+}
+.settings-body{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.settings-body-config{
+  width: 100%;
+  height: 250px;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  /* overflow: auto; */
+  padding: 10px;
+}
+
+.settings-body-config-row{
+  justify-content: space-between;
+}
+
+.config-row-right {
+  display: flex;
+  width: 100px;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 5px;
+}
+/*select {*/
+/*  color: #ffffff;*/
+/*}*/
 </style>
