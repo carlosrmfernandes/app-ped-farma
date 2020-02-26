@@ -118,7 +118,7 @@ export default {
       form: {},
       cols: [
         { name: 'title', label: 'Titulo' },
-        { name: 'organizer', label: 'Organizer' },
+        { name: 'organizer_name', label: 'Organizer' },
         { name: 'status', label: 'Status' },
         { name: 'classification', label: 'Classificação' },
         { name: 'type', label: 'Tipo' },

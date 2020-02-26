@@ -80,7 +80,7 @@ export default {
      */
     PreviewFile (event) {
       // Clear the current image in the previewer
-      this.imgSrc = ''
+      this.imgSrc = this.defaultImage
 
       // Instantiate a new FileReader object.
       const Reader = new FileReader()
