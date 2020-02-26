@@ -4,9 +4,14 @@
       <div class="panel-header">
         <h3>Detalhes do Evento</h3>
         <div class="btn-group float-right btn-group-sm ml-2" role="group">
-          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ event.status }}
-          </button>
+          <button
+            id="btnGroupDrop1"
+            type="button"
+            class="btn btn-secondary dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >{{ event.status }}</button>
           <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
             <a class="dropdown-item" @click="setEventStatus('DRAFT')">Rascunho</a>
             <a class="dropdown-item" @click="setEventStatus('CURRENT')">Activo</a>
@@ -45,9 +50,11 @@
                 v-validate="'required'"
                 data-vv-as="Nome"
               />
-              <span v-show="errors.has('event.title')" class="help is-danger">{{
+              <span v-show="errors.has('event.title')" class="help is-danger">
+                {{
                 errors.first("event.title")
-              }}</span>
+                }}
+              </span>
             </div>
           </div>
           <div class="col-md-2">
@@ -69,12 +76,13 @@
                   v-for="location in locations"
                   :value="location.id"
                   :key="location.id"
-                >{{ location.name }}</option
-                >
+                >{{ location.name }}</option>
               </select>
-              <span v-show="errors.has('event.location_id')" class="help is-danger">{{
+              <span v-show="errors.has('event.location_id')" class="help is-danger">
+                {{
                 errors.first("event.location_id")
-              }}</span>
+                }}
+              </span>
             </div>
           </div>
           <div class="col-md-2">
@@ -103,8 +111,7 @@
               <span
                 v-show="errors.has('event.classification')"
                 class="help is-danger"
-              >{{ errors.first("event.classification") }}</span
-              >
+              >{{ errors.first("event.classification") }}</span>
             </div>
           </div>
           <div class="col-md-2">
@@ -123,9 +130,11 @@
                 v-validate="'required'"
                 data-vv-as="Data do Evento"
               />
-              <span v-show="errors.has('event.starts_at')" class="help is-danger">{{
+              <span v-show="errors.has('event.starts_at')" class="help is-danger">
+                {{
                 errors.first("event.starts_at")
-              }}</span>
+                }}
+              </span>
             </div>
           </div>
           <div class="col-md-2">
@@ -139,11 +148,10 @@
                 placeholder="Ex.: A_YQzKo5Ows"
                 name="video_id"
               />
-              <small class="form-text text-muted"
-              >Exemplo: https://www.youtube.com/watch?v=<b
-              >A_YQzKo5Ows</b
-              ></small
-              >
+              <small class="form-text text-muted">
+                Exemplo: https://www.youtube.com/watch?v=
+                <b>A_YQzKo5Ows</b>
+              </small>
             </div>
           </div>
           <div class="col-md-2">
@@ -158,12 +166,11 @@
                 }"
                 v-model="event.organizer_id"
                 name="organizer_id"
-              >
+              />
               <span
                 v-show="errors.has('event.organizer_id')"
                 class="help is-danger"
-              >{{ errors.first("event.organizer_id") }}</span
-              >
+              >{{ errors.first("event.organizer_id") }}</span>
             </div>
           </div>
           <div class="col-md-3">
@@ -186,8 +193,7 @@
                 <span
                   v-show="errors.has('event.description')"
                   class="help is-danger"
-                >{{ errors.first("event.description") }}</span
-                >
+                >{{ errors.first("event.description") }}</span>
               </div>
             </div>
           </div>
@@ -198,7 +204,7 @@
                 <UploadPhoto
                   :OnChange="SelectBackdrop"
                   v-model="event.backdrop"
-                  :defaultImage="getBackdrop()"
+                  :defaultImage="`https://box.nextbss.co.ao/api/event_backdrops/`+event.backdrop"
                   width="140px"
                   height="185px"
                   name="backdrop"
@@ -209,8 +215,8 @@
                 <UploadPhoto
                   :OnChange="SelectPoster"
                   v-model="event.poster"
-                  width="140px"
                   :defaultImage="getPoster()"
+                  width="140px"
                   height="185px"
                   name="poster"
                 />
@@ -220,7 +226,8 @@
         </div>
       </div>
       <div class="panel-body mt-3">
-        <p>Sessões
+        <p>
+          Sessões
           <router-link v-bind:to="'/events/' + party_event_id + '/sessions/new'">
             <button class="btn btn-sm btn-success float-right">Nova Sessão</button>
           </router-link>
@@ -240,17 +247,25 @@
           :pageCount="pageCount"
           :removeResource="removeSession"
           registRoute="RegistSession"
-          buttonRegistName = "Adicionar Sessão"
-          :canRemove = false
+          buttonRegistName="Adicionar Sessão"
+          :canRemove="false"
         />
         <div class="row">
           <div class="col-md-6">
             <p>
               Patrocinadores
-              <button class="btn btn-sm btn-success float-right" @click="toggleModal('addSponsorsToEvent')" data-target="#addSponsorsToEvent">Adicionar Patrocinador(es)</button>
+              <button
+                class="btn btn-sm btn-success float-right"
+                @click="toggleModal('addSponsorsToEvent')"
+                data-target="#addSponsorsToEvent"
+              >Adicionar Patrocinador(es)</button>
             </p>
             <!-- Modal -->
-            <b-modal ref="addSponsorsToEvent" id="addSponsorsToEvent" title="Adicionar Patrocinador(es)">
+            <b-modal
+              ref="addSponsorsToEvent"
+              id="addSponsorsToEvent"
+              title="Adicionar Patrocinador(es)"
+            >
               <div class="d-block text-center">
                 <div class="form-group">
                   <label for="title">Nome do Evento</label>
@@ -262,7 +277,8 @@
                     placeholder="Nome do evento"
                     disabled
                   />
-                </div><!-- Nome do evento -->
+                </div>
+                <!-- Nome do evento -->
 
                 <div class="form-group">
                   <label for="decks">Patrocinadores</label>
@@ -283,19 +299,17 @@
                       v-for="sponsor in sponsors"
                       :value="sponsor.id"
                       :key="sponsor.name"
-                    >{{ sponsor.name }}</option
-                    >
+                    >{{ sponsor.name }}</option>
                   </select>
-                  <span v-show="errors.has('sponsorIds')" class="help is-danger">
-                    {{ errors.first("sponsorIds") }}
-                  </span>
+                  <span
+                    v-show="errors.has('sponsorIds')"
+                    class="help is-danger"
+                  >{{ errors.first("sponsorIds") }}</span>
                 </div>
               </div>
               <template v-slot:modal-footer>
                 <div class="w-100">
-                  <b-button @click="hideModal('addSponsorsToEvent')"
-                            class="btn-sm mr-2"
-                  >Cancelar</b-button>
+                  <b-button @click="hideModal('addSponsorsToEvent')" class="btn-sm mr-2">Cancelar</b-button>
                   <b-button
                     variant="primary"
                     size="lg"
@@ -312,7 +326,8 @@
                   </b-button>
                 </div>
               </template>
-            </b-modal> <!-- Modal add deck to event -->
+            </b-modal>
+            <!-- Modal add deck to event -->
             <MiniTable
               :cols="sponsor_cols"
               :data="event_sponsors"
@@ -328,15 +343,19 @@
               :pageCount="pageCount"
               :removeResource="removeSession"
               registRoute="RegistSuplier"
-              buttonRegistName = "Lista de Patrocinadores"
-              :canRemove = false
+              buttonRegistName="Lista de Patrocinadores"
+              :canRemove="false"
             />
           </div>
           <div class="col-md-6">
             <p>
-                Decks
-                <!-- Button trigger modal -->
-                <button class="btn btn-sm btn-success float-right" @click="toggleModal('addDecksToEvent')" data-target="#addDecksToEvent">Adicionar Deck(s)</button>
+              Decks
+              <!-- Button trigger modal -->
+              <button
+                class="btn btn-sm btn-success float-right"
+                @click="toggleModal('addDecksToEvent')"
+                data-target="#addDecksToEvent"
+              >Adicionar Deck(s)</button>
             </p>
             <!-- Modal -->
             <b-modal ref="addDecksToEvent" id="addDecksToEvent" title="Adicionar Deck(s)">
@@ -351,7 +370,8 @@
                     placeholder="Nome do evento"
                     disabled
                   />
-                </div><!-- Nome do evento -->
+                </div>
+                <!-- Nome do evento -->
 
                 <div class="form-group">
                   <label for="decks">Decks</label>
@@ -372,19 +392,17 @@
                       v-for="deck in collection_decks"
                       :value="deck.id"
                       :key="deck.id"
-                    >{{ deck.name }}</option
-                    >
+                    >{{ deck.name }}</option>
                   </select>
-                  <span v-show="errors.has('decks')" class="help is-danger">
-                    {{ errors.first("decks") }}
-                  </span>
+                  <span
+                    v-show="errors.has('decks')"
+                    class="help is-danger"
+                  >{{ errors.first("decks") }}</span>
                 </div>
               </div>
               <template v-slot:modal-footer>
                 <div class="w-100">
-                  <b-button @click="hideModal('addDecksToEvent')"
-                    class="btn-sm mr-2"
-                  >Cancelar</b-button>
+                  <b-button @click="hideModal('addDecksToEvent')" class="btn-sm mr-2">Cancelar</b-button>
                   <b-button
                     variant="primary"
                     size="lg"
@@ -401,7 +419,8 @@
                   </b-button>
                 </div>
               </template>
-            </b-modal> <!-- Modal add deck to event -->
+            </b-modal>
+            <!-- Modal add deck to event -->
             <MiniTable
               :cols="deck_cols"
               :data="decks"
@@ -417,8 +436,8 @@
               :pageCount="pageCount"
               :removeResource="removeSession"
               registRoute="RegistSession"
-              buttonRegistName = "Lista de Decks"
-              :canRemove = false
+              buttonRegistName="Lista de Decks"
+              :canRemove="false"
             />
           </div>
         </div>
@@ -426,11 +445,19 @@
           <div class="col-md-3">
             <p>
               Tipos de Ticket
-              <button class="btn btn-sm btn-success float-right" @click="toggleModal('addTicketTypesToEvent')" data-target="#addTicketTypesToEvent">Adicionar Ticket(s)</button>
+              <button
+                class="btn btn-sm btn-success float-right"
+                @click="toggleModal('addTicketTypesToEvent')"
+                data-target="#addTicketTypesToEvent"
+              >Adicionar Ticket(s)</button>
             </p>
 
             <!-- Modal -->
-            <b-modal ref="addTicketTypesToEvent" id="addTicketTypesToEvent" title="Adicionar Tipo Ticket(s)">
+            <b-modal
+              ref="addTicketTypesToEvent"
+              id="addTicketTypesToEvent"
+              title="Adicionar Tipo Ticket(s)"
+            >
               <div class="d-block text-center">
                 <div class="form-group">
                   <label for="title">Nome</label>
@@ -443,13 +470,12 @@
                     v-validate="'required'"
                     data-vv-as="Nome do Ticket"
                   />
-                </div><!-- Quantidade do ticket -->
+                </div>
+                <!-- Quantidade do ticket -->
               </div>
               <template v-slot:modal-footer>
                 <div class="w-100">
-                  <b-button @click="hideModal('addTicketTypesToEvent')"
-                            class="btn-sm mr-2"
-                  >Cancelar</b-button>
+                  <b-button @click="hideModal('addTicketTypesToEvent')" class="btn-sm mr-2">Cancelar</b-button>
                   <b-button
                     variant="primary"
                     size="lg"
@@ -466,7 +492,8 @@
                   </b-button>
                 </div>
               </template>
-            </b-modal> <!-- Modal add deck to event -->
+            </b-modal>
+            <!-- Modal add deck to event -->
 
             <MiniTable
               :cols="ticketTypes_cols"
@@ -483,8 +510,8 @@
               :pageCount="pageCount"
               :removeResource="removeTicketType"
               registRoute="addTicketType"
-              buttonRegistName = "Lista de Tickets"
-              :canRemove = false
+              buttonRegistName="Lista de Tickets"
+              :canRemove="false"
             />
           </div>
         </div>
@@ -567,9 +594,7 @@ export default {
       session_tickets: [],
       locations: '',
       organizers: '',
-      ticketTypes_cols: [
-        { name: 'name', label: 'Nome' }
-      ],
+      ticketTypes_cols: [{ name: 'name', label: 'Nome' }],
       ticketTypes: [],
       collection_decks: [],
       notDeckIds: []
@@ -591,9 +616,7 @@ export default {
      */
     async getEvent () {
       try {
-        const result = await this.axios.get(
-          `/party_events/${this.id}`
-        )
+        const result = await this.axios.get(`/party_events/${this.id}`)
         this.event.title = result.data.title
         this.event.description = result.data.description
         this.event.status = result.data.status
@@ -601,14 +624,15 @@ export default {
         this.event.organizer_id = result.data.organizer.name
         this.event.starts_at = result.data.starts_at
         this.event.classification = result.data.classification
-        this.event.video_id = result.data.video_id === 'null' ? '' : result.data.video_id
+        this.event.video_id =
+          result.data.video_id === 'null' ? '' : result.data.video_id
 
         // let posterPath = await this.axios.get(
         //   `/party_events/attachments/poster/${result.data.poster_path}`
         // )
         // console.log('Poster: ', posterPath)
-        // this.event.poster = posterPath
-        // this.backdrop_path = result.data.backdrop_path
+        this.event.poster = result.data.poster_path
+        this.event.backdrop = result.data.backdrop_path
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -633,7 +657,8 @@ export default {
             price: res.data[i].price,
             type: res.data[i].type,
             location_id: res.data[i].location.id,
-            location_name: res.data[i].location.name })
+            location_name: res.data[i].location.name
+          })
         }
 
         this.getSessionProducts(sessionID)
@@ -654,7 +679,13 @@ export default {
         let products = []
 
         for (let i = 0; i < res.data.length; i++) {
-          products.push({ id: res.data[i].id, company_product_id: res.data[i].company_product_id, amount: res.data[i].amount, price: res.data[i].price, name: res.data[i].name })
+          products.push({
+            id: res.data[i].id,
+            company_product_id: res.data[i].company_product_id,
+            amount: res.data[i].amount,
+            price: res.data[i].price,
+            name: res.data[i].name
+          })
         }
         this.session_products = products
       } catch (e) {
@@ -672,7 +703,11 @@ export default {
         let tickets = []
 
         for (let i = 0; i < res.length; i++) {
-          tickets.push({ ticket_type: res[i].ticket_type, price: res[i].price, quantity: res[i].quantity })
+          tickets.push({
+            ticket_type: res[i].ticket_type,
+            price: res[i].price,
+            quantity: res[i].quantity
+          })
         }
         this.session_tickets = tickets
       } catch (e) {
@@ -719,12 +754,17 @@ export default {
      */
     async setEventStatus (status) {
       try {
-        const result = await this.axios.put(`/events/${this.party_event_id}/status/${status}`)
+        const result = await this.axios.put(
+          `/events/${this.party_event_id}/status/${status}`
+        )
         const res = result.data
 
         if (res) {
           // redirect to event details page
-          await this.$router.push({ name: 'DetailsEvent', id: this.party_event_id })
+          await this.$router.push({
+            name: 'DetailsEvent',
+            id: this.party_event_id
+          })
         }
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
@@ -732,7 +772,9 @@ export default {
     },
     async getEventDecks () {
       try {
-        const result = await this.axios.get(`/decks?eventIds=${this.party_event_id}&currentOnly=false`)
+        const result = await this.axios.get(
+          `/decks?eventIds=${this.party_event_id}&currentOnly=false`
+        )
         const res = result.data
         const itemsCount = result.data.items_count
 
@@ -757,7 +799,9 @@ export default {
     },
     async getEventSponsors () {
       try {
-        const result = await this.axios.get(`/sponsors?eventIds=${this.party_event_id}`)
+        const result = await this.axios.get(
+          `/sponsors?eventIds=${this.party_event_id}`
+        )
         const res = result.data
         const itemsCount = result.data.items_count
 
@@ -808,7 +852,9 @@ export default {
     },
     async getEventTicketsType () {
       try {
-        const result = await this.axios.get(`/events/${this.party_event_id}/ticket_types`)
+        const result = await this.axios.get(
+          `/events/${this.party_event_id}/ticket_types`
+        )
         const res = result.data
         const itemsCount = result.data.items_count
         // event_id
@@ -925,16 +971,14 @@ export default {
         return result
       }
     },
-    async getPoster () {
-      try {
-        return await this.axios.get(`/event_posters/${this.party_event_id}/file`)
-      } catch (e) {
-        this.hadError = 'Não foi possível carregar as informações.'
-      }
+    getPoster () {
+      return `https://box.nextbss.co.ao/api/event_posters/${this.event.poster}`
     },
     async getBackdrop () {
       try {
-        return await this.axios.get(`/event_backdrops/${this.party_event_id}/file`)
+        return await this.axios.get(
+          `/event_backdrops/${this.party_event_id}/file`
+        )
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -967,7 +1011,7 @@ export default {
 }
 
 .session-card:hover {
-  box-shadow: 0 0 11px rgba(33,33,33,.2);
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
   cursor: pointer;
 }
 
