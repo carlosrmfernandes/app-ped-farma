@@ -53,9 +53,21 @@
         </div>
       </div>
     </router-link>
-    <router-link :to="{name: 'ListSponsor'}" tag="a" :class="{ active : active_el == 5}">
+    <router-link :to="{name: 'ListSupplier'}" tag="a" :class="{ active : active_el == 5}">
       <div class="accordion" v-bind:class="{ disabled: !active}">
         <div class="accordion-header" @click="activate(5)">
+          <span class="accordion-title">Operadores</span>
+        </div>
+        <div class="accordion-body" v-bind:style="{ maxHeight: maxHeight }">
+          <div class="accordion-content">
+            <slot></slot>
+          </div>
+        </div>
+      </div>
+    </router-link>
+    <router-link :to="{name: 'ListSponsor'}" tag="a" :class="{ active : active_el == 6}">
+      <div class="accordion" v-bind:class="{ disabled: !active}">
+        <div class="accordion-header" @click="activate(6)">
           <span class="accordion-title">Patrocinadores</span>
         </div>
         <div class="accordion-body" v-bind:style="{ maxHeight: maxHeight }">
@@ -65,9 +77,9 @@
         </div>
       </div>
     </router-link>
-    <router-link :to="{name: 'ListContract'}" tag="a" :class="{ active : active_el == 6}">
+    <router-link :to="{name: 'ListContract'}" tag="a" :class="{ active : active_el == 7}">
       <div class="accordion" v-bind:class="{ disabled: !active}">
-        <div class="accordion-header" @click="activate(6)">
+        <div class="accordion-header" @click="activate(7)">
           <span class="accordion-title">Contratos</span>
         </div>
         <div class="accordion-body" v-bind:style="{ maxHeight: maxHeight }">
@@ -77,9 +89,9 @@
         </div>
       </div>
     </router-link>
-    <router-link :to="{name: 'ListLocation'}" tag="a" :class="{ active : active_el == 7}">
+    <router-link :to="{name: 'ListLocation'}" tag="a" :class="{ active : active_el == 8}">
       <div class="accordion" v-bind:class="{ disabled: !active}">
-        <div class="accordion-header" @click="activate(7)">
+        <div class="accordion-header" @click="activate(8)">
           <span class="accordion-title">Localizações</span>
         </div>
         <div class="accordion-body" v-bind:style="{ maxHeight: maxHeight }">
@@ -89,9 +101,9 @@
         </div>
       </div>
     </router-link>
-    <router-link :to="{name: 'ListProduct'}" tag="a" :class="{ active : active_el == 8}">
+    <router-link :to="{name: 'ListProduct'}" tag="a" :class="{ active : active_el == 9}">
       <div class="accordion" v-bind:class="{ disabled: !active}">
-        <div class="accordion-header" @click="activate(8)">
+        <div class="accordion-header" @click="activate(9)">
           <span class="accordion-title">Produtos</span>
         </div>
         <div class="accordion-body" v-bind:style="{ maxHeight: maxHeight }">
@@ -101,9 +113,9 @@
         </div>
       </div>
     </router-link>
-    <router-link :to="{name: 'ListDeck'}" tag="a" :class="{ active : active_el == 9}">
+    <router-link :to="{name: 'ListDeck'}" tag="a" :class="{ active : active_el == 10}">
       <div class="accordion" v-bind:class="{ disabled: !active}">
-        <div class="accordion-header" @click="activate(9)">
+        <div class="accordion-header" @click="activate(10)">
           <span class="accordion-title">Decks</span>
         </div>
         <div class="accordion-body" v-bind:style="{ maxHeight: maxHeight }">
