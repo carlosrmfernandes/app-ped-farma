@@ -92,7 +92,7 @@
              :class="{'form-control': true, 'is-input-danger': errors.has('confirmed_password')}"
              name="confirmed_password"
              v-model="confirmed_password"
-             id="Supplier-password"
+             id="supplier-password-confirmation"
              placeholder="*************"
              v-validate="'required|confirmed:password'"
              data-vv-as="Confirmação de Senha" />
@@ -100,6 +100,28 @@
           </div>
         </div>
       </div>
+      <!-- Remove Modal-->
+      <b-modal id="modal-remove" title="Supplier">
+        <p class="my-4">Tem certeza que deseja remover?</p>
+        <template v-slot:modal-footer>
+          <div class="w-100">
+            <b-button variant="primary" size="sm" class="float-right" @click="RemoveSupplier">
+              <span v-if="!isRequesting">Sim</span>
+              <div class="loading-dots" v-if="isRequesting">
+                <div class="loading-dots--dot"></div>
+                <div class="loading-dots--dot"></div>
+                <div class="loading-dots--dot"></div>
+              </div>
+            </b-button>
+            <b-button
+              variant="outline-danger"
+              size="sm"
+              class="float-right mr-2"
+              @click="hideRemoveModal"
+            >Não</b-button>
+          </div>
+        </template>
+      </b-modal>
       <div class="row">
         <b-button
           variant="outline-primary"
@@ -199,6 +221,10 @@ export default {
           'Não foi possível realizar esta operação. Tente novamente'
       }
       this.isRequesting = false
+    },
+    hideRemoveModal () {
+      // Show modal for deatils
+      this.$bvModal.hide('modal-remove')
     },
     showRemoveModal () {
       // Show modal for deatils
