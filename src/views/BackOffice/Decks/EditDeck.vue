@@ -203,7 +203,7 @@
             :sortMethod="getDecksEvents"
             :changePage="changePage"
             resource="supplier"
-            editRoute="EditSupplier"
+            editRoute="DetailsEvent"
             title="Eventos"
             :canRemove="false"
           />
