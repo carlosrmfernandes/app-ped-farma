@@ -13,7 +13,7 @@
           :pagination="pagination"
           :paginationMethod="GetSuppliers"
           :sortMethod="GetSuppliers"
-          :needGrid="true"
+          :needGrid="false"
           :changePage="changePage"
           resource="supplier"
           editRoute="EditSupplier"
