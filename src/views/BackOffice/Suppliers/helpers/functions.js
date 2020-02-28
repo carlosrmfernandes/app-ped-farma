@@ -10,14 +10,14 @@ async function RemoveSupplier (ids = []) {
         await this.axios.delete(`/suppliers/${id}`)
 
         // Redirect to the Suppliers views
-        this.$router.go()
+        await this.$router.push({ name: 'ListSupplier' })
       }
     } else {
       // Redirect to the Organizer views
       await this.axios.delete(`/suppliers/${this.id}`)
 
       // Redirect to the Suppliers views
-      this.$router.go()
+      await this.$router.push({ name: 'ListSupplier' })
     }
   } catch (e) {
     this.hadError = 'Não foi possível efetuar esta operação.'
