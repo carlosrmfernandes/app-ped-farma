@@ -251,8 +251,8 @@
                 :paginationMethod="getOrganizersEvents"
                 :sortMethod="getOrganizersEvents"
                 :changePage="changePage"
-                resource="supplier"
-                editRoute="EditSupplier"
+                resource="events"
+                editRoute="DetailsEvent"
                 title="Eventos"
                 :canRemove="false"
               />
