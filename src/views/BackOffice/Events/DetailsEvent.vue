@@ -226,32 +226,42 @@
         </div>
       </div>
       <div class="panel-body mt-3">
-        <p>
-          Sessões
-          <router-link v-bind:to="'/events/' + party_event_id + '/sessions/new'">
-            <button class="btn btn-sm btn-success float-right">Nova Sessão</button>
-          </router-link>
-        </p>
-        <MiniTable
-          :cols="cols"
-          :data="sessions"
-          title="Sessions"
-          :searchMethod="getEventSessions"
-          :pagination="pagination"
-          :paginationMethod="getEventSessions"
-          :sortMethod="getEventSessions"
-          :needGrid="false"
-          :changePage="changePage"
-          resource="sessions"
-          editRoute="EditSessionEvent"
-          :pageCount="pageCount"
-          :removeResource="removeSession"
-          registRoute="RegistSession"
-          buttonRegistName="Adicionar Sessão"
-          :canRemove="false"
-        />
-        <div class="row">
-          <div class="col-md-6">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-sessions-tab" data-toggle="tab" href="#nav-sessions" role="tab" aria-controls="nav-sessions" aria-selected="true">Sessões</a>
+            <a class="nav-item nav-link" id="nav-sponsors-tab" data-toggle="tab" href="#nav-sponsors" role="tab" aria-controls="nav-sponsors" aria-selected="false">Patrocinadores</a>
+            <a class="nav-item nav-link" id="nav-decks-tab" data-toggle="tab" href="#nav-decks" role="tab" aria-controls="nav-decks" aria-selected="false">Decks</a>
+            <a class="nav-item nav-link" id="nav-ticket-types-tab" data-toggle="tab" href="#nav-ticket-types" role="tab" aria-controls="nav-ticket-types" aria-selected="false">Tipos de Ticket</a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active pl-2 pr-2 pt-4" id="nav-sessions" role="tabpanel" aria-labelledby="nav-sessions-tab">
+            <p>
+              Sessões
+              <router-link v-bind:to="'/events/' + party_event_id + '/sessions/new'">
+                <button class="btn btn-sm btn-success float-right">Nova Sessão</button>
+              </router-link>
+            </p>
+            <MiniTable
+              :cols="cols"
+              :data="sessions"
+              title="Sessions"
+              :searchMethod="getEventSessions"
+              :pagination="pagination"
+              :paginationMethod="getEventSessions"
+              :sortMethod="getEventSessions"
+              :needGrid="false"
+              :changePage="changePage"
+              resource="sessions"
+              editRoute="EditSessionEvent"
+              :pageCount="pageCount"
+              :removeResource="removeSession"
+              registRoute="RegistSession"
+              buttonRegistName="Adicionar Sessão"
+              :canRemove="false"
+            />
+          </div>
+          <div class="tab-pane fade pl-2 pr-2 pt-4" id="nav-sponsors" role="tabpanel" aria-labelledby="nav-sponsors-tab">
             <p>
               Patrocinadores
               <button
@@ -347,7 +357,7 @@
               :canRemove="false"
             />
           </div>
-          <div class="col-md-6">
+          <div class="tab-pane fade pl-2 pr-2 pt-4" id="nav-decks" role="tabpanel" aria-labelledby="nav-decks-tab">
             <p>
               Decks
               <!-- Button trigger modal -->
@@ -440,9 +450,7 @@
               :canRemove="false"
             />
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3">
+          <div class="tab-pane fade pt-4 pr-2 pl-2" id="nav-ticket-types" role="tabpanel" aria-labelledby="nav-ticket-types-tab">
             <p>
               Tipos de Ticket
               <button
@@ -1017,5 +1025,17 @@ export default {
 
 .dropdown-item {
   cursor: pointer;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: #FFF;
+  background-color: #007bff;
+  border-color: #dee2e6 #dee2e6 #007bff;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #FFF;
+  background-color: #007bff;
+  border-color: #dee2e6 #dee2e6 #007bff;
 }
 </style>
