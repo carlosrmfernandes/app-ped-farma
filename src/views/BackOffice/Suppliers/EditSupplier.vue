@@ -69,37 +69,6 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-3" >
-          <div class="form-group">
-            <label for="supplier-password">Nova Senha</label>
-            <input type="password"
-             :class="{'form-control': true, 'is-input-danger': errors.has('password')}"
-             name="password"
-             v-model="password"
-             id="Supplier-password"
-             placeholder="*************"
-             v-validate="'required'"
-             data-vv-as="Senha"
-             ref="password"/>
-             <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
-          </div>
-        </div>
-        <div class="col-md-3" >
-          <div class="form-group">
-            <label for="supplier-password">Repetir Senha</label>
-            <input type="password"
-             :class="{'form-control': true, 'is-input-danger': errors.has('confirmed_password')}"
-             name="confirmed_password"
-             v-model="confirmed_password"
-             id="supplier-password-confirmation"
-             placeholder="*************"
-             v-validate="'required|confirmed:password'"
-             data-vv-as="Confirmação de Senha" />
-             <span v-show="errors.has('confirmed_password')" class="help is-danger">{{ errors.first('confirmed_password') }}</span>
-          </div>
-        </div>
-      </div>
       <!-- Remove Modal-->
       <b-modal id="modal-remove" title="Supplier">
         <p class="my-4">Tem certeza que deseja remover?</p>
@@ -145,8 +114,7 @@ export default {
   data () {
     return {
       form: {},
-      password: '',
-      confirmed_password: '',
+      new_password: '',
       hadSuccess: '',
       hadError: '',
       isRequesting: false,
@@ -213,9 +181,11 @@ export default {
 
       try {
         // eslint-disable-next-line no-const-assign
-        await this.axios.patch(`suppliers/${this.id}/reset_password`, this.password)
+        const result = await this.axios.patch(`suppliers/${this.id}/reset_password`, this.password)
+        const res = result.data
+        this.new_password = res.password
 
-        this.hadSuccess = 'Informações actualizadas com sucesso.'
+        this.hadSuccess = `Informações actualizadas com sucesso, senha de acesso: ${this.new_password}.`
       } catch (e) {
         this.hadError =
           'Não foi possível realizar esta operação. Tente novamente'
