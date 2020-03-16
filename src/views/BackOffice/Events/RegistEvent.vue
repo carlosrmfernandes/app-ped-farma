@@ -753,7 +753,7 @@ export default {
           fData.append('classification', this.classification)
           fData.append('location_id', this.location_id)
           fData.append('organizer_id', this.organizer_id)
-          fData.append('video_id', this.video_id)
+          fData.append('video_id', this.video_id ? this.video_id : '')
           fData.append('description', this.description)
           fData.append('starts_at', this.starts_at)
           fData.append('title', this.title)
