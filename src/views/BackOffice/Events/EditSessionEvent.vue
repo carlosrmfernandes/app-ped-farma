@@ -112,10 +112,60 @@
       <div class="row">
         <!--   Tickets table   -->
         <div class="col-md-6">
-          Tickets
+          <hr>
+            <p>
+              <b>Bilhetes</b>
+              <button
+                class="btn btn-sm btn-success float-right"
+                data-target="#addTicketTypesToEvent"
+              >+ Bilhete</button>
+            </p>
+          <MiniTable
+            :cols="tickets_cols"
+            :data="collection_tickets"
+            title="Tickects"
+            :searchMethod="getEventSessions"
+            :pagination="pagination"
+            :paginationMethod="getSessionTickets"
+            :sortMethod="getSessionTickets"
+            :needGrid="false"
+            :changePage="changePage"
+            resource="sessions"
+            editRoute="EditSessionEvent"
+            :pageCount="pageCount"
+            :removeResource="removeSessionTicket"
+            registRoute="AddSessionTicket"
+            buttonRegistName="Adicionar Ticket"
+            :canRemove="false"
+          />
         </div>
         <div class="col-md-6">
-          Products
+          <hr>
+          <p>
+            <b>Produtos</b>
+            <button
+              class="btn btn-sm btn-success float-right"
+              data-target="#addProductToSession"
+            >+ Produto</button>
+          </p>
+          <MiniTable
+            :cols="products_cols"
+            :data="collection_products"
+            title="Tickects"
+            :searchMethod="getEventSessions"
+            :pagination="pagination"
+            :paginationMethod="getSessionProducts"
+            :sortMethod="getSessionProducts"
+            :needGrid="false"
+            :changePage="changePage"
+            resource="sessions"
+            editRoute="EditSessionEvent"
+            :pageCount="pageCount"
+            :removeResource="removeSessionProduct"
+            registRoute="AddSessionProduct"
+            buttonRegistName="Adicionar Produto"
+            :canRemove="false"
+          />
         </div>
       </div>
       <b-button
@@ -137,7 +187,12 @@
 </template>
 
 <script>
+import MiniTable from '@/components/Layouts/MiniTable'
+
 export default {
+  components: {
+    MiniTable
+  },
   name: 'EditSessionEvent',
   props: {
     id: {
@@ -165,8 +220,16 @@ export default {
       company_products: '',
       tickets: {},
       collection_tickets: [],
-      event_ticket_types: [],
-      ticket_types: [],
+      tickets_cols: [
+        { name: 'ticket_type', label: 'Tipo' },
+        { name: 'price', label: 'Preço' },
+        { name: 'quantity', label: 'Quantidade' }
+      ],
+      products_cols: [
+        { name: 'name', label: 'Nome' },
+        { name: 'price', label: 'Preço' },
+        { name: 'amount', label: 'Quantidade' }
+      ],
       isRequesting: false,
       hadSuccess: '',
       hadError: ''
@@ -273,6 +336,27 @@ export default {
         this.hadError = 'Não foi possível carregar as informações.'
       }
     },
+    async getSessionTickets () {
+      try {
+        const result = await this.axios.get(
+          `/party_event_sessions/${this.event_session_id}/party_tickets/grouped`
+        )
+        this.collection_tickets = result.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
+    async getSessionProducts () {
+      try {
+        const result = await this.axios.get(
+          `/party_event_sessions/${this.event_session_id}/session_products`
+        )
+        const res = result.data
+        this.collection_products = res.data
+      } catch (e) {
+        this.hadError = 'Não foi possível carregar as informações.'
+      }
+    },
     addTicket: function () {
       this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })
     },
@@ -301,7 +385,8 @@ export default {
     this.getProducts()
   },
   mounted () {
-    this.collection_tickets.push({ amount: '', price: '', ticket_type: '' })
+    this.getSessionTickets()
+    this.getSessionProducts()
   }
 }
 </script>
