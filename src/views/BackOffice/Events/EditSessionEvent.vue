@@ -1,9 +1,31 @@
 <template>
   <div class="panel">
     <div class="panel-header">
-      <h3>Editar Sessão {{ party_event_id }}</h3>
+      <h3>Editar Sessão</h3>
+      <div class="btn-group float-right btn-group-sm ml-2" role="group">
+        <button
+          id="btnGroupDrop1"
+          type="button"
+          class="btn btn-secondary dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >Estado: {{ session_status }}</button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" @click="updateSessionStatus('DRAFT')">Rascunho</a>
+          <a class="dropdown-item" @click="updateSessionStatus('ACTIVE')">Activo</a>
+          <a class="dropdown-item" @click="updateSessionStatus('INACTIVE')">Inactivo</a>
+          <a class="dropdown-item" @click="updateSessionStatus('COMPLETED')">Passado</a>
+        </div>
+      </div>
     </div>
     <div class="panel-body">
+      <div class="alert alert-success col-md-10" v-if="hadSuccess" role="alert">
+        {{hadSuccess}}
+      </div>
+      <div class="alert alert-danger col-md-10" v-if="hadError" role="alert">
+        {{hadError}}
+      </div>
       <div class="row mt-5">
         <div class="col-md-3">
           <div class="form-group">
@@ -87,26 +109,15 @@
           </div>
         </div>
       </div>
-      <!--   Tickets table   -->
-      <MiniTable
-        :cols="cols"
-        :data="tickets"
-        title="Sessions"
-        :searchMethod="getSessionsTickets"
-        :pagination="pagination"
-        :paginationMethod="getSessionsTickets"
-        :sortMethod="getSessionsTickets"
-        :needGrid="false"
-        :changePage="changePage"
-        resource="sessions"
-        editRoute="EditSessionTicket"
-        :pageCount="pageCount"
-        :removeResource="removeSessionTicket"
-        registRoute="RegistSession"
-        buttonRegistName = "Adicionar Sessão"
-        :canRemove = false
-      />
-      <!--   Products table   -->
+      <div class="row">
+        <!--   Tickets table   -->
+        <div class="col-md-6">
+          Tickets
+        </div>
+        <div class="col-md-6">
+          Products
+        </div>
+      </div>
       <b-button
         variant="primary"
         size="md ml-2 mb-4"
@@ -135,7 +146,7 @@ export default {
   },
   data: function () {
     return {
-      party_event_id: this.id,
+      party_event_id: '',
       event_session_id: this.id,
       locations: '',
       classifications: '',
@@ -143,6 +154,7 @@ export default {
       title: '',
       description: '',
       starts_at: '',
+      session_status: '',
       video_id: '',
       location_id: '',
       collection_products: [],
@@ -156,7 +168,7 @@ export default {
       event_ticket_types: [],
       ticket_types: [],
       isRequesting: false,
-      hadSuccess: false,
+      hadSuccess: '',
       hadError: ''
     }
   },
@@ -170,7 +182,7 @@ export default {
         const result = await this.axios.get(`/locations?bringAll=true`)
         this.locations = result.data
       } catch (e) {
-        this.hadError = 'Não foi possível carregar as informações.'
+        this.hadError = 'Não foi possível carregar as localizações.'
       }
     },
     /*
@@ -183,7 +195,7 @@ export default {
         const res = result.data
         this.company_products = res.data
       } catch (e) {
-        this.hadError = 'Não foi possível carregar as informações.'
+        this.hadError = 'Não foi possível carregar os produtos.'
       }
     },
     /*
@@ -233,13 +245,30 @@ export default {
       }
       this.isRequesting = false
     },
-    async getTicketTypes () {
+    async updateSessionStatus (status) {
+      this.isRequesting = true
+      try {
+        // Fire the POST request
+        await this.axios.put(
+          `/event_sessions/${this.event_session_id}/status/${status}`
+        )
+        this.hadSuccess =
+            'Estado da sessão atualizada com sucesso.'
+      } catch (e) {
+        this.hadError =
+          `Não foi possível atualizar o estado da sessão.`
+        console.log(e)
+      }
+      this.isRequesting = false
+    },
+    async getSessionData () {
       try {
         const result = await this.axios.get(
-          `/events/${this.party_event_id}/ticket_types`
+          `/event_sessions/${this.event_session_id}`
         )
         const res = result.data
-        this.ticket_types = res.data
+        this.session_status = res.status
+        this.party_event_id = res.event.id
       } catch (e) {
         this.hadError = 'Não foi possível carregar as informações.'
       }
@@ -266,6 +295,7 @@ export default {
     }
   },
   created () {
+    this.getSessionData()
     this.getLocations()
     this.getTicketTypes()
     this.getProducts()
