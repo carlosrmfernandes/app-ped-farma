@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import backOfficeRoutes from './routes/backOfficeRoutes'
+import clientOfficeRoutes from './routes/clientsOfficeRoutes'
 
 Vue.use(Router)
 
@@ -21,6 +22,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     ...backOfficeRoutes,
+    ...clientOfficeRoutes,
     ...NotFound
   ]
 })
@@ -60,11 +62,17 @@ function CanUserAccessThisRoute (
  *  here, in order to prevent unauthorized access.
  */
 router.beforeEach((to, from, next) => {
-  // Guard admin routes
-  const adminLoginPath = {
+  // Guard Client routes
+  const loginPath = {
     name: 'Login'
   }
-  CanUserAccessThisRoute(to, next, '/admin/all', 'box_admin', adminLoginPath)
+  CanUserAccessThisRoute(to, next, '/client/c', 'app_client', loginPath)
+
+  // Guard Admin routes
+  const loginAdminPath = {
+    name: 'AdminLogin'
+  }
+  CanUserAccessThisRoute(to, next, '/admin/l', 'app_admin', loginAdminPath)
 })
 
 export default router

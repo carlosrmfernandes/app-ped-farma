@@ -2,7 +2,6 @@
   <!-- Sidebar Holder -->
   <nav id="sidebar">
     <div class="sidebar-header">
-      <avatar :fullname="user.name" :size="80"></avatar>
       <h5>{{user.name}}</h5>
     </div>
     <router-link :to="{name: 'Dashboard'}" tag="a" :class="{ active : active_el == 1}">
@@ -138,11 +137,10 @@ import {
   mapState,
   mapActions
 } from 'vuex'
-import Avatar from 'vue-avatar-component'
 
 export default {
   name: 'Sidebar',
-  components: { Avatar },
+  components: { },
   data () {
     return {
       username: '',

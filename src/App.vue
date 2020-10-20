@@ -9,6 +9,6 @@ export default {
 }
 </script>
 <style lang="scss">
-@import './assets/css/variables';
-@import './assets/css/bootstrap';
+@import './assets/css/style.scss';
+
 </style>

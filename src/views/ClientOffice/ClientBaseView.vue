@@ -11,10 +11,11 @@
 </template>
 
 <script>
-import FarmaHeader from '@/components/BackOffice/Layouts/Farma-Header.vue'
-import FarmaAside from '@/components/BackOffice/Layouts/Farma-Aside.vue'
-import FarmaMain from '@/components/BackOffice/Layouts/Farma-Main.vue'
-import FarmaFooter from '@/components/BackOffice/Layouts/Farma-Footer.vue'
+import FarmaHeader from '@/components/ClientOffice/Layouts/Farma-Header.vue'
+import FarmaAside from '@/components/ClientOffice/Layouts/Farma-Aside.vue'
+import FarmaMain from '@/components/ClientOffice/Layouts/Farma-Main.vue'
+import FarmaFooter from '@/components/ClientOffice/Layouts/Farma-Footer.vue'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -29,10 +30,26 @@ export default {
     }
   },
   methods: {
+    ...mapActions('Clients', ['SetClient']),
+    /*
+     * LoadClientUserToState: This method will check if there is admin information
+     * in the localstorage and then load it to the global state.
+     */
+    LoadClientUserToState () {
+      const clientData = localStorage.getItem('app_client')
+      if (clientData) {
+        this.SetClient(JSON.parse(clientData))
+      }
+    },
     openToggle () {
       var element = document.querySelector('.sidenav')
       element.classList.toggle('active')
     }
+  },
+  created () {
+    // This method will be executed everytime the App component is created
+    // usually on hard
+    this.LoadClientUserToState()
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <div class="container-lg">
       <div class="box-login">
         <div class="box-login-header">
-          <span>Login do Admin</span>
+          <span>Login do Cliente</span>
         </div>
         <div class="row errors">
           <div class="alert alert-danger col-md-11" v-if="hadError" role="alert">{{hadError}}</div>
@@ -21,7 +21,7 @@
                     name="form.email"
                     placeholder="email"
                     v-model="form.email"
-                    v-validate="'required'"
+                    v-validate="'required|email'"
                     data-vv-as="Email"
                   />
                 </div>
@@ -37,7 +37,7 @@
                 <div class="col-md-12">
                   <input
                     type="password"
-                    :class="{'form-control': true, 'is-input-danger': errors.has('form.password')}"
+                    :class="{'is-input-danger': errors.has('form.password')}"
                     id="User-Password"
                     name="form.password"
                     placeholder="Senha"
@@ -71,25 +71,25 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'AdminLogin',
+  name: 'Login',
   data () {
     return {
       isRequesting: false,
       form: {
-        login: '', // "admin",
+        email: '', // "admin",
         password: '' // "WeConnectToOlhaSo2018"
       },
       hadError: ''
     }
   },
   computed: {
-    ...mapGetters('Admins', ['isLoggedIn'])
+    ...mapGetters('Clients', ['isLoggedIn'])
   },
   methods: {
     /*
      * Map all the actions from the Admin module
      */
-    ...mapActions('Admins', ['Login']),
+    ...mapActions('Clients', ['Login']),
     /*
      * ProcessForm: This method will validate the DoLogin() method
      */
@@ -105,7 +105,7 @@ export default {
       this.isRequesting = true
       try {
         await this.Login(this.form)
-        this.$router.push({ name: 'AdminDashboard' })
+        this.$router.push({ name: 'Dashboard' })
       } catch (err) {
         this.HangleLoginErrors(err)
       }

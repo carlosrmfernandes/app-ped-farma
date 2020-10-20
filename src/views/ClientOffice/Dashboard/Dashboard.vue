@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main-header">
-      <div class="main-header__heading">Dashboard Admin</div>
+      <div class="main-header__heading">Dashboard Cliente</div>
       <div class="col col-9 head-info"></div>
     </div>
     <div class="main-overview">

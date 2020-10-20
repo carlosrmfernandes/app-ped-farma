@@ -2,210 +2,180 @@
     DEMO STYLE
 */
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
-@import "~vue-tabulator/dist/scss/bootstrap/tabulator_bootstrap4";
-
-body {
-    font-family: 'Poppins', sans-serif;
-    // background: #E8E8EC;
-    background-color: rgba(0,0,0,.04);
-}
-
-p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1em;
-    font-weight: 300;
-    line-height: 1.7em;
-    color: #999;
-}
-
-a, a:hover, a:focus {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-label {
-    color: #212529 !important;
-    margin-left: 0px;
-    font-size: 12px;
-}
-
-.modal-backdrop {
-    background-color:rgba(0, 0, 0, 0.5);
-}
-
-.navbar {
-    padding: 15px 10px;
-    background: #fff;
-    border: none;
-    border-radius: 0;
-    margin-bottom: 40px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-btn {
-    box-shadow: none;
-    outline: none !important;
-    border: none;
-}
-
-.line {
-    width: 100%;
-    height: 1px;
-    border-bottom: 1px dashed #ddd;
-    margin: 40px 0;
-}
-
-.form-control{
-    font-size: 0.7rem;
-}
-
-.custom-select{
-    font-size: 0.7rem;
-}
-
-.btn-sm-new{
-    line-height: 1.1;
-}
-
-.btn-sm-new span{
-    font-size: 11px;
-}
+@import "../styles/main.scss";
+@import "../styles/template/_grid.scss";
 
 /* ---------------------------------------------------
-    SIDEBAR STYLE
+    CSS for layout
 ----------------------------------------------------- */
-.wrapper {
-    display: flex;
-    align-items: stretch;
+.form-container{
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 15px 1px rgba(39,39,39,0.1);
 }
 
-#sidebar {
-    width: 190px;
-    height: 100%;
-    /* position: fixed; */
-    background: rgba(0,0,0,.08);
-    color: #000;
-    transition: all 0.3s;
-    display: flex;
-    flex-direction: column;
+label{
+  font-size: 14px;
 }
 
-#sidebar.active {
-    margin-left: -250px;
+textarea{
+  width: 100%;
+}
+/* ---------------------------------------------------
+    Login Styles
+----------------------------------------------------- */
+
+.container-login{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-#sidebar .sidebar-header {
+.container-lg{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-lg::before {
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-image: url('assets/images/green-waves.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.box-login{
+  position: relative;
+  width: 350px;
+  height: 350px;
+  padding: 40px 20px;
+  padding-bottom: 20px;
+  border-radius: 6px;
+  box-shadow: 0 1px 15px 1px rgba(39,39,39,0.1);  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 425px){
+  .box-login{
+    width: 300px;
     padding: 20px;
-    // background: #343A4E;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  }
+
+  .reset-password{
+    margin-bottom: 0;
+  }
 }
 
-#sidebar ul.components {
-    padding: 20px 0;
+.box-login-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
-#sidebar ul p {
-    color: #fff;
-    padding: 10px;
-    padding-left: 25px;
+.box-login-body{
+  flex-grow: 1;
+  // padding-top: 10px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#sidebar ul li a {
-    // padding: 10px;
-    font-size: 1.1em;
-    display: block;
-}
-#sidebar ul li a:hover {
-    color: #2E3553;
-    background: #fff ;
+.side-login{
+  margin-bottom: 25px;
 }
 
-#sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #2E3553;
-    background: #fff ;
+.box-login-body input{
+  height: 40px;
 }
 
-
-a[data-toggle="collapse"] {
-    position: relative;
+.side-login{
+  margin-bottom: 25px;
 }
 
-ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #fff;
+.reset-password{
+  text-align: center;
 }
 
-ul.CTAs {
-    // padding: 20px;
-    padding-left: 30px;
-    position: absolute;
-    bottom: 0;
-}
-
-ul.CTAs a {
-    text-align: center;
-    font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-}
-
-.collapse{
-    display: flex;
-    flex-direction: column;
-}
-
-.accordion.disabled .collapse {
-  pointer-events: none;
-  padding: 0;
-  margin-left: 16px;
-  opacity: 0;
-  max-height: 0px;
-  transform: translateY(-20px);
-}
-
-.form-error {
-  color: red;
+.reset-password span{
+  width: 100% !important;
+  text-align: center;
+  cursor: pointer;
+  font-family: 'Open Sans SemiBold';
   font-size: 12px;
+  color: #5f5f5f;
 }
 
-.is-danger{
-    color:red;
+.btn-login{
+  width:100%;
+  height: 40px;
+  border-radius: 4px;
+  font-size: 16px;
+  border: 1px solid;
+  cursor: pointer;
+}
+.btn-login:hover{
+  opacity: 0.9;
+}
+
+.btn-login.success{
+  color: #fff;
+  background-color: #2D8A05;
+}
+
+.errors{
+  margin-right: 0px;
+  margin-left: 0px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+/* ---------------------------------------------------
+    CSS for inputs
+----------------------------------------------------- */
+input[type=text], .vti__input{
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid darkgrey;
+  text-align: center;
+  color: #7c7c7d;
+}
+
+input[type=password]{
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid darkgrey;
+  text-align: center;
+}
+
+input[type=checkbox]{
+  margin: 10px;
+}
+
+label{
+  font-family: 'Open Sans Regular';
+  font-size: 12px;
+  color: rgb(95, 95, 95);
+}
+
+@media screen and (max-width: 425px){
+  input{
     font-size: 12px;
-}
-
-.is-input-danger{
-    border: 1px solid red;
-}
-
-
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
-#content {
-    padding: 20px;
-    min-height: 100vh;
-    transition: all 0.3s;
-}
-
-/* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -250px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-    #sidebarCollapse span {
-        display: none;
-    }
+  }
 }
 
 /* ---------------------------------------------------
@@ -251,4 +221,68 @@ ul.CTAs a {
         animation-delay: 1s;
       }
     }
+  }
+
+/* ---------------------------------------------------
+    Error Style CSS
+----------------------------------------------------- */
+
+  .form-error {
+    color: red !important;
+    font-size: 12px !important;
+  }
+  
+  .is-danger {
+    color: red !important;
+    font-size: 13px !important;
+  }
+  
+  .is-input-danger {
+    border: 1px solid red !important;
+  }
+
+  .errors{
+    margin-right: 0px;
+    margin-left: 0px;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  
+  .errors div{
+    text-align: center;
+    color: red;
+  }
+
+  .btn {
+    width: 100%;
+    min-height: 35px;
+    padding: 4px;
+    font-family: 'Open Sans Semibold';
+    font-size: 12px;
+    border-radius: 4px;
+    border: 1px solid;
+    cursor: pointer;
+  }
+  
+  .btn:hover{
+    opacity: 0.9;
+  }
+  
+  .btn-success {
+    color: #fff;
+    background-color: #2D8A05;
+    border-color: #2D8A05;
+    border-radius: 5px;
+  }
+  
+  .btn-outline-primary {
+    background-color: #fff;
+    color: #2D8A05;
+    border-color: #2D8A05;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background-color: #11559C;
+    border-color: #11559C;
   }

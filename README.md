@@ -1,4 +1,4 @@
-# Box - Backoffice
+# Ped Farma Test
 
 ## Requirements
 
@@ -33,6 +33,12 @@ npm install
 
 ```sh
 yarn serve
+```
+
+### Run Project
+
+```sh
+npm run serve
 ```
 
 ### Compiles and minifies for production

@@ -1,1 +1,196 @@
-@import "../../../node_modules/bootstrap/scss/bootstrap";
+/* Simple dashboard grid CSS */
+
+/* Assign grid instructions to our parent grid container */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Side nav is hidden on mobile */
+    grid-template-rows: 50px 1fr 50px;
+    grid-template-areas:
+      'header'
+      'main'
+      'footer';
+    height: 100vh;
+    background-color: #e3e4e6;
+  }
+  
+  .sidenav {
+    display: none;
+    grid-area: sidenav;
+    background-color: #394263;
+  }
+  
+  /* Give every child element its grid name */
+  .header {
+    grid-area: header;
+    background-color: #e3e4e6;
+  }
+  
+  .main {
+    grid-area: main;
+    background-color: #e3e4e6;
+  }
+  
+  .footer {
+    grid-area: footer;
+    background-color: #e3e4e6;
+  }
+  
+  .header, .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+  
+  .main-header__heading{
+    font-family: 'Open Sans Bold';
+    display: flex;
+    align-items: center;
+  }
+  
+  .main-header button{
+    display: none;
+  }
+  
+    /* Non-mobile styles, 750px breakpoint */
+    @media only screen and (min-width: 46.875em) {
+        /* Show the sidenav */
+        .grid-container {
+          grid-template-columns: 220px 1fr; /* Show the side nav for non-mobile screens */
+          grid-template-areas:
+            "sidenav header"
+            "sidenav main"
+            "sidenav footer";
+        }
+    
+        .sidenav {
+          display: flex;
+          flex-direction: column;
+        }
+  
+        .main-header button{
+          display: block;
+        }
+  
+        .float-btn {
+          display: none !important;
+        }
+          
+      }
+    
+      /* Medium-sized screen breakpoint (tablet, 1050px) */
+      @media only screen and (min-width: 65.625em) {
+        /* Break out main cards into two columns */
+        .main-cards {
+          column-count: 2;
+        }
+      }
+  
+  .main-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 20px;
+    padding: 10px 20px;
+    height: 100px; /* Force our height since we don't have actual content yet */
+    color: slategray;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 15px 1px rgba(39,39,39,0.1);
+  }
+  
+  .head-info{
+    margin-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .header-user-name{
+    font-family: 'Open Sans Bold';
+    color: slategray;
+  }
+      
+  .sidenav {
+    display: flex; /* Will be hidden on mobile */
+    flex-direction: column;
+    grid-area: sidenav;
+    background-color: #394263;
+  }
+  
+  .sidenav__list {
+    padding: 0;
+    margin-top: 85px;
+    list-style-type: none;
+  }
+  
+  .sidenav__list-item {
+    font-family: 'Open Sans Regular';
+    font-size: 13px;
+    padding: 15px 10px 10px 30px;
+    color: #ddd;
+  }
+  
+  .sidenav__list-item i{
+    width: 10px;
+    margin-right: 16px;
+  }
+  
+  .sidenav__list-item:hover {
+    background-color: #3BBE02;
+    cursor: pointer;
+  }
+  
+  /* Hamburger menu icon, stays fixed on mobile for any possible scrolling */
+  .menu-icon {
+    position: fixed;
+    display: flex;
+    top: 5px;
+    left: 10px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    z-index: 2;
+    cursor: pointer;
+    padding: 12px;
+    background-color: #dadae3;
+  }
+  
+  /* Hamburger menu icon, stays fixed on mobile for any possible scrolling */
+  .float-btn {
+    position: fixed;
+    display: flex;
+    bottom: 5px;
+    right: 10px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    z-index: 2;
+    cursor: pointer;
+    padding: 12px;
+    background-color: #2D8A05;
+  }
+  
+  /* menu icon */
+  .form-container .float-btn{
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    padding: 28px 20px;
+    position: relative;
+    user-select: none;
+  }
+  
+  .float-btn.plus{
+    background-color: #2D8A05;
+  }
+  
+  .float-btn i{
+    color: #fff;
+  }
+  
+  /* Make room for the menu icon on mobile */
+  .header__search {
+    margin-left: 42px;
+  }
+  
